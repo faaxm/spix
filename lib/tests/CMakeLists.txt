@@ -1,0 +1,21 @@
+find_package(GTest REQUIRED)
+
+set(TEST_SOURCES
+    unittests_main.cpp
+    unittests/Commands/ClickOnItem_test.cpp
+    unittests/Commands/DropFromExt_test.cpp
+    unittests/Commands/GetProperty_test.cpp
+
+    unittests/CommandExecuter/CommandExecuter_test.cpp
+    unittests/CommandExecuter/ExecuterState_test.cpp
+
+    unittests/Data/ItemPath_test.cpp
+    unittests/Data/PasteboardContent_test.cpp
+)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${TEST_SOURCES})
+
+add_executable(Spix_test ${TEST_SOURCES})
+target_include_directories(Spix_test PRIVATE ../src)
+target_link_libraries(Spix_test Spix GTest::GTest)
+

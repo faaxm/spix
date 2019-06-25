@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>show_tomato.qml</file>
+        <file>show_cucumber.qml</file>
+        <file>show_pear.qml</file>
+        <file>show_banana.qml</file>
+    </qresource>
+</RCC>
