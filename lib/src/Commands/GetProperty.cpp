@@ -32,4 +32,4 @@ void GetProperty::execute(CommandEnvironment& env)
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

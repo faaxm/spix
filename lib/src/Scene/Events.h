@@ -23,7 +23,7 @@ public:
         static const unsigned middle = 1 << 2;
     };
     using MouseButton = unsigned;
-    
+
     virtual ~Events() = default;
 
     virtual void mouseDown(Item* item, Point loc, MouseButton button) = 0;
@@ -34,4 +34,4 @@ public:
     virtual void quit() = 0;
 };
 
-} // namespace uibot
+} // namespace spix

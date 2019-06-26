@@ -19,4 +19,4 @@ void DumpMetaObject(const QMetaObject* meta);
 void DumpQQuickItemTree(const QQuickItem* item, int level = 0);
 
 } // namespace utils
-} // namespace uibot
+} // namespace spix

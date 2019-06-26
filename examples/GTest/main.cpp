@@ -35,7 +35,7 @@ public:
 protected:
     int m_argc;
     char** m_argv;
-    std::atomic<int> m_result { 0 };
+    std::atomic<int> m_result {0};
 
     void executeTest() override
     {

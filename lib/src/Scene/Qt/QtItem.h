@@ -27,4 +27,4 @@ private:
     QQuickItem* m_item;
 };
 
-} // namespace uibot
+} // namespace spix

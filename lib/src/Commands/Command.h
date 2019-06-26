@@ -20,4 +20,4 @@ public:
 };
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

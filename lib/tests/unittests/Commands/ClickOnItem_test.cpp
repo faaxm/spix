@@ -48,9 +48,11 @@ TEST(ClickOnItemTest, ClickItem)
               EXPECT_TRUE(loc.y > 14.0 && loc.y < 16.0);
               // Been here, done that.
               didPostClickEvent = true;
-            
-              if(press) mouseDown = true;
-              else mouseDown = false;
+
+              if (press)
+                  mouseDown = true;
+              else
+                  mouseDown = false;
           };
 
     spix::CommandExecuter exec;

@@ -37,4 +37,4 @@ std::string ExecuterState::errorsDescription() const
     return description;
 }
 
-} // namespace uibot
+} // namespace spix

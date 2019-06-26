@@ -33,4 +33,4 @@ private:
     QtEvents m_events;
 };
 
-} // namespace uibot
+} // namespace spix

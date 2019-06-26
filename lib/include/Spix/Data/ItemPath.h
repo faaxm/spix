@@ -30,4 +30,4 @@ private:
     std::vector<std::string> m_components;
 };
 
-} // namespace uibot
+} // namespace spix

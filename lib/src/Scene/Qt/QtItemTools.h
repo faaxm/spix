@@ -19,4 +19,4 @@ QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index);
 QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name);
 
 } // namespace qt
-} // namespace uibot
+} // namespace spix

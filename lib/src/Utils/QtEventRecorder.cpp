@@ -10,11 +10,10 @@
 #include <QMouseEvent>
 #include <iostream>
 
-
 namespace spix {
 namespace utils {
 
-bool QtEventRecorder::eventFilter(QObject *object, QEvent *event)
+bool QtEventRecorder::eventFilter(QObject* object, QEvent* event)
 {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
@@ -28,4 +27,4 @@ bool QtEventRecorder::eventFilter(QObject *object, QEvent *event)
 }
 
 } // namespace utils
-} // namespace uibot
+} // namespace spix

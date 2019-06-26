@@ -33,4 +33,4 @@ std::map<std::string, std::string>& MockItem::stringProperties()
     return m_stringProperties;
 }
 
-} // namespace uibot
+} // namespace spix

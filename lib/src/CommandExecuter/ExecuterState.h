@@ -26,4 +26,4 @@ private:
     std::vector<CommandError> m_errors;
 };
 
-} // namespace uibot
+} // namespace spix

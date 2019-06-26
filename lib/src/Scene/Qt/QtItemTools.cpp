@@ -42,4 +42,4 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
 }
 
 } // namespace qt
-} // namespace uibot
+} // namespace spix

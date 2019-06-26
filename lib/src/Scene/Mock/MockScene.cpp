@@ -38,4 +38,4 @@ MockEvents& MockScene::mockEvents()
     return m_events;
 }
 
-} // namespace uibot
+} // namespace spix

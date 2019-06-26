@@ -23,4 +23,4 @@ private:
 
 PasteboardContent makePasteboardContentWithUrls(const std::vector<std::string>& urls);
 
-} // namespace uibot
+} // namespace spix

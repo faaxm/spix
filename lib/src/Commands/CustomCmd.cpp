@@ -26,4 +26,4 @@ bool CustomCmd::canExecuteNow()
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

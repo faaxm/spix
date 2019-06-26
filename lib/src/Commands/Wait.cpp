@@ -31,4 +31,4 @@ bool Wait::canExecuteNow()
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

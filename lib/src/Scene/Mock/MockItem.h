@@ -29,4 +29,4 @@ private:
     std::map<std::string, std::string> m_stringProperties;
 };
 
-} // namespace uibot
+} // namespace spix

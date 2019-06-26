@@ -121,4 +121,4 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
     image.save(QString::fromStdString(filePath));
 }
 
-} // namespace uibot
+} // namespace spix

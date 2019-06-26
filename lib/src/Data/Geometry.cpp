@@ -20,4 +20,4 @@ Point::Point(Real x, Real y)
 {
 }
 
-} // namespace uibot
+} // namespace spix

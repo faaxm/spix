@@ -28,4 +28,4 @@ public:
     std::function<void(Item*, Point, PasteboardContent&)> onMouseDropEvent;
 };
 
-} // namespace uibot
+} // namespace spix

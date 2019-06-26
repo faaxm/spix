@@ -70,4 +70,4 @@ ItemPath ItemPath::subPath(size_t offset) const
     return ItemPath(std::move(sub_components));
 }
 
-} // namespace uibot
+} // namespace spix

@@ -74,4 +74,4 @@ void AnyRpcServer::executeTest()
     }
 }
 
-} // namespace uibot
+} // namespace spix

@@ -24,4 +24,4 @@ private:
     Events::MouseButton m_pressedMouseButtons = Events::MouseButtons::none;
 };
 
-} // namespace uibot
+} // namespace spix

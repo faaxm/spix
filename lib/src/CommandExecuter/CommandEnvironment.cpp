@@ -24,4 +24,4 @@ ExecuterState& CommandEnvironment::state()
     return m_state;
 }
 
-} // namespace uibot
+} // namespace spix

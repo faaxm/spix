@@ -11,11 +11,10 @@
 namespace spix {
 namespace utils {
 
-class QtEventRecorder : public QObject
-{
+class QtEventRecorder : public QObject {
 public:
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject* object, QEvent* event);
 };
 
 } // namespace utils
-} // namespace uibot
+} // namespace spix

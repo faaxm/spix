@@ -60,4 +60,4 @@ private:
     std::thread m_thread;
 };
 
-} // namespace uibot
+} // namespace spix

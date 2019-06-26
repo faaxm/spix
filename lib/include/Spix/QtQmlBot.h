@@ -42,4 +42,4 @@ private:
     std::unique_ptr<CommandExecuter> m_cmdExec;
 };
 
-} // namespace uibot
+} // namespace spix

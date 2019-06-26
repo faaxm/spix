@@ -30,48 +30,46 @@ QQuickWindow* getWindowAndPositionForItem(Item* item, Point relToItemPos, QPoint
     if (!qtitem)
         return nullptr;
     auto window = qtitem->qquickitem()->window();
-    
+
     QPointF qtlocalPoint(relToItemPos.x, relToItemPos.y);
     windowPos = qtitem->qquickitem()->mapToScene(qtlocalPoint);
-    
+
     return window;
 }
 
 Qt::MouseButton getQtMouseButtonValue(Events::MouseButton button)
 {
     unsigned qtButton = Qt::MouseButton::NoButton;
-    
-    if(button & Events::MouseButtons::left){
+
+    if (button & Events::MouseButtons::left) {
         qtButton |= Qt::MouseButton::LeftButton;
     }
-    
-    if(button & Events::MouseButtons::right){
+
+    if (button & Events::MouseButtons::right) {
         qtButton |= Qt::MouseButton::RightButton;
     }
-    
-    if(button & Events::MouseButtons::middle){
+
+    if (button & Events::MouseButtons::middle) {
         qtButton |= Qt::MouseButton::MiddleButton;
     }
-    
+
     return static_cast<Qt::MouseButton>(qtButton);
 }
 
-}
-
-
+} // namespace
 
 void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
 {
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
-    if(!window) return;
-    
+    if (!window)
+        return;
+
     m_pressedMouseButtons |= button;
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
-    
-    QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, 0);
+
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, 0);
     QGuiApplication::postEvent(window, event);
 }
 
@@ -79,14 +77,14 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
 {
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
-    if(!window) return;
-    
+    if (!window)
+        return;
+
     m_pressedMouseButtons ^= button;
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
-    
-    QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, 0);
+
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, 0);
     QGuiApplication::postEvent(window, event);
 }
 
@@ -94,10 +92,11 @@ void QtEvents::mouseMove(Item* item, Point loc)
 {
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
-    if(!window) return;
-    
+    if (!window)
+        return;
+
     Qt::MouseButton activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
-    
+
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() -= 1;
     QMouseEvent* mouseMoveEvent
@@ -106,11 +105,9 @@ void QtEvents::mouseMove(Item* item, Point loc)
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() += 1;
-    mouseMoveEvent
-        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, 0);
+    mouseMoveEvent = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, 0);
     QGuiApplication::postEvent(window, mouseMoveEvent);
 }
-
 
 void QtEvents::stringInput(Item* item, const std::string& text)
 {
@@ -163,4 +160,4 @@ void QtEvents::quit()
     QGuiApplication::quit();
 }
 
-} // namespace uibot
+} // namespace spix

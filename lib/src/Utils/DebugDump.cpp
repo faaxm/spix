@@ -72,4 +72,4 @@ void DumpQQuickItemTree(const QQuickItem* item, int level)
 }
 
 } // namespace utils
-} // namespace uibot
+} // namespace spix

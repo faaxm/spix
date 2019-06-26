@@ -22,4 +22,4 @@ public:
     virtual bool visible() const = 0;
 };
 
-} // namespace uibot
+} // namespace spix

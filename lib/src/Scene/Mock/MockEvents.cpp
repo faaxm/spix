@@ -47,4 +47,4 @@ void MockEvents::quit()
 {
 }
 
-} // namespace uibot
+} // namespace spix

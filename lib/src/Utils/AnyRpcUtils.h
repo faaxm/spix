@@ -146,4 +146,4 @@ void AddFunctionToAnyRpc(
 }
 
 } // namespace utils
-} // namespace uibot
+} // namespace spix

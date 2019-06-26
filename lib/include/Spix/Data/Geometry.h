@@ -24,4 +24,4 @@ struct Point {
     Real y;
 };
 
-} // namespace uibot
+} // namespace spix

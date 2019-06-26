@@ -19,8 +19,7 @@ GetTestStatus::GetTestStatus(bool /*errorsOnly*/, std::promise<StatusStrings> pr
 void GetTestStatus::execute(CommandEnvironment& env)
 {
     m_promise.set_value(env.state().errors());
-    
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

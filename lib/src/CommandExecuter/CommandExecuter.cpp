@@ -59,4 +59,4 @@ void CommandExecuter::processCommands(Scene& scene)
     }
 }
 
-} // namespace uibot
+} // namespace spix

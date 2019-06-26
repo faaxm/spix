@@ -31,4 +31,4 @@ public:
     virtual void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) = 0;
 };
 
-} // namespace uibot
+} // namespace spix

@@ -32,4 +32,4 @@ private:
     std::unique_ptr<AnyRpcServerPimpl> m_pimpl;
 };
 
-} // namespace uibot
+} // namespace spix

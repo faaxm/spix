@@ -33,4 +33,4 @@ private:
     MockEvents m_events;
 };
 
-} // namespace uibot
+} // namespace spix

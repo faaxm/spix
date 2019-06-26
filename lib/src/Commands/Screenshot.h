@@ -24,4 +24,4 @@ private:
 };
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

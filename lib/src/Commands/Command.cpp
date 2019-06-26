@@ -15,4 +15,4 @@ bool Command::canExecuteNow()
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix

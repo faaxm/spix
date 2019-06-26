@@ -117,4 +117,4 @@ void TestServer::quit()
     m_cmdExec->enqueueCommand<cmd::Quit>();
 }
 
-} // namespace uibot
+} // namespace spix

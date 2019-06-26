@@ -33,4 +33,4 @@ void QtQmlBot::timerEvent(QTimerEvent*)
     m_cmdExec->processCommands(*m_scene);
 }
 
-} // namespace uibot
+} // namespace spix

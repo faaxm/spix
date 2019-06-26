@@ -36,4 +36,4 @@ QQuickItem* QtItem::qquickitem()
     return m_item;
 }
 
-} // namespace uibot
+} // namespace spix

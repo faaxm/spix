@@ -32,4 +32,4 @@ void DragEnd::execute(CommandEnvironment& env)
 }
 
 } // namespace cmd
-} // namespace uibot
+} // namespace spix
