@@ -13,7 +13,7 @@
 namespace spix {
 namespace utils {
 
-bool QtEventRecorder::eventFilter(QObject* object, QEvent* event)
+bool QtEventRecorder::eventFilter(QObject*, QEvent* event)
 {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);

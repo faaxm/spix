@@ -8,14 +8,14 @@
 
 namespace spix {
 
-void MockEvents::mouseDown(Item* item, Point loc, MouseButton button)
+void MockEvents::mouseDown(Item* item, Point loc, MouseButton /*button*/)
 {
     if (onMouseClickEvent) {
         onMouseClickEvent(item, loc, true, false);
     }
 }
 
-void MockEvents::mouseUp(Item* item, Point loc, MouseButton button)
+void MockEvents::mouseUp(Item* item, Point loc, MouseButton /*button*/)
 {
     if (onMouseClickEvent) {
         onMouseClickEvent(item, loc, false, true);
