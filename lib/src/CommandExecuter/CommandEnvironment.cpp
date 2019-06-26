@@ -6,7 +6,7 @@
 
 #include "CommandEnvironment.h"
 
-namespace uibot {
+namespace spix {
 
 CommandEnvironment::CommandEnvironment(Scene& scene, ExecuterState& state)
 : m_scene(scene)

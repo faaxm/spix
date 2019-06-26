@@ -7,7 +7,7 @@
 #include "MockScene.h"
 #include <Scene/Mock/MockItem.h>
 
-namespace uibot {
+namespace spix {
 
 std::unique_ptr<Item> MockScene::itemAtPath(const ItemPath& path)
 {

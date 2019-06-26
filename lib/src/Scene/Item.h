@@ -10,7 +10,7 @@
 
 #include <string>
 
-namespace uibot {
+namespace spix {
 
 class Item {
 public:

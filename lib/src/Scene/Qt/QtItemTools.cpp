@@ -8,7 +8,7 @@
 
 #include <QQuickItem>
 
-namespace uibot {
+namespace spix {
 namespace qt {
 
 const QString repeater_class_name = QString("QQuickRepeater");

@@ -10,7 +10,7 @@
 #include <Spix/Data/ItemPath.h>
 #include <Spix/Data/PasteboardContent.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class DropFromExt : public Command {

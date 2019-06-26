@@ -23,8 +23,8 @@ int main(int argc, char* argv[])
         return -1;
 
     // Instantiate and run tests
-    uibot::AnyRpcServer server;
-    auto bot = new uibot::QtQmlBot();
+    spix::AnyRpcServer server;
+    auto bot = new spix::QtQmlBot();
     bot->runTestServer(server);
 
     return app.exec();

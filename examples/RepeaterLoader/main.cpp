@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-class MyTests : public uibot::TestServer {
+class MyTests : public spix::TestServer {
 protected:
     void executeTest() override
     {
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     // Instantiate and run tests
     MyTests tests;
-    auto bot = new uibot::QtQmlBot();
+    auto bot = new spix::QtQmlBot();
     bot->runTestServer(tests);
 
     return app.exec();

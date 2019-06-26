@@ -13,10 +13,10 @@
 
 TEST(ClickOnItemTest, ErrorOnMissingItem)
 {
-    auto command = std::make_unique<uibot::cmd::ClickOnItem>("window/some/item");
+    auto command = std::make_unique<spix::cmd::ClickOnItem>("window/some/item");
 
-    uibot::MockScene scene;
-    uibot::CommandExecuter exec;
+    spix::MockScene scene;
+    spix::CommandExecuter exec;
     exec.enqueueCommand(std::move(command));
 
     // Try a couple of times to process all commands
@@ -32,13 +32,13 @@ TEST(ClickOnItemTest, ClickItem)
 {
     bool didPostClickEvent = false;
 
-    auto command = std::make_unique<uibot::cmd::ClickOnItem>("window/some/item");
+    auto command = std::make_unique<spix::cmd::ClickOnItem>("window/some/item");
 
-    uibot::MockScene scene;
-    scene.addItemAtPath(uibot::Size(100.0, 30.0), "window/some/item");
+    spix::MockScene scene;
+    scene.addItemAtPath(spix::Size(100.0, 30.0), "window/some/item");
 
     scene.mockEvents().onMouseClickEvent
-        = [&didPostClickEvent](uibot::Item*, uibot::Point loc, bool press, bool release) {
+        = [&didPostClickEvent](spix::Item*, spix::Point loc, bool press, bool release) {
               // Press and release the mouse button
               EXPECT_TRUE(press);
               EXPECT_TRUE(release);
@@ -49,7 +49,7 @@ TEST(ClickOnItemTest, ClickItem)
               didPostClickEvent = true;
           };
 
-    uibot::CommandExecuter exec;
+    spix::CommandExecuter exec;
     exec.enqueueCommand(std::move(command));
     exec.processCommands(scene);
 

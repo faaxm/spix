@@ -6,7 +6,7 @@
 
 #include "CustomCmd.h"
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 CustomCmd::CustomCmd(CustomCmd::ExecFunction exec, CustomCmd::CanExecFunction canExec)
@@ -15,7 +15,7 @@ CustomCmd::CustomCmd(CustomCmd::ExecFunction exec, CustomCmd::CanExecFunction ca
 {
 }
 
-void CustomCmd::execute(uibot::CommandEnvironment& env)
+void CustomCmd::execute(spix::CommandEnvironment& env)
 {
     m_exec(env);
 }

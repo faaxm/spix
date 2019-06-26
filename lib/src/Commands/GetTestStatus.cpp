@@ -8,7 +8,7 @@
 
 #include <Scene/Scene.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 GetTestStatus::GetTestStatus(bool /*errorsOnly*/, std::promise<StatusStrings> promise)

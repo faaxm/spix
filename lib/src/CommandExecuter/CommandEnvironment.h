@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-namespace uibot {
+namespace spix {
 
 class Scene;
 

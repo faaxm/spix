@@ -8,7 +8,7 @@
 
 #include <Scene/Events.h>
 
-namespace uibot {
+namespace spix {
 
 class QtEvents : public Events {
 public:

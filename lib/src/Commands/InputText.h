@@ -9,7 +9,7 @@
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class InputText : public Command {

@@ -21,7 +21,7 @@ void helper_indentbylevel(int level)
 }
 } // namespace
 
-namespace uibot {
+namespace spix {
 namespace utils {
 
 void DumpObject(const QObject* obj)

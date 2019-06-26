@@ -10,7 +10,7 @@
 
 class QQuickItem;
 
-namespace uibot {
+namespace spix {
 
 class QtItem : public Item {
 public:

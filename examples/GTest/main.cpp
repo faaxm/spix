@@ -22,7 +22,7 @@
 
 static class SpixGTest* srv;
 
-class SpixGTest : public uibot::TestServer {
+class SpixGTest : public spix::TestServer {
 public:
     SpixGTest(int argc, char* argv[])
     {
@@ -48,17 +48,17 @@ protected:
 
 TEST(GTestExample, BasicUITest)
 {
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 
     // Instantiate and run tests
     SpixGTest tests(argc, argv);
-    auto bot = new uibot::QtQmlBot();
+    auto bot = new spix::QtQmlBot();
     bot->runTestServer(tests);
 
     app.exec();

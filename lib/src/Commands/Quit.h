@@ -8,7 +8,7 @@
 
 #include "Command.h"
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class Quit : public Command {

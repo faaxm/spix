@@ -10,7 +10,7 @@
 #include <Spix/TestServer.h>
 #include <memory>
 
-namespace uibot {
+namespace spix {
 
 class CommandExecuter;
 class QtScene;

@@ -6,7 +6,7 @@
 
 #include "Command.h"
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 bool Command::canExecuteNow()

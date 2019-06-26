@@ -6,7 +6,7 @@
 
 #include <Spix/Data/PasteboardContent.h>
 
-namespace uibot {
+namespace spix {
 
 void PasteboardContent::addUrl(std::string url)
 {

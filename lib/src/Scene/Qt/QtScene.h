@@ -14,7 +14,7 @@
 
 class QQuickWindow;
 
-namespace uibot {
+namespace spix {
 
 class ItemPath;
 

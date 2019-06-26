@@ -10,7 +10,7 @@
 #include <Scene/Qt/QtScene.h>
 #include <Spix/TestServer.h>
 
-namespace uibot {
+namespace spix {
 
 QtQmlBot::QtQmlBot(QObject* parent)
 : QObject(parent)

@@ -10,7 +10,7 @@
 
 TEST(PasteboardContentTest, AddUrls)
 {
-    uibot::PasteboardContent content;
+    spix::PasteboardContent content;
 
     content.addUrl("file://some/file");
     content.addUrl("file://other/file");
@@ -20,7 +20,7 @@ TEST(PasteboardContentTest, AddUrls)
 
 TEST(PasteboardContentTest, HelperMakeWithUrls)
 {
-    auto content = uibot::makePasteboardContentWithUrls({"file://some/file", "file://other/file/here"});
+    auto content = spix::makePasteboardContentWithUrls({"file://some/file", "file://other/file/here"});
 
     EXPECT_EQ(content.urls().size(), 2);
     EXPECT_EQ(content.urls().at(0), "file://some/file");

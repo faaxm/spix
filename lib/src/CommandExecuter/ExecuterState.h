@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace uibot {
+namespace spix {
 
 using CommandError = std::string;
 

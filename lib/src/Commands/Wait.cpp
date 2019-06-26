@@ -6,7 +6,7 @@
 
 #include "Wait.h"
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 Wait::Wait(std::chrono::milliseconds waitTime)

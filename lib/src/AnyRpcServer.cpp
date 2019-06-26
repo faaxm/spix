@@ -8,7 +8,7 @@
 #include <Utils/AnyRpcUtils.h>
 #include <anyrpc/anyrpc.h>
 
-namespace uibot {
+namespace spix {
 
 struct AnyRpcServerPimpl {
     std::unique_ptr<anyrpc::Server> server;

@@ -20,7 +20,7 @@
 #include <QDragMoveEvent>
 #include <QMimeData>
 
-namespace uibot {
+namespace spix {
 
 void QtEvents::mouseClick(Item* item, Point loc, bool press, bool release)
 {

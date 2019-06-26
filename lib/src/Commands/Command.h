@@ -8,7 +8,7 @@
 
 #include <CommandExecuter/CommandEnvironment.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class Command {

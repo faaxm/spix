@@ -9,18 +9,18 @@
 #include "Command.h"
 #include <functional>
 
-namespace uibot {
+namespace spix {
 
 namespace cmd {
 
-class CustomCmd : public uibot::cmd::Command {
+class CustomCmd : public spix::cmd::Command {
 public:
-    using ExecFunction = std::function<void(uibot::CommandEnvironment&)>;
+    using ExecFunction = std::function<void(spix::CommandEnvironment&)>;
     using CanExecFunction = std::function<bool()>;
 
     CustomCmd(ExecFunction exec, CanExecFunction canExec);
 
-    void execute(uibot::CommandEnvironment&) override;
+    void execute(spix::CommandEnvironment&) override;
     bool canExecuteNow() override;
 
 private:

@@ -10,7 +10,7 @@ class QObject;
 struct QMetaObject;
 class QQuickItem;
 
-namespace uibot {
+namespace spix {
 namespace utils {
 
 void DumpObject(const QObject* obj);

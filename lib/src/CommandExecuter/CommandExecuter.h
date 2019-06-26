@@ -13,7 +13,7 @@
 #include <mutex>
 #include <queue>
 
-namespace uibot {
+namespace spix {
 
 class Scene;
 

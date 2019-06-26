@@ -8,7 +8,7 @@
 
 #include <Scene/Scene.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 DragEnd::DragEnd(ItemPath path)

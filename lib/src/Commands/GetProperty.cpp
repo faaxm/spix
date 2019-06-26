@@ -8,7 +8,7 @@
 
 #include <Scene/Scene.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<std::string> promise)

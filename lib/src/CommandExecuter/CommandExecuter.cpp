@@ -7,7 +7,7 @@
 #include "CommandExecuter.h"
 #include "CommandEnvironment.h"
 
-namespace uibot {
+namespace spix {
 
 CommandExecuter::CommandExecuter()
 : m_commandQueue()

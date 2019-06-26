@@ -15,16 +15,16 @@ TEST(GetPropertyTest, GetStringProperty)
     // Build command
     std::promise<std::string> promise;
     auto result = promise.get_future();
-    auto command = std::make_unique<uibot::cmd::GetProperty>("window/some/item", "testProperty", std::move(promise));
+    auto command = std::make_unique<spix::cmd::GetProperty>("window/some/item", "testProperty", std::move(promise));
 
     // Build Scene with Item
-    uibot::MockScene scene;
-    uibot::MockItem item {uibot::Size(100.0, 30.0)};
+    spix::MockScene scene;
+    spix::MockItem item {spix::Size(100.0, 30.0)};
     item.stringProperties()["testProperty"] = "This is a test value";
     scene.addItemAtPath(std::move(item), "window/some/item");
 
     // Execute Commands
-    uibot::CommandExecuter exec;
+    spix::CommandExecuter exec;
     exec.enqueueCommand(std::move(command));
     exec.processCommands(scene);
 

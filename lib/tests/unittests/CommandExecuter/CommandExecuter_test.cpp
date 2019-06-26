@@ -13,8 +13,8 @@
 
 TEST(CommandExecuterTest, Plain)
 {
-    uibot::CommandExecuter exec;
-    uibot::MockScene scene;
+    spix::CommandExecuter exec;
+    spix::MockScene scene;
 
     int didExec1 = 0;
     int didExec2 = 0;
@@ -24,11 +24,11 @@ TEST(CommandExecuterTest, Plain)
     exec.processCommands(scene);
     // Enqueue test commands
     exec.enqueueCommand(
-        std::make_unique<uibot::cmd::CustomCmd>([&](uibot::CommandEnvironment&) { ++didExec1; }, [] { return true; }));
+        std::make_unique<spix::cmd::CustomCmd>([&](spix::CommandEnvironment&) { ++didExec1; }, [] { return true; }));
     exec.enqueueCommand(
-        std::make_unique<uibot::cmd::CustomCmd>([&](uibot::CommandEnvironment&) { ++didExec2; }, [] { return true; }));
+        std::make_unique<spix::cmd::CustomCmd>([&](spix::CommandEnvironment&) { ++didExec2; }, [] { return true; }));
     exec.enqueueCommand(
-        std::make_unique<uibot::cmd::CustomCmd>([&](uibot::CommandEnvironment&) { ++didExec3; }, [] { return true; }));
+        std::make_unique<spix::cmd::CustomCmd>([&](spix::CommandEnvironment&) { ++didExec3; }, [] { return true; }));
 
     // process. Should execute every command once
     exec.processCommands(scene);
@@ -45,8 +45,8 @@ TEST(CommandExecuterTest, Plain)
 
 TEST(CommandExecuterTest, Blocked)
 {
-    uibot::CommandExecuter exec;
-    uibot::MockScene scene;
+    spix::CommandExecuter exec;
+    spix::MockScene scene;
 
     // Control / Test vars
     int didExec1 = 0;
@@ -56,11 +56,11 @@ TEST(CommandExecuterTest, Blocked)
 
     // Add commands to executer and execute
     exec.enqueueCommand(
-        std::make_unique<uibot::cmd::CustomCmd>([&](uibot::CommandEnvironment&) { ++didExec1; }, [] { return true; }));
-    exec.enqueueCommand(std::make_unique<uibot::cmd::CustomCmd>(
-        [&](uibot::CommandEnvironment&) { ++didExec2; }, [&] { return canExec2; }));
+        std::make_unique<spix::cmd::CustomCmd>([&](spix::CommandEnvironment&) { ++didExec1; }, [] { return true; }));
+    exec.enqueueCommand(std::make_unique<spix::cmd::CustomCmd>(
+        [&](spix::CommandEnvironment&) { ++didExec2; }, [&] { return canExec2; }));
     exec.enqueueCommand(
-        std::make_unique<uibot::cmd::CustomCmd>([&](uibot::CommandEnvironment&) { ++didExec3; }, [] { return true; }));
+        std::make_unique<spix::cmd::CustomCmd>([&](spix::CommandEnvironment&) { ++didExec3; }, [] { return true; }));
     exec.processCommands(scene);
 
     // Only the first command should have been executed
@@ -86,14 +86,14 @@ TEST(CommandExecuterTest, NoBreakOnError)
 {
     bool didExec2ndCommand = false;
 
-    uibot::CommandExecuter exec;
-    uibot::MockScene scene;
+    spix::CommandExecuter exec;
+    spix::MockScene scene;
 
     // Add commands to executer and execute
-    exec.enqueueCommand(std::make_unique<uibot::cmd::CustomCmd>(
-        [&](uibot::CommandEnvironment& env) { env.state().reportError("Some Error Happened"); }, [] { return true; }));
-    exec.enqueueCommand(std::make_unique<uibot::cmd::CustomCmd>(
-        [&](uibot::CommandEnvironment&) { didExec2ndCommand = true; }, [] { return true; }));
+    exec.enqueueCommand(std::make_unique<spix::cmd::CustomCmd>(
+        [&](spix::CommandEnvironment& env) { env.state().reportError("Some Error Happened"); }, [] { return true; }));
+    exec.enqueueCommand(std::make_unique<spix::cmd::CustomCmd>(
+        [&](spix::CommandEnvironment&) { didExec2ndCommand = true; }, [] { return true; }));
 
     exec.processCommands(scene);
     exec.processCommands(scene);

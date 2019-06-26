@@ -10,7 +10,7 @@
 
 TEST(ItemPathTest, InitWithPathString)
 {
-    uibot::ItemPath path {"windowname/item/subitem"};
+    spix::ItemPath path {"windowname/item/subitem"};
     auto components = path.components();
 
     EXPECT_EQ(components.size(), 3);
@@ -18,11 +18,11 @@ TEST(ItemPathTest, InitWithPathString)
     EXPECT_EQ(components.at(1), "item");
     EXPECT_EQ(components.at(2), "subitem");
 
-    uibot::ItemPath empty_path {""};
+    spix::ItemPath empty_path {""};
     auto empty_comp = empty_path.components();
     EXPECT_EQ(empty_comp.size(), 0);
 
-    uibot::ItemPath more_slashes_path {"/windowname/item/subitem/"};
+    spix::ItemPath more_slashes_path {"/windowname/item/subitem/"};
     auto more_slashes_comp = more_slashes_path.components();
     EXPECT_EQ(more_slashes_comp.size(), 3);
     EXPECT_EQ(more_slashes_comp.at(0), "windowname");
@@ -33,7 +33,7 @@ TEST(ItemPathTest, InitWithPathString)
 TEST(ItemPathTest, InitWithComponents)
 {
     std::vector<std::string> in_components {"windowname", "item", "subitem"};
-    uibot::ItemPath path(in_components);
+    spix::ItemPath path(in_components);
     auto out_components = path.components();
 
     EXPECT_EQ(out_components.size(), 3);
@@ -44,7 +44,7 @@ TEST(ItemPathTest, InitWithComponents)
 
 TEST(ItemPathTest, SubPath)
 {
-    uibot::ItemPath path {"windowname/item/subitem/subsubitem"};
+    spix::ItemPath path {"windowname/item/subitem/subsubitem"};
 
     auto subPath_1 = path.subPath(0);
     EXPECT_EQ(subPath_1.string(), "windowname/item/subitem/subsubitem");

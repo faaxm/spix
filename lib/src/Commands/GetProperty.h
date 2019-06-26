@@ -11,7 +11,7 @@
 
 #include <future>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class GetProperty : public Command {

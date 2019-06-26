@@ -8,7 +8,7 @@
 
 #include <anyrpc/anyrpc.h>
 
-namespace uibot {
+namespace spix {
 namespace utils {
 
 /**

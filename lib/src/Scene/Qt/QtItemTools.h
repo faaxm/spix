@@ -9,7 +9,7 @@
 class QQuickItem;
 class QString;
 
-namespace uibot {
+namespace spix {
 namespace qt {
 
 extern const QString repeater_class_name;

@@ -6,7 +6,7 @@
 
 #include <Spix/Data/Geometry.h>
 
-namespace uibot {
+namespace spix {
 
 Size::Size(Real width, Real height)
 : width(width)

@@ -8,7 +8,7 @@
 
 #include <sstream>
 
-namespace uibot {
+namespace spix {
 
 ItemPath::ItemPath() = default;
 

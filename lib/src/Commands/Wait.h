@@ -10,7 +10,7 @@
 
 #include <chrono>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class Wait : public Command {

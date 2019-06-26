@@ -12,8 +12,8 @@ mouseClick("mainWindow/ok_button");
 To provide an RPC test interface to your App,
 only add these three lines to your `main(...)` function:
 ```
-uibot::AnyRpcServer server;
-auto bot = new uibot::QtQmlBot();
+spix::AnyRpcServer server;
+auto bot = new spix::QtQmlBot();
 bot->runTestServer(server);
 ```
 

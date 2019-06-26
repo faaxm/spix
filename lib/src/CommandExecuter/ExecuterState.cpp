@@ -6,7 +6,7 @@
 
 #include "ExecuterState.h"
 
-namespace uibot {
+namespace spix {
 
 void ExecuterState::reportError(CommandError error)
 {

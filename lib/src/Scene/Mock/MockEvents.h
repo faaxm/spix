@@ -11,7 +11,7 @@
 
 #include <functional>
 
-namespace uibot {
+namespace spix {
 
 class MockEvents : public Events {
 public:

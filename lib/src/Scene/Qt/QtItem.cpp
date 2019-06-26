@@ -8,7 +8,7 @@
 
 #include <QQuickItem>
 
-namespace uibot {
+namespace spix {
 
 QtItem::QtItem(QQuickItem* item)
 : m_item(item)

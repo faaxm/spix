@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace uibot {
+namespace spix {
 
 class Events {
 public:

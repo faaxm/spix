@@ -9,7 +9,7 @@
 #include <CommandExecuter/CommandEnvironment.h>
 #include <Scene/Scene.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 DropFromExt::DropFromExt(ItemPath path, PasteboardContent content)

@@ -12,7 +12,7 @@
 
 #include <Spix/Data/ItemPath.h>
 
-namespace uibot {
+namespace spix {
 
 class CommandExecuter;
 

@@ -6,7 +6,7 @@
 
 #include "MockEvents.h"
 
-namespace uibot {
+namespace spix {
 
 void MockEvents::mouseClick(Item* item, Point loc, bool press, bool release)
 {

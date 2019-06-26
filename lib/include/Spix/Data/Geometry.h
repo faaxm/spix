@@ -6,7 +6,7 @@
 
 #pragma once
 
-namespace uibot {
+namespace spix {
 
 using Real = double;
 

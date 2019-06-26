@@ -10,7 +10,7 @@
 
 TEST(ExecuterStateTest, Plain)
 {
-    uibot::ExecuterState state;
+    spix::ExecuterState state;
 
     EXPECT_FALSE(state.hasErrors());
 

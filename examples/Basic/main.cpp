@@ -10,21 +10,21 @@
 
 #include <iostream>
 
-class MyTests : public uibot::TestServer {
+class MyTests : public spix::TestServer {
 protected:
     void executeTest() override
     {
-        mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+        mouseClick(spix::ItemPath("mainWindow/Button_1"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+        mouseClick(spix::ItemPath("mainWindow/Button_2"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+        mouseClick(spix::ItemPath("mainWindow/Button_2"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+        mouseClick(spix::ItemPath("mainWindow/Button_1"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(uibot::ItemPath("mainWindow/Button_2"));
+        mouseClick(spix::ItemPath("mainWindow/Button_2"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(uibot::ItemPath("mainWindow/Button_1"));
+        mouseClick(spix::ItemPath("mainWindow/Button_1"));
         wait(std::chrono::milliseconds(500));
 
         auto result = getStringProperty("mainWindow/results", "text");
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
     // Instantiate and run tests
     MyTests tests;
-    auto bot = new uibot::QtQmlBot();
+    auto bot = new spix::QtQmlBot();
     bot->runTestServer(tests);
 
     return app.exec();

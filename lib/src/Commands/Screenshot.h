@@ -9,7 +9,7 @@
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
 
-namespace uibot {
+namespace spix {
 namespace cmd {
 
 class Screenshot : public Command {

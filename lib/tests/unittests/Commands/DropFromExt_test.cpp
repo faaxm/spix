@@ -13,11 +13,11 @@
 
 TEST(DropFromExtTest, ErrorOnMissingItem)
 {
-    auto command = std::make_unique<uibot::cmd::DropFromExt>(
-        "window/some/item", uibot::makePasteboardContentWithUrls({"file://"}));
+    auto command = std::make_unique<spix::cmd::DropFromExt>(
+        "window/some/item", spix::makePasteboardContentWithUrls({"file://"}));
 
-    uibot::MockScene scene;
-    uibot::CommandExecuter exec;
+    spix::MockScene scene;
+    spix::CommandExecuter exec;
     exec.enqueueCommand(std::move(command));
 
     // Process command
@@ -31,14 +31,14 @@ TEST(DropFromExtTest, DropData)
 {
     bool didPostClickEvent = false;
 
-    auto command = std::make_unique<uibot::cmd::DropFromExt>(
-        "window/some/item", uibot::makePasteboardContentWithUrls({"file://some/file"}));
+    auto command = std::make_unique<spix::cmd::DropFromExt>(
+        "window/some/item", spix::makePasteboardContentWithUrls({"file://some/file"}));
 
-    uibot::MockScene scene;
-    scene.addItemAtPath(uibot::Size(100.0, 30.0), "window/some/item");
+    spix::MockScene scene;
+    scene.addItemAtPath(spix::Size(100.0, 30.0), "window/some/item");
 
     scene.mockEvents().onMouseDropEvent
-        = [&didPostClickEvent](uibot::Item*, uibot::Point loc, uibot::PasteboardContent& data) {
+        = [&didPostClickEvent](spix::Item*, spix::Point loc, spix::PasteboardContent& data) {
               // With the mouse in the center of the item
               EXPECT_TRUE(loc.x > 49.0 && loc.x < 51.0);
               EXPECT_TRUE(loc.y > 14.0 && loc.y < 16.0);
@@ -49,7 +49,7 @@ TEST(DropFromExtTest, DropData)
               didPostClickEvent = true;
           };
 
-    uibot::CommandExecuter exec;
+    spix::CommandExecuter exec;
     exec.enqueueCommand(std::move(command));
     exec.processCommands(scene);
 

@@ -13,7 +13,7 @@
 
 #include <string>
 
-namespace uibot {
+namespace spix {
 
 class PasteboardContent;
 

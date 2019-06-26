@@ -8,7 +8,7 @@
 
 #include <Spix/TestServer.h>
 
-namespace uibot {
+namespace spix {
 
 struct AnyRpcServerPimpl;
 

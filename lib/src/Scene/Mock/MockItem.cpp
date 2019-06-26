@@ -6,7 +6,7 @@
 
 #include "MockItem.h"
 
-namespace uibot {
+namespace spix {
 
 MockItem::MockItem(Size size)
 : m_size(size)

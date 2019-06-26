@@ -20,7 +20,7 @@
 #include <Commands/Screenshot.h>
 #include <Commands/Wait.h>
 
-namespace uibot {
+namespace spix {
 
 TestServer::~TestServer()
 {

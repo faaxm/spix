@@ -10,7 +10,7 @@
 
 #include <map>
 
-namespace uibot {
+namespace spix {
 
 class MockItem : public Item {
 public:

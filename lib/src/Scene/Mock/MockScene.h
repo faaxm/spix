@@ -11,7 +11,7 @@
 #include <Scene/Scene.h>
 #include <map>
 
-namespace uibot {
+namespace spix {
 
 class MockScene : public Scene {
 public:
