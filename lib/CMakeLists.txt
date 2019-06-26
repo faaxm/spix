@@ -81,6 +81,8 @@ set(SOURCES
     src/Utils/AnyRpcUtils.h
     src/Utils/DebugDump.cpp
     src/Utils/DebugDump.h
+    src/Utils/QtEventRecorder.cpp
+    src/Utils/QtEventRecorder.h
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})

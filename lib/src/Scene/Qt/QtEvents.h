@@ -12,10 +12,16 @@ namespace spix {
 
 class QtEvents : public Events {
 public:
-    void mouseClick(Item* item, Point loc, bool press = true, bool release = true) override;
+    void mouseDown(Item* item, Point loc, MouseButton button) override;
+    void mouseUp(Item* item, Point loc, MouseButton button) override;
+    void mouseMove(Item* item, Point loc) override;
     void stringInput(Item* item, const std::string& text) override;
     void extMouseDrop(Item* item, Point loc, PasteboardContent& content) override;
     void quit() override;
+
+private:
+    /// Keep track of which buttons are currently pressed
+    Events::MouseButton m_pressedMouseButtons = Events::MouseButtons::none;
 };
 
 } // namespace uibot

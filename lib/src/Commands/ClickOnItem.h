@@ -14,14 +14,12 @@ namespace cmd {
 
 class ClickOnItem : public Command {
 public:
-    ClickOnItem(ItemPath path, bool press = true, bool release = true);
+    ClickOnItem(ItemPath path);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPath m_path;
-    bool m_press;
-    bool m_release;
 };
 
 } // namespace cmd

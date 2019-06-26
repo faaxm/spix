@@ -31,6 +31,7 @@ TEST(ClickOnItemTest, ErrorOnMissingItem)
 TEST(ClickOnItemTest, ClickItem)
 {
     bool didPostClickEvent = false;
+    bool mouseDown = false;
 
     auto command = std::make_unique<spix::cmd::ClickOnItem>("window/some/item");
 
@@ -38,15 +39,18 @@ TEST(ClickOnItemTest, ClickItem)
     scene.addItemAtPath(spix::Size(100.0, 30.0), "window/some/item");
 
     scene.mockEvents().onMouseClickEvent
-        = [&didPostClickEvent](spix::Item*, spix::Point loc, bool press, bool release) {
+        = [&didPostClickEvent, &mouseDown](spix::Item*, spix::Point loc, bool press, bool release) {
               // Press and release the mouse button
-              EXPECT_TRUE(press);
-              EXPECT_TRUE(release);
+              EXPECT_TRUE(mouseDown || press);
+              EXPECT_TRUE(!mouseDown || release);
               // With the mouse in the center of the item
               EXPECT_TRUE(loc.x > 49.0 && loc.x < 51.0);
               EXPECT_TRUE(loc.y > 14.0 && loc.y < 16.0);
               // Been here, done that.
               didPostClickEvent = true;
+            
+              if(press) mouseDown = true;
+              else mouseDown = false;
           };
 
     spix::CommandExecuter exec;

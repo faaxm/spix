@@ -22,41 +22,95 @@
 
 namespace spix {
 
-void QtEvents::mouseClick(Item* item, Point loc, bool press, bool release)
+namespace {
+
+QQuickWindow* getWindowAndPositionForItem(Item* item, Point relToItemPos, QPointF& windowPos)
 {
     auto qtitem = dynamic_cast<QtItem*>(item);
     if (!qtitem)
-        return;
-
+        return nullptr;
     auto window = qtitem->qquickitem()->window();
-
-    QPointF qtlocalPoint(loc.x, loc.y);
-    QPointF windowLoc = qtitem->qquickitem()->mapToScene(qtlocalPoint);
-
-    if (press) {
-        QMouseEvent* mousePressEvent = new QMouseEvent(
-            QEvent::MouseButtonPress, windowLoc, Qt::MouseButton::LeftButton, Qt::MouseButton::NoButton, 0);
-        QGuiApplication::postEvent(window, mousePressEvent);
-    }
-
-    if (release) {
-        QMouseEvent* mouseReleaseEvent = new QMouseEvent(
-            QEvent::MouseButtonRelease, windowLoc, Qt::MouseButton::LeftButton, Qt::MouseButton::NoButton, 0);
-        QGuiApplication::postEvent(window, mouseReleaseEvent);
-    }
-
-    if (!press && !release) {
-        QMouseEvent* mouseMoveEvent
-            = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::LeftButton, Qt::MouseButton::NoButton, 0);
-        QGuiApplication::postEvent(window, mouseMoveEvent);
-
-        // Wiggle the cursor a bit. This is needed to correctly recognize drag events
-        windowLoc.rx() += 1;
-        mouseMoveEvent
-            = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::LeftButton, Qt::MouseButton::NoButton, 0);
-        QGuiApplication::postEvent(window, mouseMoveEvent);
-    }
+    
+    QPointF qtlocalPoint(relToItemPos.x, relToItemPos.y);
+    windowPos = qtitem->qquickitem()->mapToScene(qtlocalPoint);
+    
+    return window;
 }
+
+Qt::MouseButton getQtMouseButtonValue(Events::MouseButton button)
+{
+    unsigned qtButton = Qt::MouseButton::NoButton;
+    
+    if(button & Events::MouseButtons::left){
+        qtButton |= Qt::MouseButton::LeftButton;
+    }
+    
+    if(button & Events::MouseButtons::right){
+        qtButton |= Qt::MouseButton::RightButton;
+    }
+    
+    if(button & Events::MouseButtons::middle){
+        qtButton |= Qt::MouseButton::MiddleButton;
+    }
+    
+    return static_cast<Qt::MouseButton>(qtButton);
+}
+
+}
+
+
+
+void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
+{
+    QPointF windowLoc;
+    auto window = getWindowAndPositionForItem(item, loc, windowLoc);
+    if(!window) return;
+    
+    m_pressedMouseButtons |= button;
+    Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
+    Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+    
+    QMouseEvent* event = new QMouseEvent(
+        QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, 0);
+    QGuiApplication::postEvent(window, event);
+}
+
+void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
+{
+    QPointF windowLoc;
+    auto window = getWindowAndPositionForItem(item, loc, windowLoc);
+    if(!window) return;
+    
+    m_pressedMouseButtons ^= button;
+    Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
+    Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+    
+    QMouseEvent* event = new QMouseEvent(
+        QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, 0);
+    QGuiApplication::postEvent(window, event);
+}
+
+void QtEvents::mouseMove(Item* item, Point loc)
+{
+    QPointF windowLoc;
+    auto window = getWindowAndPositionForItem(item, loc, windowLoc);
+    if(!window) return;
+    
+    Qt::MouseButton activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+    
+    // Wiggle the cursor a bit. This is needed to correctly recognize drag events
+    windowLoc.rx() -= 1;
+    QMouseEvent* mouseMoveEvent
+        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, 0);
+    QGuiApplication::postEvent(window, mouseMoveEvent);
+
+    // Wiggle the cursor a bit. This is needed to correctly recognize drag events
+    windowLoc.rx() += 1;
+    mouseMoveEvent
+        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, 0);
+    QGuiApplication::postEvent(window, mouseMoveEvent);
+}
+
 
 void QtEvents::stringInput(Item* item, const std::string& text)
 {
