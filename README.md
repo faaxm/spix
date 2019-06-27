@@ -17,6 +17,18 @@ auto bot = new spix::QtQmlBot();
 bot->runTestServer(server);
 ```
 
+And a test script in python could look like this:
+```
+import xmlrpc.client
+
+s = xmlrpc.client.ServerProxy('http://localhost:9000')
+s.mouseClick("mainWindow/Button_1")
+s.wait(200)
+s.mouseClick("mainWindow/Button_2")
+resultText = s.getStringProperty("mainWindow/results", "text")
+s.quit()
+```
+
 # Requirements
 * Qt
 * AnyRPC
@@ -30,4 +42,3 @@ bot->runTestServer(server);
 * Take and save a screenshot
 * Quit the app
 * Remote control, also of embedded devices / ios
-
