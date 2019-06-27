@@ -57,6 +57,7 @@ set(SOURCES
 
     src/Data/Geometry.cpp
     src/Data/ItemPath.cpp
+    src/Data/ItemPosition.cpp
     src/Data/PasteboardContent.cpp
 
     src/Scene/Events.h

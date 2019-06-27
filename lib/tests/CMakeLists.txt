@@ -10,6 +10,7 @@ set(TEST_SOURCES
     unittests/CommandExecuter/ExecuterState_test.cpp
 
     unittests/Data/ItemPath_test.cpp
+    unittests/Data/ItemPosition_test.cpp
     unittests/Data/PasteboardContent_test.cpp
 )
 
