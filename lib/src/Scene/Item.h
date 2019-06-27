@@ -12,6 +12,13 @@
 
 namespace spix {
 
+/**
+ * @brief Represents an item in a scene
+ *
+ * This object can be queried for basic properties of an item in the scene.
+ * It will be implemented by the different backends, depending on whether this
+ * is a Qml/Qt/Mock or other scene.
+ */
 class Item {
 public:
     virtual ~Item() = default;

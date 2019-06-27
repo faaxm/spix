@@ -11,6 +11,12 @@
 
 namespace spix {
 
+/**
+ * @brief PasteboardContent represent data from external apps
+ *
+ * This data can be used to represent MIME data that is dropped onto the
+ * application from external applications.
+ */
 class PasteboardContent {
 public:
     void addUrl(std::string url);

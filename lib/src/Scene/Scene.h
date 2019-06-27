@@ -17,6 +17,13 @@ namespace spix {
 
 class PasteboardContent;
 
+/**
+ * @brief The basic actions a scene can perform
+ *
+ * Each backend for different application types (Qt/Qml/Mock/...) has to
+ * implement this to grant Commands access to the scene and its objects.
+ * Due to this, all commands can be reused with varying backends.
+ */
 class Scene {
 public:
     virtual ~Scene() = default;

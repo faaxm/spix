@@ -8,6 +8,12 @@
 
 #include <anyrpc/anyrpc.h>
 
+/**
+ * The templates in this file make it easier to register functions with AnyRPC.
+ * It is now sufficient to register a function. The parameter parsing will automatically
+ * be adapted to the signature of the function, including type checks and conversion.
+ */
+
 namespace spix {
 namespace utils {
 

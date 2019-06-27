@@ -60,7 +60,6 @@ set(SOURCES
     src/Data/PasteboardContent.cpp
 
     src/Scene/Events.h
-    src/Scene/Item.cpp
     src/Scene/Item.h
     src/Scene/Mock/MockEvents.cpp
     src/Scene/Mock/MockEvents.h
