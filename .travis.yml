@@ -1,0 +1,50 @@
+language: cpp
+sudo: required
+dist: xenial
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons: &linux-gcc-5 { apt: {
+        sources: [ ubuntu-toolchain-r-test ],
+        packages: [ g++-5, cmake, qt5-default, qtdeclarative5-dev ] } }
+      env: MATRIX_EVAL="CXX=g++-5"  BUILD_TYPE=Release
+
+    - os: linux
+      compiler: gcc
+      addons: &linux-gcc-8 { apt: {
+        sources: [ ubuntu-toolchain-r-test ],
+        packages: [ g++-8, cmake, qt5-default, qtdeclarative5-dev ] } }
+      env: MATRIX_EVAL="CXX=g++-8"  BUILD_TYPE=Release
+
+    - os: linux
+      compiler: gcc
+      addons: *linux-gcc-8
+      env: MATRIX_EVAL="CXX=g++-8"  BUILD_TYPE=Debug
+
+    - os: linux
+      compiler: clang
+      addons: &linux-clang-8 { apt: {
+        sources: [ ubuntu-toolchain-r-test, llvm-toolchain-xenial-8 ],
+        packages: [ clang-8, libstdc++-8-dev, cmake, qt5-default, qtdeclarative5-dev ] } }
+      env: MATRIX_EVAL="CXX=clang++-8"  BUILD_TYPE=Release
+
+    - os: linux
+      compiler: clang
+      addons: *linux-clang-8
+      env: MATRIX_EVAL="CXX=clang++-8"  BUILD_TYPE=Debug
+
+    - os: osx
+      osx_image: xcode10
+      env: MATRIX_EVAL="" BUILD_TYPE=Release
+
+before_install:
+    - eval "${MATRIX_EVAL}"
+    - sh ci/travis-install-deps.sh
+
+script:
+  - sh ci/travis-build.sh
+
+notifications:
+  email: false

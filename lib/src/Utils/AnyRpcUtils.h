@@ -81,13 +81,13 @@ T unpackAnyRpcParamArray(anyrpc::Value& params, int& index)
  * value to the given anyrpc::Value. If the return type
  * of the std::function is 'void', no value is assigned.
  */
-template <typename R, typename... Args>
+template <typename R, typename = std::enable_if_t<!std::is_void<R>::value>, typename... Args>
 void callAndAssignAnyRpcResult(std::function<R(Args...)> func, anyrpc::Value& result, Args... args)
 {
     result = func(std::forward<Args>(args)...);
 }
 
-template <typename R, typename... Args>
+template <typename R,typename... Args>
 void callAndAssignAnyRpcResult(std::function<std::vector<R>(Args...)> func, anyrpc::Value& result, Args... args)
 {
     auto funcResult = func(std::forward<Args>(args)...);

@@ -19,8 +19,10 @@
 #include <Spix/QtQmlBot.h>
 
 #include <gtest/gtest.h>
+#include <atomic>
 
-static class SpixGTest* srv;
+class SpixGTest;
+static SpixGTest* srv;
 
 class SpixGTest : public spix::TestServer {
 public:
@@ -77,8 +79,6 @@ Button 1 clicked)RSLT";
 
 int main(int argc, char* argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     // Init Qt Qml Application
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

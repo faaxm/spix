@@ -34,8 +34,6 @@ protected:
 
 int main(int argc, char* argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     // Init Qt Qml Application
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

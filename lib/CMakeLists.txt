@@ -1,10 +1,10 @@
 #
 # Dependencies
 #
+find_package(Threads    REQUIRED)
 find_package(Qt5Core    REQUIRED)
 find_package(Qt5Gui     REQUIRED)
 find_package(Qt5Quick   REQUIRED)
-find_package(Qt5Qml     REQUIRED)
 find_package(AnyRPC     REQUIRED)
 
 
@@ -47,7 +47,7 @@ set(SOURCES
     src/Commands/Screenshot.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
-    
+
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h
     src/CommandExecuter/CommandExecuter.cpp
@@ -106,10 +106,9 @@ target_include_directories(Spix
 )
 target_link_libraries(Spix
     PUBLIC
+        Threads::Threads
         Qt5::Core
         Qt5::Gui
         Qt5::Quick
-        Qt5::Qml
         AnyRPC::anyrpc
 )
-
