@@ -1,3 +1,5 @@
+![Travis Build Status](https://travis-ci.org/faaxm/spix.svg?branch=master)
+
 # Spix
 Spix is a minimally invasive UI testing library that enables your
 Qt/Qml app's UI to be controlled either via c++ code, or through a http RPC
@@ -28,6 +30,12 @@ s.mouseClick("mainWindow/Button_2")
 resultText = s.getStringProperty("mainWindow/results", "text")
 s.quit()
 ```
+
+## What is this good for
+The obvious use of Spix is to automatically test the GUI of your Qt/QML application
+and make sure that it behaves as you expect. However, you can also use Spix as
+an easy way to remote control existing Qt/QML applications or to automatically
+generate and update screenshots for your documentation.
 
 # Requirements
 * Qt
