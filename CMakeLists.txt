@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(Spix)
+project(Spix LANGUAGES CXX)
 
 option(SPIX_BUILD_EXAMPLES "Build Spix examples." ON)
 option(SPIX_BUILD_TESTS "Build Spix unit tests." OFF)
