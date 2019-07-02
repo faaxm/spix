@@ -87,7 +87,7 @@ void callAndAssignAnyRpcResult(std::function<R(Args...)> func, anyrpc::Value& re
     result = func(std::forward<Args>(args)...);
 }
 
-template <typename R,typename... Args>
+template <typename R, typename... Args>
 void callAndAssignAnyRpcResult(std::function<std::vector<R>(Args...)> func, anyrpc::Value& result, Args... args)
 {
     auto funcResult = func(std::forward<Args>(args)...);

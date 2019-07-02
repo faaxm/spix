@@ -18,8 +18,8 @@
 #include <QQmlApplicationEngine>
 #include <Spix/QtQmlBot.h>
 
-#include <gtest/gtest.h>
 #include <atomic>
+#include <gtest/gtest.h>
 
 class SpixGTest;
 static SpixGTest* srv;
