@@ -7,17 +7,21 @@
 #include "CommandExecuter.h"
 #include "CommandEnvironment.h"
 
+#include <cassert>
+
 namespace spix {
 
 CommandExecuter::CommandExecuter()
-: m_commandQueue()
+: m_mainThreadId(std::this_thread::get_id())
+, m_commandQueue()
 , m_processingEnabled(true)
 {
 }
 
 ExecuterState& CommandExecuter::state()
 {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    // main thread access only
+    assert(m_mainThreadId == std::this_thread::get_id());
     return m_state;
 }
 
@@ -29,6 +33,9 @@ void CommandExecuter::enqueueCommand(std::unique_ptr<cmd::Command> command)
 
 void CommandExecuter::processCommands(Scene& scene)
 {
+    // main thread access only
+    assert(m_mainThreadId == std::this_thread::get_id());
+    
     std::unique_lock<std::mutex> lock(m_mutex, std::try_to_lock);
     if (!lock) {
         return;

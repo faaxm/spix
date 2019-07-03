@@ -10,6 +10,7 @@
 #include <Commands/Command.h>
 
 #include <memory>
+#include <thread>
 #include <mutex>
 #include <queue>
 
@@ -17,6 +18,15 @@ namespace spix {
 
 class Scene;
 
+/**
+ * @brief Handles and processes commands
+ *
+ * The CommandExecuter manages a queue of commands that will
+ * be processed on the main thread.
+ *
+ * Commands can be enqueued from any thread, but all other
+ * methods have to be called from the main thread.
+ */
 class CommandExecuter {
 public:
     CommandExecuter();
@@ -33,6 +43,7 @@ public:
     }
 
 private:
+    std::thread::id m_mainThreadId;
     std::mutex m_mutex;
     std::queue<std::unique_ptr<cmd::Command>> m_commandQueue;
     bool m_processingEnabled;
