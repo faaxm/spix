@@ -19,4 +19,4 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${TEST_SOURCES
 add_executable(Spix_test ${TEST_SOURCES})
 target_include_directories(Spix_test PRIVATE ../src)
 target_link_libraries(Spix_test Spix GTest::GTest)
-
+add_test( NAME SpixUnitTests COMMAND Spix_test )

@@ -14,5 +14,6 @@ if(SPIX_BUILD_EXAMPLES)
 endif()
 
 if(SPIX_BUILD_TESTS)
+    enable_testing()
     add_subdirectory(lib/tests)
 endif()

@@ -8,3 +8,4 @@ fi
 
 cat compile_commands.json
 cmake  --build .
+ctest -VV .
