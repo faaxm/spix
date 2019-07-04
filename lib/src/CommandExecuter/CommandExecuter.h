@@ -10,9 +10,9 @@
 #include <Commands/Command.h>
 
 #include <memory>
-#include <thread>
 #include <mutex>
 #include <queue>
+#include <thread>
 
 namespace spix {
 
@@ -45,8 +45,9 @@ public:
 private:
     std::thread::id m_mainThreadId;
     std::mutex m_mutex;
+
     std::queue<std::unique_ptr<cmd::Command>> m_commandQueue;
-    bool m_processingEnabled;
+
     ExecuterState m_state;
 };
 

@@ -14,7 +14,6 @@ namespace spix {
 CommandExecuter::CommandExecuter()
 : m_mainThreadId(std::this_thread::get_id())
 , m_commandQueue()
-, m_processingEnabled(true)
 {
 }
 
@@ -35,13 +34,9 @@ void CommandExecuter::processCommands(Scene& scene)
 {
     // main thread access only
     assert(m_mainThreadId == std::this_thread::get_id());
-    
+
     std::unique_lock<std::mutex> lock(m_mutex, std::try_to_lock);
     if (!lock) {
-        return;
-    }
-
-    if (!m_processingEnabled) {
         return;
     }
 
