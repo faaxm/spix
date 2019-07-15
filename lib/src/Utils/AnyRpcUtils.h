@@ -93,10 +93,10 @@ void callAndAssignAnyRpcResult(std::function<void(Args...)> func, anyrpc::Value&
     func(std::forward<Args>(args)...);
 }
 
-template<typename...Args, std::size_t... Is, typename F>
+template <typename... Args, std::size_t... Is, typename F>
 void callAndAssignAnyRpcResult(F func, anyrpc::Value& result, std::index_sequence<Is...>, anyrpc::Value& params)
 {
-	callAndAssignAnyRpcResult(func, result, unpackAnyRpcParam<Args>(params[Is])...);
+    callAndAssignAnyRpcResult(func, result, unpackAnyRpcParam<Args>(params[Is])...);
 }
 
 /**
