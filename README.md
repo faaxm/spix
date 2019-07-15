@@ -31,7 +31,7 @@ resultText = s.getStringProperty("mainWindow/results", "text")
 s.quit()
 ```
 
-## What is this good for
+## What are the applications of Spix?
 The obvious use for Spix is to automatically test the GUI of your Qt/QML application
 and make sure that it behaves as you expect. However, you can also use Spix as
 an easy way to remote control existing Qt/QML applications or to automatically
@@ -50,3 +50,22 @@ generate and update screenshots for your documentation.
 * Take and save a screenshot
 * Quit the app
 * Remote control, also of embedded devices / ios
+
+# Building Spix
+Spix uses cmake and can be build with the standard cmake commands once cloned:
+```
+git clone https://github.com/faaxm/spix
+cd spix
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+You can also have a look at the build scripts in `ci/`, which are run on the
+build server to build and test Spix.
+
+If you installed the dependencies (like AnyRPC) in a non-standard directory
+you can point cmake to it by setting `CMAKE_PREFIX_PATH`, so
+instead of `cmake ..` you run:
+```
+cmake -DCMAKE_PREFIX_PATH=/path/to/libs ..
+```
