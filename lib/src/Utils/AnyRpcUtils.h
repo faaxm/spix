@@ -65,18 +65,6 @@ std::vector<std::string> unpackAnyRpcParam(anyrpc::Value& value)
 }
 
 /**
- * Converts a value in an anyrpc::Value array at the given index
- * to the requested type and increases the index.
- **/
-template <typename T>
-T unpackAnyRpcParamArray(anyrpc::Value& params, int& index)
-{
-    auto value = unpackAnyRpcParam<T>(params[index]);
-    ++index;
-    return value;
-}
-
-/**
  * Functions that call a std::function and assign its returned
  * value to the given anyrpc::Value. If the return type
  * of the std::function is 'void', no value is assigned.
@@ -103,6 +91,12 @@ template <typename... Args>
 void callAndAssignAnyRpcResult(std::function<void(Args...)> func, anyrpc::Value& /*result*/, Args... args)
 {
     func(std::forward<Args>(args)...);
+}
+
+template<typename...Args, std::size_t... Is, typename F>
+void callAndAssignAnyRpcResult(F func, anyrpc::Value& result, std::index_sequence<Is...>, anyrpc::Value& params)
+{
+	callAndAssignAnyRpcResult(func, result, unpackAnyRpcParam<Args>(params[Is])...);
 }
 
 /**
@@ -133,8 +127,7 @@ public:
                 anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Number of parameters incorrect.");
         }
 
-        int paramIndex = 0;
-        callAndAssignAnyRpcResult(m_func, result, unpackAnyRpcParamArray<Args>(params, paramIndex)...);
+        callAndAssignAnyRpcResult<Args...>(m_func, result, std::make_index_sequence<sizeof...(Args)>(), params);
     }
 
 private:
