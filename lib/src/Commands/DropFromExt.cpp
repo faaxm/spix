@@ -22,20 +22,20 @@ DropFromExt::DropFromExt(ItemPath path, PasteboardContent content, std::promise<
 
 void DropFromExt::execute(CommandEnvironment& env)
 {
-	try {
-		auto item = env.scene().itemAtPath(m_path);
+    try {
+        auto item = env.scene().itemAtPath(m_path);
 
-		if (!item)
+        if (!item)
             throw std::runtime_error("DropFromExt: Item not found: " + m_path.string());
 
-		auto size = item->size();
-		Point midPoint(size.width / 2.0, size.height / 2.0);
-		env.scene().events().extMouseDrop(item.get(), midPoint, m_content);
-		m_promise.set_value();
-	} catch (const std::runtime_error& e) {
+        auto size = item->size();
+        Point midPoint(size.width / 2.0, size.height / 2.0);
+        env.scene().events().extMouseDrop(item.get(), midPoint, m_content);
+        m_promise.set_value();
+    } catch (const std::runtime_error& e) {
         env.state().reportError(e.what());
         m_promise.set_exception(std::make_exception_ptr(e));
-	}
+    }
 }
 
 } // namespace cmd
