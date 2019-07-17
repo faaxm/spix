@@ -55,6 +55,9 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         if (rootClassName == spix::qt::repeater_class_name) {
             QQuickItem* repeater = static_cast<QQuickItem*>(root);
             subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
+        } else if (rootClassName == spix::qt::listview_class_name || rootClassName == spix::qt::gridview_class_name) {
+            QQuickItem* list = static_cast<QQuickItem*>(root);
+            subItem = spix::qt::ListViewChildWithName(list, QString::fromStdString(itemName));
         } else {
             subItem = root->findChild<QQuickItem*>(itemName.c_str());
         }
