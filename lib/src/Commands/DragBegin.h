@@ -8,18 +8,20 @@
 
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
+#include <future>
 
 namespace spix {
 namespace cmd {
 
 class DragBegin : public Command {
 public:
-    DragBegin(ItemPath path);
+    DragBegin(ItemPath path, std::promise<void> promise);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPath m_path;
+    std::promise<void> m_promise;
 };
 
 } // namespace cmd

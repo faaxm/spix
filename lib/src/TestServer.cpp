@@ -54,27 +54,46 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 
 void TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path);
+    std::promise<void> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, std::move(promise));
+
+    result.get();
 }
 
 void TestServer::mouseBeginDrag(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::DragBegin>(path);
+    std::promise<void> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::DragBegin>(path, std::move(promise));
+
+    result.get();
 }
 
 void TestServer::mouseEndDrag(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::DragEnd>(path);
+    std::promise<void> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::DragEnd>(path, std::move(promise));
+
+    result.get();
 }
 
 void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& urls)
 {
-    m_cmdExec->enqueueCommand<cmd::DropFromExt>(path, makePasteboardContentWithUrls(urls));
+    std::promise<void> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::DropFromExt>(path, makePasteboardContentWithUrls(urls), std::move(promise));
+
+    result.get();
 }
 
 void TestServer::inputText(ItemPath path, std::string text)
 {
-    m_cmdExec->enqueueCommand<cmd::InputText>(path, std::move(text));
+    std::promise<void> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::InputText>(path, std::move(text), std::move(promise));
+    result.get();
 }
 
 std::string TestServer::getStringProperty(ItemPath path, std::string propertyName)

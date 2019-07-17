@@ -8,18 +8,20 @@
 
 #include "Command.h"
 #include <Spix/Data/ItemPosition.h>
+#include <future>
 
 namespace spix {
 namespace cmd {
 
 class ClickOnItem : public Command {
 public:
-    ClickOnItem(ItemPosition path);
+    ClickOnItem(ItemPosition path, std::promise<void> promise);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPosition m_position;
+    std::promise<void> m_promise;
 };
 
 } // namespace cmd

@@ -7,6 +7,7 @@
 #include "GetProperty.h"
 
 #include <Scene/Scene.h>
+#include <stdexcept>
 
 namespace spix {
 namespace cmd {
@@ -20,14 +21,18 @@ GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<s
 
 void GetProperty::execute(CommandEnvironment& env)
 {
-    auto item = env.scene().itemAtPath(m_path);
+    try {
+        auto item = env.scene().itemAtPath(m_path);
 
-    if (item) {
-        auto value = item->stringProperty(m_propertyName);
-        m_promise.set_value(value);
-    } else {
-        m_promise.set_value("");
-        env.state().reportError("InputText: Item not found: " + m_path.string());
+        if (item) {
+            auto value = item->stringProperty(m_propertyName);
+            m_promise.set_value(value);
+        } else {
+            throw std::runtime_error("InputText: Item not found: " + m_path.string());
+        }
+    } catch (const std::runtime_error& e) {
+        env.state().reportError(e.what());
+        m_promise.set_exception(std::make_exception_ptr(e));
     }
 }
 

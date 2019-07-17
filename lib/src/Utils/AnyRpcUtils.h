@@ -127,7 +127,13 @@ public:
                 anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Number of parameters incorrect.");
         }
 
-        callAndAssignAnyRpcResult<Args...>(m_func, result, std::make_index_sequence<sizeof...(Args)>(), params);
+        try {
+            callAndAssignAnyRpcResult<Args...>(m_func, result, std::make_index_sequence<sizeof...(Args)>(), params);
+        } catch (const anyrpc::AnyRpcException& e) {
+            throw e;
+        } catch (const std::exception& e) {
+            throw anyrpc::AnyRpcException(anyrpc::AnyRpcErrorApplicationError, e.what());
+        }
     }
 
 private:
