@@ -44,6 +44,7 @@ before_install:
     - sh ci/travis-install-deps.sh
 
 script:
+  - sh ci/travis-clangformat.sh
   - sh ci/travis-build.sh
 
 notifications:

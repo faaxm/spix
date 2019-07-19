@@ -2,7 +2,7 @@
 # OS Specific dependencies
 #
 if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    brew install qt5;
+    brew install qt5 clang-format;
 fi
 
 #
