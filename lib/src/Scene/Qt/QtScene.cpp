@@ -48,7 +48,8 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     QQuickItem* subItem = nullptr;
 
     if (itemName.compare(0, 1, ".") == 0) {
-        QVariant propValue = root->property(itemName.c_str() + 1);
+        auto propertyName = itemName.substr(1);
+        QVariant propValue = root->property(propertyName.c_str());
         if (propValue.isValid())
             subItem = propValue.value<QQuickItem*>();
     } else {
