@@ -49,9 +49,10 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
 
     if (itemName.compare(0, 1, ".") == 0) {
         auto propertyName = itemName.substr(1);
-        QVariant propValue = root->property(propertyName.c_str());
-        if (propValue.isValid())
-            subItem = propValue.value<QQuickItem*>();
+        QVariant propertyValue = root->property(propertyName.c_str());
+        if (propertyValue.isValid()) {
+            subItem = propertyValue.value<QQuickItem*>();
+        }
     } else {
         if (rootClassName == spix::qt::repeater_class_name) {
             QQuickItem* repeater = static_cast<QQuickItem*>(root);
@@ -78,10 +79,11 @@ QQuickItem* getQQuickItemAtPath(const spix::ItemPath& path)
         return nullptr;
     }
 
-    if (path.length() > 1)
+    if (path.length() > 1) {
         item = getQQuickItemWithRoot(path.subPath(1), itemWindow);
-    else
+    } else {
         item = itemWindow->contentItem();
+    }
 
     return item;
 }
