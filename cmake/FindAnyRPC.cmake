@@ -14,5 +14,11 @@ if( ANYRPC_FOUND )
       IMPORTED_LOCATION ${AnyRPC_LIBRARIES}
       INTERFACE_INCLUDE_DIRECTORIES ${AnyRPC_INCLUDE_DIRS}
     )
+    
+    if (WIN32)
+      set_target_properties(AnyRPC::anyrpc PROPERTIES
+        IMPORTED_LINK_INTERFACE_LIBRARIES "ws2_32"
+      )
+    endif()
   endif()
 endif()
