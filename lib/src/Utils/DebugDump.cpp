@@ -71,5 +71,23 @@ void DumpQQuickItemTree(const QQuickItem* item, int level)
     }
 }
 
+void DumpQQuickItemOrQObjectTree(const QObject* object, int level)
+{
+    helper_indentbylevel(level);
+
+    DumpObject(object);
+    std::cout << std::endl;
+
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        for (auto child : qquickitem->childItems()) {
+            DumpQQuickItemOrQObjectTree(child, level + 1);
+        }
+    } else {
+        for (auto child : object->children()) {
+            DumpQQuickItemOrQObjectTree(child, level + 1);
+        }
+    }
+}
+
 } // namespace utils
 } // namespace spix

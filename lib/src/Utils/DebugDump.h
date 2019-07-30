@@ -17,6 +17,7 @@ void DumpObject(const QObject* obj);
 void DumpObjectTree(const QObject* obj, int level = 0);
 void DumpMetaObject(const QMetaObject* meta);
 void DumpQQuickItemTree(const QQuickItem* item, int level = 0);
+void DumpQQuickItemOrQObjectTree(const QObject* object, int level = 0);
 
 } // namespace utils
 } // namespace spix

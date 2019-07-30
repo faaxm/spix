@@ -25,7 +25,9 @@ protected:
             std::cout << "Error: Item should be displayed after button pressed." << std::endl;
         }
 
-        mouseClick("mainWindow/ItemButtons/Item_1");
+        // 'ItemButtons' is not required in the path,
+        // as 'gridItem_0' is unique within 'mainWindow'
+        mouseClick("mainWindow/Item_1");
         wait(std::chrono::milliseconds(500));
 
         auto result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");

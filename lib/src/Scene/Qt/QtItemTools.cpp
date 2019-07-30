@@ -41,5 +41,30 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
     return item;
 }
 
+QObject* FindChildItem(QObject* object, const QString& name)
+{
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        for (auto child : qquickitem->childItems()) {
+            if (child->objectName() == name) {
+                return child;
+            }
+            if (auto item = FindChildItem(child, name)) {
+                return item;
+            }
+        }
+    } else {
+        for (auto child : object->children()) {
+            if (child->objectName() == name) {
+                return child;
+            }
+            if (auto item = FindChildItem(child, name)) {
+                return item;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
 } // namespace qt
 } // namespace spix

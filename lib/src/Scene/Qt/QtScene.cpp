@@ -58,7 +58,7 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
             QQuickItem* repeater = static_cast<QQuickItem*>(root);
             subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
         } else {
-            subItem = root->findChild<QQuickItem*>(itemName.c_str());
+            subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
         }
     }
 
