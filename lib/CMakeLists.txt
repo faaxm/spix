@@ -125,4 +125,7 @@ install(
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
 )
-install(DIRECTORY include/Spix DESTINATION include)
+
+install(DIRECTORY include/Spix 
+    DESTINATION include
+)
