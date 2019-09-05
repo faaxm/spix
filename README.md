@@ -3,25 +3,25 @@
 
 # Spix
 Spix is a minimally invasive UI testing library that enables your
-Qt/Qml app's UI to be controlled either via c++ code, or through a http RPC
+Qt/QML app's UI to be controlled either via c++ code, or through an http RPC
 interface.
 
 UI elements are referenced through names and paths which are robust against
 design changes. To click on a button you write
-```
+```cpp
 mouseClick("mainWindow/ok_button");
 ```
 
-To provide an RPC test interface to your App,
+To provide an RPC test interface to your app,
 only add these three lines to your `main(...)` function:
-```
+```cpp
 spix::AnyRpcServer server;
 auto bot = new spix::QtQmlBot();
 bot->runTestServer(server);
 ```
 
 And a test script in python could look like this:
-```
+```python
 import xmlrpc.client
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
@@ -50,11 +50,11 @@ generate and update screenshots for your documentation.
 * Get property values of items (text, position, color, ...)
 * Take and save a screenshot
 * Quit the app
-* Remote control, also of embedded devices / ios
+* Remote control, also of embedded devices / iOS
 
 # Building Spix
 Spix uses cmake and can be build with the standard cmake commands once cloned:
-```
+```sh
 git clone https://github.com/faaxm/spix
 cd spix
 mkdir build && cd build
@@ -67,6 +67,6 @@ build server to build and test Spix.
 If you installed the dependencies (like AnyRPC) in a non-standard directory
 you can point cmake to it by setting `CMAKE_PREFIX_PATH`, so
 instead of `cmake ..` you run:
-```
+```sh
 cmake -DCMAKE_PREFIX_PATH=/path/to/libs ..
 ```
