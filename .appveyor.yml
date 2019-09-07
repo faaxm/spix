@@ -22,15 +22,17 @@ init:
 
 install:
   - cd C:\Tools\vcpkg
-  - git pull https://github.com/faaxm/vcpkg add_anyrpc
+  - git config user.name "Spix Appveyor"
+  - git config user.email "appveyor@somewhere"
+  - git pull
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
-  
+
   - echo set(VCPKG_TARGET_ARCHITECTURE %TARGET_ARCHITECTURE%) > C:\tools\vcpkg\triplets\custom-triplet.cmake
   - echo set(VCPKG_CRT_LINKAGE %CRT_LINKAGE%) >> C:\tools\vcpkg\triplets\custom-triplet.cmake
   - echo set(VCPKG_LIBRARY_LINKAGE %LIBRARY_LINKAGE%) >> C:\tools\vcpkg\triplets\custom-triplet.cmake
   - cat C:\tools\vcpkg\triplets\custom-triplet.cmake
-  
+
   - vcpkg install
       gtest
       anyrpc
