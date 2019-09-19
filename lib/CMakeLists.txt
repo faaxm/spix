@@ -5,7 +5,7 @@ find_package(Threads REQUIRED)
 find_package(Qt5
     COMPONENTS
         Core
-        GUI
+        Gui
         Quick
     REQUIRED)
 find_package(AnyRPC REQUIRED)
