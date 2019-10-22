@@ -5,7 +5,7 @@ option(SPIX_BUILD_EXAMPLES "Build Spix examples." ON)
 option(SPIX_BUILD_TESTS "Build Spix unit tests." OFF)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-set (CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(lib)
 
