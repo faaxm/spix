@@ -18,6 +18,7 @@
 #include <Commands/InputText.h>
 #include <Commands/Quit.h>
 #include <Commands/Screenshot.h>
+#include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
 namespace spix {
@@ -81,10 +82,15 @@ std::string TestServer::getStringProperty(ItemPath path, std::string propertyNam
 {
     std::promise<std::string> promise;
     auto result = promise.get_future();
-    auto cmd = std::make_unique<cmd::GetProperty>(path, propertyName, std::move(promise));
+    auto cmd = std::make_unique<cmd::GetProperty>(path, std::move(propertyName), std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
 
     return result.get();
+}
+
+void TestServer::setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue)
+{
+    m_cmdExec->enqueueCommand<cmd::SetProperty>(path, std::move(propertyName), std::move(propertyValue));
 }
 
 bool TestServer::existsAndVisible(ItemPath path)

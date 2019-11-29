@@ -46,6 +46,8 @@ protected:
         if (result != "I am a view with a cucumber. Trust me.") {
             std::cout << "Error: Wrong item displayed: \"" << result << "\"" << std::endl;
         }
+
+        setStringProperty("mainWindow/itemCombo", "currentIndex", "2");
     }
 };
 

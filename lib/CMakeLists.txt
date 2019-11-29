@@ -48,6 +48,8 @@ set(SOURCES
     src/Commands/Quit.h
     src/Commands/Screenshot.cpp
     src/Commands/Screenshot.h
+    src/Commands/SetProperty.cpp
+    src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
 

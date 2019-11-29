@@ -43,6 +43,11 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Return a property as string", [this](std::string path, std::string property) {
             return getStringProperty(std::move(path), std::move(property));
         });
+    utils::AddFunctionToAnyRpc<void(std::string, std::string, std::string)>(methodManager, "setStringProperty",
+        "Set the string value of the given property",
+        [this](std::string path, std::string property, std::string value) {
+            setStringProperty(std::move(path), std::move(property), std::move(value));
+        });
     utils::AddFunctionToAnyRpc<bool(std::string)>(methodManager, "existsAndVisible",
         "Returns true if the given object exists",
         [this](std::string path) { return existsAndVisible(std::move(path)); });

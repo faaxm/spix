@@ -46,6 +46,7 @@ public:
     void inputText(ItemPath path, std::string text);
 
     std::string getStringProperty(ItemPath path, std::string propertyName);
+    void setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue);
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
 
