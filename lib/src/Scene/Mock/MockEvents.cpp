@@ -36,6 +36,14 @@ void MockEvents::stringInput(Item* item, const std::string& text)
     }
 }
 
+void MockEvents::keyPress(Item* item, int keyCode, KeyModifier mod)
+{
+}
+
+void MockEvents::keyRelease(Item* item, int keyCode, KeyModifier mod)
+{
+}
+
 void MockEvents::extMouseDrop(Item* item, Point loc, PasteboardContent& content)
 {
     if (onMouseDropEvent) {

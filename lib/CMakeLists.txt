@@ -36,6 +36,8 @@ set(SOURCES
     src/Commands/DragEnd.h
     src/Commands/DropFromExt.cpp
     src/Commands/DropFromExt.h
+    src/Commands/EnterKey.cpp
+    src/Commands/EnterKey.h
     src/Commands/ExistsAndVisible.cpp
     src/Commands/ExistsAndVisible.h
     src/Commands/GetProperty.cpp

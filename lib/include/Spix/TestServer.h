@@ -44,6 +44,7 @@ public:
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);
 
     void inputText(ItemPath path, std::string text);
+    void enterKey(ItemPath path, int keyCode, unsigned modifiers);
 
     std::string getStringProperty(ItemPath path, std::string propertyName);
     void setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue);

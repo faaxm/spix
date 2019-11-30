@@ -38,6 +38,8 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "inputText",
         "Enter text. Events are sent to the item's window at path.",
         [this](std::string path, std::string text) { inputText(std::move(path), std::move(text)); });
+    utils::AddFunctionToAnyRpc<void(std::string, int, unsigned)>(methodManager, "enterKey", "Press and release a key",
+        [this](std::string path, int keyCode, unsigned modifiers) { enterKey(std::move(path), keyCode, modifiers); });
 
     utils::AddFunctionToAnyRpc<std::string(std::string, std::string)>(methodManager, "getStringProperty",
         "Return a property as string", [this](std::string path, std::string property) {

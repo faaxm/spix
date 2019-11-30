@@ -47,7 +47,21 @@ protected:
             std::cout << "Error: Wrong item displayed: \"" << result << "\"" << std::endl;
         }
 
-        setStringProperty("mainWindow/itemCombo", "currentIndex", "2");
+        mouseClick("mainWindow/itemCombo");
+        wait(std::chrono::milliseconds(400));
+        // The following Key-Codes are taken from the Qt::Key enum
+        // https://doc.qt.io/qt-5/qt.html#Key-enum
+        enterKey("mainWindow/itemCombo", Qt::Key_Down, 0); // Down
+        wait(std::chrono::milliseconds(200));
+        enterKey("mainWindow/itemCombo", Qt::Key_Down, 0); // Down
+        wait(std::chrono::milliseconds(200));
+        enterKey("mainWindow/itemCombo", Qt::Key_Enter, 0); // Enter
+        wait(std::chrono::milliseconds(100));
+
+        result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
+        if (result != "I am a view with a banana. Trust me.") {
+            std::cout << "Error: Wrong item displayed: \"" << result << "\"" << std::endl;
+        }
     }
 };
 

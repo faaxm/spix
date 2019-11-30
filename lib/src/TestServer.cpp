@@ -12,6 +12,7 @@
 #include <Commands/DragBegin.h>
 #include <Commands/DragEnd.h>
 #include <Commands/DropFromExt.h>
+#include <Commands/EnterKey.h>
 #include <Commands/ExistsAndVisible.h>
 #include <Commands/GetProperty.h>
 #include <Commands/GetTestStatus.h>
@@ -76,6 +77,11 @@ void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& ur
 void TestServer::inputText(ItemPath path, std::string text)
 {
     m_cmdExec->enqueueCommand<cmd::InputText>(path, std::move(text));
+}
+
+void TestServer::enterKey(ItemPath path, int keyCode, unsigned modifiers)
+{
+    m_cmdExec->enqueueCommand<cmd::EnterKey>(path, keyCode, modifiers);
 }
 
 std::string TestServer::getStringProperty(ItemPath path, std::string propertyName)
