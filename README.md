@@ -1,5 +1,6 @@
 [![Build Status](https://www.travis-ci.org/faaxm/spix.svg?branch=master)](https://www.travis-ci.org/faaxm/spix)
 [![Build status](https://ci.appveyor.com/api/projects/status/9f5m2ya9uu9ddxnp?svg=true)](https://ci.appveyor.com/project/faaxm/spix)
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/faaxm)
 
 # Spix
 Spix is a minimally invasive UI testing library that enables your
