@@ -36,6 +36,8 @@ set(SOURCES
     src/Commands/DragEnd.h
     src/Commands/DropFromExt.cpp
     src/Commands/DropFromExt.h
+    src/Commands/EnterKey.cpp
+    src/Commands/EnterKey.h
     src/Commands/ExistsAndVisible.cpp
     src/Commands/ExistsAndVisible.h
     src/Commands/GetProperty.cpp
@@ -48,6 +50,8 @@ set(SOURCES
     src/Commands/Quit.h
     src/Commands/Screenshot.cpp
     src/Commands/Screenshot.h
+    src/Commands/SetProperty.cpp
+    src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
 

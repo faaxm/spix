@@ -36,6 +36,15 @@ int unpackAnyRpcParam(anyrpc::Value& value)
 }
 
 template <>
+unsigned unpackAnyRpcParam(anyrpc::Value& value)
+{
+    if (!value.IsUint()) {
+        throw anyrpc::AnyRpcException(anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Expected Int.");
+    }
+    return value.GetUint();
+}
+
+template <>
 std::string unpackAnyRpcParam(anyrpc::Value& value)
 {
     if (!value.IsString()) {

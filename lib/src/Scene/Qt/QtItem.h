@@ -19,6 +19,7 @@ public:
 
     Size size() const override;
     std::string stringProperty(const std::string& name) const override;
+    void setStringProperty(const std::string& name, const std::string& value) override;
     bool visible() const override;
 
     QQuickItem* qquickitem();

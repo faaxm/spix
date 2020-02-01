@@ -26,6 +26,11 @@ std::string QtItem::stringProperty(const std::string& name) const
     return value.toString().toStdString();
 }
 
+void QtItem::setStringProperty(const std::string& name, const std::string& value)
+{
+    m_item->setProperty(name.c_str(), value.c_str());
+}
+
 bool QtItem::visible() const
 {
     return m_item->isVisible();
