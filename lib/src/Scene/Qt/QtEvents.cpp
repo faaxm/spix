@@ -56,6 +56,39 @@ Qt::MouseButton getQtMouseButtonValue(Events::MouseButton button)
     return static_cast<Qt::MouseButton>(qtButton);
 }
 
+Qt::KeyboardModifiers getQtKeyboardModifiers(QtEvents::KeyModifier mod)
+{
+    Qt::KeyboardModifiers qtmod = Qt::NoModifier;
+
+    if (mod & QtEvents::KeyModifiers::shift) {
+        qtmod = qtmod | Qt::ShiftModifier;
+    }
+    if (mod & QtEvents::KeyModifiers::control) {
+        qtmod = qtmod | Qt::ControlModifier;
+    }
+    if (mod & QtEvents::KeyModifiers::alt) {
+        qtmod = qtmod | Qt::AltModifier;
+    }
+    if (mod & QtEvents::KeyModifiers::meta) {
+        qtmod = qtmod | Qt::MetaModifier;
+    }
+
+    return qtmod;
+}
+
+void sendQtKeyEvent(Item* item, bool press, int keyCode, QtEvents::KeyModifier mod)
+{
+    auto qtitem = dynamic_cast<QtItem*>(item);
+    if (!qtitem)
+        return;
+
+    auto window = qtitem->qquickitem()->window();
+
+    auto qtmod = getQtKeyboardModifiers(mod);
+    auto keyEvent = new QKeyEvent(press ? QEvent::KeyPress : QEvent::KeyRelease, keyCode, qtmod);
+    QGuiApplication::postEvent(window, keyEvent);
+}
+
 } // namespace
 
 void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
@@ -120,6 +153,16 @@ void QtEvents::stringInput(Item* item, const std::string& text)
     auto keyDownEvent
         = new QKeyEvent(QEvent::KeyPress, 0 /* key id */, 0 /* modifiers */, QString::fromStdString(text));
     QGuiApplication::postEvent(window, keyDownEvent);
+}
+
+void QtEvents::keyPress(Item* item, int keyCode, KeyModifier mod)
+{
+    sendQtKeyEvent(item, true, keyCode, mod);
+}
+
+void QtEvents::keyRelease(Item* item, int keyCode, KeyModifier mod)
+{
+    sendQtKeyEvent(item, false, keyCode, mod);
 }
 
 void QtEvents::extMouseDrop(Item* item, Point loc, PasteboardContent& content)

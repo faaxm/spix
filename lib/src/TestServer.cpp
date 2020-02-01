@@ -12,12 +12,14 @@
 #include <Commands/DragBegin.h>
 #include <Commands/DragEnd.h>
 #include <Commands/DropFromExt.h>
+#include <Commands/EnterKey.h>
 #include <Commands/ExistsAndVisible.h>
 #include <Commands/GetProperty.h>
 #include <Commands/GetTestStatus.h>
 #include <Commands/InputText.h>
 #include <Commands/Quit.h>
 #include <Commands/Screenshot.h>
+#include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
 namespace spix {
@@ -77,14 +79,24 @@ void TestServer::inputText(ItemPath path, std::string text)
     m_cmdExec->enqueueCommand<cmd::InputText>(path, std::move(text));
 }
 
+void TestServer::enterKey(ItemPath path, int keyCode, unsigned modifiers)
+{
+    m_cmdExec->enqueueCommand<cmd::EnterKey>(path, keyCode, modifiers);
+}
+
 std::string TestServer::getStringProperty(ItemPath path, std::string propertyName)
 {
     std::promise<std::string> promise;
     auto result = promise.get_future();
-    auto cmd = std::make_unique<cmd::GetProperty>(path, propertyName, std::move(promise));
+    auto cmd = std::make_unique<cmd::GetProperty>(path, std::move(propertyName), std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
 
     return result.get();
+}
+
+void TestServer::setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue)
+{
+    m_cmdExec->enqueueCommand<cmd::SetProperty>(path, std::move(propertyName), std::move(propertyValue));
 }
 
 bool TestServer::existsAndVisible(ItemPath path)

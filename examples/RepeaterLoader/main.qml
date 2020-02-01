@@ -63,5 +63,13 @@ Window {
                 anchors.centerIn: parent
             }
         }
+        
+        ComboBox {
+            objectName: "itemCombo"
+            width: 200
+            model: ["tomato", "pear", "banana", "cucumber"]
+            
+            onActivated: itemDisplayLoader.source = "show_" + textAt(index) + ".qml"
+        }
     }
 }

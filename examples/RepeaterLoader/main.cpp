@@ -6,6 +6,8 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+
+#include <Spix/Events/KeyCodes.h>
 #include <Spix/QtQmlBot.h>
 
 #include <iostream>
@@ -44,6 +46,21 @@ protected:
 
         result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
         if (result != "I am a view with a cucumber. Trust me.") {
+            std::cout << "Error: Wrong item displayed: \"" << result << "\"" << std::endl;
+        }
+
+        mouseClick("mainWindow/itemCombo");
+        wait(std::chrono::milliseconds(400));
+
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Down, 0); // Down
+        wait(std::chrono::milliseconds(200));
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Down, 0); // Down
+        wait(std::chrono::milliseconds(200));
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Enter, 0); // Enter
+        wait(std::chrono::milliseconds(100));
+
+        result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
+        if (result != "I am a view with a banana. Trust me.") {
             std::cout << "Error: Wrong item displayed: \"" << result << "\"" << std::endl;
         }
     }
