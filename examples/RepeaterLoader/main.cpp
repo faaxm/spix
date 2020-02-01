@@ -6,6 +6,8 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+
+#include <Spix/Events/KeyCodes.h>
 #include <Spix/QtQmlBot.h>
 
 #include <iostream>
@@ -49,13 +51,12 @@ protected:
 
         mouseClick("mainWindow/itemCombo");
         wait(std::chrono::milliseconds(400));
-        // The following Key-Codes are taken from the Qt::Key enum
-        // https://doc.qt.io/qt-5/qt.html#Key-enum
-        enterKey("mainWindow/itemCombo", Qt::Key_Down, 0); // Down
+
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Down, 0); // Down
         wait(std::chrono::milliseconds(200));
-        enterKey("mainWindow/itemCombo", Qt::Key_Down, 0); // Down
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Down, 0); // Down
         wait(std::chrono::milliseconds(200));
-        enterKey("mainWindow/itemCombo", Qt::Key_Enter, 0); // Enter
+        enterKey("mainWindow/itemCombo", spix::KeyCodes::Enter, 0); // Enter
         wait(std::chrono::milliseconds(100));
 
         result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
