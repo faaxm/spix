@@ -7,6 +7,7 @@
 #pragma once
 
 #include <anyrpc/anyrpc.h>
+#include <functional>
 
 /**
  * The templates in this file make it easier to register functions with AnyRPC.
