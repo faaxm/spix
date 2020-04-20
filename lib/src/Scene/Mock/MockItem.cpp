@@ -23,6 +23,10 @@ std::string MockItem::stringProperty(const std::string& name) const
     return m_stringProperties.at(name);
 }
 
+void MockItem::setStringProperty(const std::string& name, const std::string& value)
+{
+}
+
 bool MockItem::visible() const
 {
     return true;

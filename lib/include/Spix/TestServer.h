@@ -48,8 +48,10 @@ public:
     void genericCommand(std::string command, std::string payload);
 
     void inputText(ItemPath path, std::string text);
+    void enterKey(ItemPath path, int keyCode, unsigned modifiers);
 
     std::string getStringProperty(ItemPath path, std::string propertyName);
+    void setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue);
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
 

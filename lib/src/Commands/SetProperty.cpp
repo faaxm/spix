@@ -4,30 +4,28 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
-#include "GetProperty.h"
+#include "SetProperty.h"
 
 #include <Scene/Scene.h>
 
 namespace spix {
 namespace cmd {
 
-GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<std::string> promise)
+SetProperty::SetProperty(ItemPath path, std::string propertyName, std::string propertyValue)
 : m_path(std::move(path))
 , m_propertyName(std::move(propertyName))
-, m_promise(std::move(promise))
+, m_propertyValue(std::move(propertyValue))
 {
 }
 
-void GetProperty::execute(CommandEnvironment& env)
+void SetProperty::execute(CommandEnvironment& env)
 {
     auto item = env.scene().itemAtPath(m_path);
 
     if (item) {
-        auto value = item->stringProperty(m_propertyName);
-        m_promise.set_value(value);
+        item->setStringProperty(m_propertyName, m_propertyValue);
     } else {
-        m_promise.set_value("");
-        env.state().reportError("GetProperty: Item not found: " + m_path.string());
+        env.state().reportError("SetProperty: Item not found: " + m_path.string());
     }
 }
 

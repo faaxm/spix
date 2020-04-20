@@ -7,6 +7,7 @@
 #pragma once
 
 #include <anyrpc/anyrpc.h>
+#include <functional>
 
 /**
  * The templates in this file make it easier to register functions with AnyRPC.
@@ -33,6 +34,15 @@ int unpackAnyRpcParam(anyrpc::Value& value)
         throw anyrpc::AnyRpcException(anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Expected Int.");
     }
     return value.GetInt();
+}
+
+template <>
+unsigned unpackAnyRpcParam(anyrpc::Value& value)
+{
+    if (!value.IsUint()) {
+        throw anyrpc::AnyRpcException(anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Expected Int.");
+    }
+    return value.GetUint();
 }
 
 template <>

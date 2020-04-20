@@ -16,6 +16,8 @@ public:
     void mouseUp(Item* item, Point loc, MouseButton button) override;
     void mouseMove(Item* item, Point loc) override;
     void stringInput(Item* item, const std::string& text) override;
+    void keyPress(Item* item, int keyCode, KeyModifier mod) override;
+    void keyRelease(Item* item, int keyCode, KeyModifier mod) override;
     void extMouseDrop(Item* item, Point loc, PasteboardContent& content) override;
     void quit() override;
 
