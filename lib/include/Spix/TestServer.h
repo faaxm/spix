@@ -9,6 +9,7 @@
 #include <chrono>
 #include <memory>
 #include <thread>
+#include <functional>
 
 #include <Spix/Data/ItemPath.h>
 
@@ -36,12 +37,15 @@ public:
     void start();
     void setCommandExecuter(CommandExecuter* exec);
 
+    void setGenericCommandHandler(std::function<void(std::string, std::string)> handler);
+
     // Commands
     void wait(std::chrono::milliseconds waitTime);
     void mouseClick(ItemPath path);
     void mouseBeginDrag(ItemPath path);
     void mouseEndDrag(ItemPath path);
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);
+    void genericCommand(std::string command, std::string payload);
 
     void inputText(ItemPath path, std::string text);
 
@@ -58,6 +62,7 @@ protected:
 private:
     CommandExecuter* m_cmdExec;
     std::thread m_thread;
+    std::function<void(std::string, std::string)> m_handler;
 };
 
 } // namespace spix

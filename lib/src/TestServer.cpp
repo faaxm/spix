@@ -43,6 +43,11 @@ void TestServer::setCommandExecuter(CommandExecuter* exec)
     m_cmdExec = exec;
 }
 
+void TestServer::setGenericCommandHandler(std::function<void(std::string, std::string)> handler)
+{
+    m_handler = handler;
+}
+
 // ####################
 // # Commands
 // ####################
@@ -70,6 +75,11 @@ void TestServer::mouseEndDrag(ItemPath path)
 void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& urls)
 {
     m_cmdExec->enqueueCommand<cmd::DropFromExt>(path, makePasteboardContentWithUrls(urls));
+}
+
+void TestServer::genericCommand(std::string command, std::string payload)
+{
+    m_handler(command, payload);
 }
 
 void TestServer::inputText(ItemPath path, std::string text)
