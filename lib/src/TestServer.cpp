@@ -9,6 +9,7 @@
 #include <CommandExecuter/CommandExecuter.h>
 
 #include <Commands/ClickOnItem.h>
+#include <Commands/CustomCmd.h>
 #include <Commands/DragBegin.h>
 #include <Commands/DragEnd.h>
 #include <Commands/DropFromExt.h>
@@ -81,7 +82,8 @@ void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& ur
 
 void TestServer::genericCommand(std::string command, std::string payload)
 {
-    m_handler(command, payload);
+    m_cmdExec->enqueueCommand<cmd::CustomCmd>(
+        [=](spix::CommandEnvironment&) { m_handler(command, payload); }, []() { return true; });
 }
 
 void TestServer::inputText(ItemPath path, std::string text)
