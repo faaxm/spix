@@ -7,9 +7,9 @@
 #pragma once
 
 #include <chrono>
+#include <functional>
 #include <memory>
 #include <thread>
-#include <functional>
 
 #include <Spix/Data/ItemPath.h>
 

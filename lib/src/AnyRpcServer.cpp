@@ -63,7 +63,8 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
 
     utils::AddFunctionToAnyRpc<void()>(methodManager, "quit", "Close the app", [this] { quit(); });
 
-    utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command", "Executes a generic command", [this](std::string command, std::string payload) { genericCommand(command, payload); });
+    utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command", "Executes a generic command",
+        [this](std::string command, std::string payload) { genericCommand(command, payload); });
 
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
