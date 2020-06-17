@@ -6,6 +6,7 @@
 
 #include <Spix/Data/ItemPath.h>
 
+#include <iterator>
 #include <sstream>
 
 namespace spix {

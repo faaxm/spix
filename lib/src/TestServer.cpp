@@ -9,6 +9,7 @@
 #include <CommandExecuter/CommandExecuter.h>
 
 #include <Commands/ClickOnItem.h>
+#include <Commands/CustomCmd.h>
 #include <Commands/DragBegin.h>
 #include <Commands/DragEnd.h>
 #include <Commands/DropFromExt.h>
@@ -45,6 +46,11 @@ void TestServer::setCommandExecuter(CommandExecuter* exec)
     m_cmdExec = exec;
 }
 
+void TestServer::setGenericCommandHandler(std::function<void(std::string, std::string)> handler)
+{
+    m_handler = handler;
+}
+
 // ####################
 // # Commands
 // ####################
@@ -72,6 +78,12 @@ void TestServer::mouseEndDrag(ItemPath path)
 void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& urls)
 {
     m_cmdExec->enqueueCommand<cmd::DropFromExt>(path, makePasteboardContentWithUrls(urls));
+}
+
+void TestServer::genericCommand(std::string command, std::string payload)
+{
+    m_cmdExec->enqueueCommand<cmd::CustomCmd>(
+        [=](spix::CommandEnvironment&) { m_handler(command, payload); }, []() { return true; });
 }
 
 void TestServer::inputText(ItemPath path, std::string text)
