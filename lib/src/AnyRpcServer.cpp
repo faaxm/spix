@@ -7,6 +7,7 @@
 #include <Spix/AnyRpcServer.h>
 #include <Utils/AnyRpcUtils.h>
 #include <anyrpc/anyrpc.h>
+#include <atomic>
 
 namespace spix {
 
