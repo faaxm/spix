@@ -54,3 +54,9 @@ install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
     DESTINATION ${SPIX_CMAKE_CONFIG_DIR}
 )
+
+export(
+    EXPORT SpixTargets
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/SpixTargets.cmake"
+    NAMESPACE Spix::
+)
