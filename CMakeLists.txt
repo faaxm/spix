@@ -19,13 +19,38 @@ if(SPIX_BUILD_TESTS)
 endif()
 
 
+include(GNUInstallDirs)
+
+#
+# SpixConfig.cmake File
+#
+set(SPIX_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_DATADIR}/Spix/cmake")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    cmake/SpixConfig.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    INSTALL_DESTINATION "${SPIX_CMAKE_CONFIG_DIR}"
+)
+
 #
 # Install
 #
 install(
     TARGETS Spix
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    EXPORT SpixTargets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(DIRECTORY lib/include/Spix DESTINATION include)
+install(DIRECTORY lib/include/Spix DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(
+    EXPORT SpixTargets
+    FILE SpixTargets.cmake
+    DESTINATION ${SPIX_CMAKE_CONFIG_DIR}
+    NAMESPACE Spix::
+)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    DESTINATION ${SPIX_CMAKE_CONFIG_DIR}
+)

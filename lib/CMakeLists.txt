@@ -10,6 +10,8 @@ find_package(Qt5
     REQUIRED)
 find_package(AnyRPC REQUIRED)
 
+include(GNUInstallDirs)
+
 
 #
 # Sources
@@ -107,7 +109,8 @@ qt5_wrap_cpp(MOC_FILES "include/Spix/QtQmlBot.h")
 add_library(Spix ${SOURCES} ${MOC_FILES})
 target_include_directories(Spix
     PUBLIC
-        include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
         src
 )
