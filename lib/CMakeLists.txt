@@ -119,14 +119,3 @@ target_link_libraries(Spix
         Qt5::Quick
         AnyRPC::anyrpc
 )
-
-#
-# Install
-#
-install(
-    TARGETS Spix
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-)
-install(DIRECTORY include/Spix DESTINATION include)
