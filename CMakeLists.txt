@@ -17,3 +17,15 @@ if(SPIX_BUILD_TESTS)
     enable_testing()
     add_subdirectory(lib/tests)
 endif()
+
+
+#
+# Install
+#
+install(
+    TARGETS Spix
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+install(DIRECTORY lib/include/Spix DESTINATION include)
