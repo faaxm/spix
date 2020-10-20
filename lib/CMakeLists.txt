@@ -1,4 +1,11 @@
 #
+# Includes
+#
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+
+#
 # Dependencies
 #
 find_package(Threads REQUIRED)
@@ -9,8 +16,6 @@ find_package(Qt5
         Quick
     REQUIRED)
 find_package(AnyRPC REQUIRED)
-
-include(GNUInstallDirs)
 
 
 #
@@ -121,4 +126,44 @@ target_link_libraries(Spix
         Qt5::Gui
         Qt5::Quick
         AnyRPC::anyrpc
+)
+
+
+#
+# SpixConfig.cmake File
+#
+set(SPIX_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_DATADIR}/Spix/cmake")
+
+configure_package_config_file(
+    cmake/SpixConfig.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    INSTALL_DESTINATION "${SPIX_CMAKE_CONFIG_DIR}"
+)
+
+#
+# Install
+#
+install(
+    TARGETS Spix
+    EXPORT SpixTargets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+install(DIRECTORY include/Spix DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(
+    EXPORT SpixTargets
+    FILE SpixTargets.cmake
+    DESTINATION ${SPIX_CMAKE_CONFIG_DIR}
+    NAMESPACE Spix::
+)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    DESTINATION ${SPIX_CMAKE_CONFIG_DIR}
+)
+
+export(
+    EXPORT SpixTargets
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/SpixTargets.cmake"
+    NAMESPACE Spix::
 )
