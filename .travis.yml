@@ -36,7 +36,7 @@ matrix:
       env: MATRIX_EVAL="CXX=clang++-8"  BUILD_TYPE=Debug
 
     - os: osx
-      osx_image: xcode10
+      osx_image: xcode12
       env: MATRIX_EVAL="" BUILD_TYPE=Release
 
 before_install:
