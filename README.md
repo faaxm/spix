@@ -33,6 +33,9 @@ resultText = s.getStringProperty("mainWindow/results", "text")
 s.quit()
 ```
 
+You can also use [PyAutoGUI](https://pyautogui.readthedocs.io) in combination with
+Spix. Have a look at the example script [](examples/RemoteCtrl/script/autogui.py).
+
 ## What are the applications of Spix?
 The obvious use for Spix is to automatically test the GUI of your Qt/QML application
 and make sure that it behaves as you expect. However, you can also use Spix as
