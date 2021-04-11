@@ -11,6 +11,7 @@ namespace spix {
 using Real = double;
 
 struct Size {
+    Size();
     Size(Real width, Real height);
 
     Real width;
@@ -18,6 +19,7 @@ struct Size {
 };
 
 struct Point {
+    Point();
     Point(Real x, Real y);
 
     Real x;
@@ -25,6 +27,7 @@ struct Point {
 };
 
 struct Rect {
+    Rect();
     Rect(Real x, Real y, Real width, Real height);
 
     Point topLeft;
