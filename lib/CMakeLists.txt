@@ -9,7 +9,7 @@ include(CMakePackageConfigHelpers)
 # Dependencies
 #
 find_package(Threads REQUIRED)
-find_package(Qt5
+find_package(Qt6
     COMPONENTS
         Core
         Gui
@@ -105,7 +105,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 #
 # Qt MOC Files
 #
-qt5_wrap_cpp(MOC_FILES "include/Spix/QtQmlBot.h")
+qt6_wrap_cpp(MOC_FILES "include/Spix/QtQmlBot.h")
 
 
 #
@@ -122,9 +122,9 @@ target_include_directories(Spix
 target_link_libraries(Spix
     PUBLIC
         Threads::Threads
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Quick
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Quick
         AnyRPC::anyrpc
 )
 
