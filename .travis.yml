@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: xenial
+dist: focal
 
 matrix:
   include:
