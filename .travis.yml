@@ -8,8 +8,8 @@ matrix:
       compiler: gcc
       addons: &linux-gcc-5 { apt: {
         sources: [ ubuntu-toolchain-r-test ],
-        packages: [ g++-5, cmake, qt5-default, qtdeclarative5-dev ] } }
-      env: MATRIX_EVAL="CXX=g++-5"  BUILD_TYPE=Release
+        packages: [ g++-10, cmake, qt5-default, qtdeclarative5-dev ] } }
+      env: MATRIX_EVAL="CXX=g++-10"  BUILD_TYPE=Release
 
     - os: linux
       compiler: gcc
