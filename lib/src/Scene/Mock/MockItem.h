@@ -18,6 +18,8 @@ public:
 
     // Item interface
     Size size() const override;
+    Point position() const override;
+    Rect bounds() const override;
     std::string stringProperty(const std::string& name) const override;
     void setStringProperty(const std::string& name, const std::string& value) override;
     bool visible() const override;

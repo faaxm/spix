@@ -20,4 +20,10 @@ Point::Point(Real x, Real y)
 {
 }
 
+Rect::Rect(Real x, Real y, Real width, Real height)
+: topLeft(x, y)
+, size(width, height)
+{
+}
+
 } // namespace spix

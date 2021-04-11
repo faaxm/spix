@@ -24,4 +24,11 @@ struct Point {
     Real y;
 };
 
+struct Rect {
+    Rect(Real x, Real y, Real width, Real height);
+
+    Point topLeft;
+    Size size;
+};
+
 } // namespace spix

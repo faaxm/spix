@@ -12,6 +12,7 @@
 #include <thread>
 
 #include <Spix/Data/ItemPath.h>
+#include <Spix/Data/Geometry.h>
 
 namespace spix {
 
@@ -52,6 +53,7 @@ public:
 
     std::string getStringProperty(ItemPath path, std::string propertyName);
     void setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue);
+    Rect getBoundingBox(ItemPath path);
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
 
