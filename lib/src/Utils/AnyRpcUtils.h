@@ -19,6 +19,19 @@ namespace spix {
 namespace utils {
 
 /**
+ * Generic type traits
+ */
+template <class T>
+struct is_std_vector {
+    static const bool value = false;
+};
+
+template <class T>
+struct is_std_vector<std::vector<T>> {
+    static const bool value = true;
+};
+
+/**
  * Tools to convert an anyrpc::Value to a
  * particular type. If the requested type does not
  * match the content of the anyrpc::Value, an excption
@@ -79,7 +92,8 @@ std::vector<std::string> unpackAnyRpcParam(anyrpc::Value& value)
  * value to the given anyrpc::Value. If the return type
  * of the std::function is 'void', no value is assigned.
  */
-template <typename R, typename = std::enable_if_t<!std::is_void<R>::value>, typename... Args>
+template <typename R, typename = std::enable_if_t<!std::is_void<R>::value>,
+    typename = std::enable_if_t<!is_std_vector<R>::value>, typename... Args>
 void callAndAssignAnyRpcResult(std::function<R(Args...)> func, anyrpc::Value& result, Args... args)
 {
     result = func(std::forward<Args>(args)...);
