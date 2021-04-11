@@ -11,8 +11,8 @@
 #include <memory>
 #include <thread>
 
-#include <Spix/Data/ItemPath.h>
 #include <Spix/Data/Geometry.h>
+#include <Spix/Data/ItemPath.h>
 
 namespace spix {
 

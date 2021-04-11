@@ -54,7 +54,7 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<std::vector<double>(std::string)>(methodManager, "getBoundingBox",
         "Return the bounding box of an item in screen coordinates", [this](std::string path) {
             auto bounds = getBoundingBox(std::move(path));
-            return std::vector<double>{bounds.topLeft.x, bounds.topLeft.y, bounds.size.width, bounds.size.height};
+            return std::vector<double> {bounds.topLeft.x, bounds.topLeft.y, bounds.size.width, bounds.size.height};
         });
     utils::AddFunctionToAnyRpc<bool(std::string)>(methodManager, "existsAndVisible",
         "Returns true if the given object exists",

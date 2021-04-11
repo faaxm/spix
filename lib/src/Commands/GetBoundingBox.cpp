@@ -25,7 +25,7 @@ void GetBoundingBox::execute(CommandEnvironment& env)
         auto value = item->bounds();
         m_promise.set_value(value);
     } else {
-        m_promise.set_value(Rect{0.0, 0.0, 0.0, 0.0});
+        m_promise.set_value(Rect {0.0, 0.0, 0.0, 0.0});
         env.state().reportError("GetBoundingBox: Item not found: " + m_path.string());
     }
 }

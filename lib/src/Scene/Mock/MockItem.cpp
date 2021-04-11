@@ -20,12 +20,12 @@ Size MockItem::size() const
 
 Point MockItem::position() const
 {
-    return Point{0.0, 0.0};
+    return Point {0.0, 0.0};
 }
 
 Rect MockItem::bounds() const
 {
-    Rect bounds{0.0, 0.0, 0.0, 0.0};
+    Rect bounds {0.0, 0.0, 0.0, 0.0};
     bounds.topLeft = position();
     bounds.size = size();
     return bounds;

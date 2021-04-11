@@ -23,7 +23,7 @@ Size QtItem::size() const
 Point QtItem::position() const
 {
     // the point (0, 0) in item coordinates...
-    QPointF localPoint{0.0, 0.0};
+    QPointF localPoint {0.0, 0.0};
     // ...is mapped to global to get the item position on screen
     auto globalPoint = m_item->mapToGlobal(localPoint);
 
@@ -32,7 +32,7 @@ Point QtItem::position() const
 
 Rect QtItem::bounds() const
 {
-    Rect bounds{0.0, 0.0, 0.0, 0.0};
+    Rect bounds {0.0, 0.0, 0.0, 0.0};
     bounds.topLeft = position();
     bounds.size = size();
     return bounds;
