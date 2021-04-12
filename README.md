@@ -48,7 +48,7 @@ to your application:
 
 ### Generate Qt events directly
 You can use Spix to directly create Qt events, either from C++ as a unit test, or from
-an external script through RPC. Since the Qt events are generated directly inside the
+an external script via the network through RPC. Since the Qt events are generated directly inside the
 app, and do not come from the system, the mouse coursor will not actually move and interaction
 with other applications is limited. On the plus side, this mechanism is independent from
 the system your app is running on and can easily be used to control software on an embedded
