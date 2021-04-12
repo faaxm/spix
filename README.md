@@ -46,7 +46,7 @@ generate and update screenshots for your documentation.
 Spix can be used in two ways, which are different in how events are generated and sent
 to your application:
 
-### Generate Qt Events directly
+### Generate Qt events directly
 You can use Spix to directly create Qt events, either from C++ as a unit test, or from
 an external script through RPC. Since the Qt events are generated directly inside the
 app, and do not come from the system, the mouse coursor will not actually move and interaction
