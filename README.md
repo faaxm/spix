@@ -37,10 +37,28 @@ You can also use [PyAutoGUI](https://pyautogui.readthedocs.io) in combination wi
 Spix. Have a look at the [example script](examples/RemoteCtrl/script/autogui.py).
 
 ## What are the applications of Spix?
-The obvious use for Spix is to automatically test the GUI of your Qt/QML application
+The main use for Spix is to automatically test the UI of your Qt/QML application
 and make sure that it behaves as you expect. However, you can also use Spix as
 an easy way to remote control existing Qt/QML applications or to automatically
 generate and update screenshots for your documentation.
+
+## Two modes of operation
+Spix can be used in two ways, which are different in how events are generated and sent
+to your application:
+
+### Generate Qt Events directly
+You can use Spix to directly create Qt events, either from C++ as a unit test, or from
+an external script through RPC. Since the Qt events are generated directly inside the
+app, and do not come from the system, the mouse coursor will not actually move and interaction
+with other applications is limited. On the plus side, this mechanism is independent from
+the system your app is running on and can easily be used to control software on an embedded
+device via the network (RPC).
+
+### Generate system events externally
+In this case, Spix is not generating the events itself. Instead, you use a script to query
+Spix for the screen coordinates of qt objects and then generate events on the system level
+through other tools. One option is to use python together with PyAutoGUI for this, as is
+done in the [RemoteCtrl](examples/RemoteCtrl) example.
 
 # Requirements
 * Qt
