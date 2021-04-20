@@ -38,11 +38,11 @@ install:
       anyrpc
       --triplet custom-triplet
 
-build_script:
-  - mkdir build
-  - cd build
-  - cmake .. -G "%CMAKE_GENERATOR%" -DSPIX_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=%CONFIG% -DCMAKE_TOOLCHAIN_FILE=C:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=custom-triplet
-  - cmake --build . --config %CONFIG%
+#build_script:
+#  - mkdir build
+#  - cd build
+#  - cmake .. -G "%CMAKE_GENERATOR%" -DSPIX_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=%CONFIG% -DCMAKE_TOOLCHAIN_FILE=C:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=custom-triplet
+#  - cmake --build . --config %CONFIG%
 
-test_script:
-  - cmake --build . --target RUN_TESTS --config %CONFIG%
+#test_script:
+#  - cmake --build . --target RUN_TESTS --config %CONFIG%
