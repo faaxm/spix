@@ -47,6 +47,8 @@ set(SOURCES
     src/Commands/EnterKey.h
     src/Commands/ExistsAndVisible.cpp
     src/Commands/ExistsAndVisible.h
+    src/Commands/GetBoundingBox.cpp
+    src/Commands/GetBoundingBox.h
     src/Commands/GetProperty.cpp
     src/Commands/GetProperty.h
     src/Commands/GetTestStatus.cpp

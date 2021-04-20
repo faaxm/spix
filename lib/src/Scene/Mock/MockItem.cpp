@@ -18,6 +18,19 @@ Size MockItem::size() const
     return m_size;
 }
 
+Point MockItem::position() const
+{
+    return Point {0.0, 0.0};
+}
+
+Rect MockItem::bounds() const
+{
+    Rect bounds {0.0, 0.0, 0.0, 0.0};
+    bounds.topLeft = position();
+    bounds.size = size();
+    return bounds;
+}
+
 std::string MockItem::stringProperty(const std::string& name) const
 {
     return m_stringProperties.at(name);

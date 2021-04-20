@@ -8,15 +8,37 @@
 
 namespace spix {
 
+Size::Size()
+: width(0.0)
+, height(0.0)
+{
+}
+
 Size::Size(Real width, Real height)
 : width(width)
 , height(height)
 {
 }
 
+Point::Point()
+: x(0.0)
+, y(0.0)
+{
+}
+
 Point::Point(Real x, Real y)
 : x(x)
 , y(y)
+{
+}
+
+Rect::Rect()
+{
+}
+
+Rect::Rect(Real x, Real y, Real width, Real height)
+: topLeft(x, y)
+, size(width, height)
 {
 }
 

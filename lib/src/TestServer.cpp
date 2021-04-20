@@ -15,6 +15,7 @@
 #include <Commands/DropFromExt.h>
 #include <Commands/EnterKey.h>
 #include <Commands/ExistsAndVisible.h>
+#include <Commands/GetBoundingBox.h>
 #include <Commands/GetProperty.h>
 #include <Commands/GetTestStatus.h>
 #include <Commands/InputText.h>
@@ -109,6 +110,16 @@ std::string TestServer::getStringProperty(ItemPath path, std::string propertyNam
 void TestServer::setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue)
 {
     m_cmdExec->enqueueCommand<cmd::SetProperty>(path, std::move(propertyName), std::move(propertyValue));
+}
+
+Rect TestServer::getBoundingBox(ItemPath path)
+{
+    std::promise<Rect> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::GetBoundingBox>(path, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
 bool TestServer::existsAndVisible(ItemPath path)

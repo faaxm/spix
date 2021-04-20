@@ -25,6 +25,8 @@ public:
 
     // Item properties
     virtual Size size() const = 0;
+    virtual Point position() const = 0;
+    virtual Rect bounds() const = 0;
     virtual std::string stringProperty(const std::string& name) const = 0;
     virtual void setStringProperty(const std::string& name, const std::string& value) = 0;
     virtual bool visible() const = 0;
