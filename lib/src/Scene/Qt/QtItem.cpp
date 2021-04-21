@@ -20,6 +20,24 @@ Size QtItem::size() const
     return Size {m_item->width(), m_item->height()};
 }
 
+Point QtItem::position() const
+{
+    // the point (0, 0) in item coordinates...
+    QPointF localPoint {0.0, 0.0};
+    // ...is mapped to global to get the item position on screen
+    auto globalPoint = m_item->mapToGlobal(localPoint);
+
+    return Point {globalPoint.rx(), globalPoint.ry()};
+}
+
+Rect QtItem::bounds() const
+{
+    Rect bounds {0.0, 0.0, 0.0, 0.0};
+    bounds.topLeft = position();
+    bounds.size = size();
+    return bounds;
+}
+
 std::string QtItem::stringProperty(const std::string& name) const
 {
     auto value = m_item->property(name.c_str());
