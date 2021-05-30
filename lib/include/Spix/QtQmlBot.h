@@ -9,6 +9,7 @@
 #include <QObject>
 #include <Spix/TestServer.h>
 #include <memory>
+#include "spix_export.h"
 
 namespace spix {
 
@@ -25,7 +26,7 @@ class QtScene;
  * Usually it is enough to create one object of this type
  * in `main()` of your application to start processing tests.
  */
-class QtQmlBot : public QObject {
+class SPIX_EXPORT QtQmlBot : public QObject {
     Q_OBJECT
 
 public:
