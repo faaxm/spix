@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Spix"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\cmake\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\opt\;CMake Files\..\..\..\..\opt\qt5\;CMake Files\..\..\..\..\opt\qt5\lib\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Quick\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5QmlModels\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\;CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\;CMake Files\cmake\;CMake Files\cmake\modules\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Spix">
+				<Option output="/home/developer/workspace/spix/cmake-build-debug/lib/libSpix.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug/lib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_QUICK_LIB"/>
+					<Add option="-DQT_QMLMODELS_LIB"/>
+					<Add option="-DQT_QML_LIB"/>
+					<Add option="-DQT_NETWORK_LIB"/>
+					<Add directory="/home/developer/workspace/spix/lib/include"/>
+					<Add directory="/home/developer/workspace/spix/lib/src"/>
+					<Add directory="/opt/qt5/include"/>
+					<Add directory="/opt/qt5/include/QtCore"/>
+					<Add directory="/opt/qt5/./mkspecs/linux-g++"/>
+					<Add directory="/opt/qt5/include/QtGui"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/opt/qt5/include/QtQuick"/>
+					<Add directory="/opt/qt5/include/QtQmlModels"/>
+					<Add directory="/opt/qt5/include/QtQml"/>
+					<Add directory="/opt/qt5/include/QtNetwork"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 Spix"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Spix/fast">
+				<Option output="/home/developer/workspace/spix/cmake-build-debug/lib/libSpix.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/developer/workspace/spix/cmake-build-debug/lib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_QUICK_LIB"/>
+					<Add option="-DQT_QMLMODELS_LIB"/>
+					<Add option="-DQT_QML_LIB"/>
+					<Add option="-DQT_NETWORK_LIB"/>
+					<Add directory="/home/developer/workspace/spix/lib/include"/>
+					<Add directory="/home/developer/workspace/spix/lib/src"/>
+					<Add directory="/opt/qt5/include"/>
+					<Add directory="/opt/qt5/include/QtCore"/>
+					<Add directory="/opt/qt5/./mkspecs/linux-g++"/>
+					<Add directory="/opt/qt5/include/QtGui"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/opt/qt5/include/QtQuick"/>
+					<Add directory="/opt/qt5/include/QtQmlModels"/>
+					<Add directory="/opt/qt5/include/QtQml"/>
+					<Add directory="/opt/qt5/include/QtNetwork"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 Spix/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/developer/workspace/spix/cmake-build-debug/lib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/developer/workspace/spix/cmake-build-debug/lib/include/Spix/moc_QtQmlBot.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/cmake-build-debug/lib/include/Spix/moc_QtQmlBot.cpp.rule">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/AnyRpcServer.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/Data/Geometry.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/Data/ItemPath.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/Data/ItemPosition.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/Data/PasteboardContent.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/Events/KeyCodes.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/QtQmlBot.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/include/Spix/TestServer.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/AnyRpcServer.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/CommandEnvironment.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/CommandEnvironment.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/CommandExecuter.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/CommandExecuter.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/ExecuterState.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/CommandExecuter/ExecuterState.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/ClickOnItem.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/ClickOnItem.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Command.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Command.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/CustomCmd.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/CustomCmd.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DragBegin.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DragBegin.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DragEnd.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DragEnd.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DropFromExt.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/DropFromExt.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/EnterKey.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/EnterKey.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/ExistsAndVisible.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/ExistsAndVisible.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetBoundingBox.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetBoundingBox.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetProperty.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetProperty.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetTestStatus.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/GetTestStatus.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/InputText.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/InputText.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Quit.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Quit.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Screenshot.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Screenshot.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/SetProperty.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/SetProperty.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Wait.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Commands/Wait.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Data/Geometry.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Data/ItemPath.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Data/ItemPosition.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Data/PasteboardContent.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/QtQmlBot.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Events.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Item.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockEvents.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockEvents.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockItem.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockItem.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockScene.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Mock/MockScene.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtEvents.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtEvents.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtItem.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtItem.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtItemTools.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtItemTools.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtScene.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Qt/QtScene.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Scene/Scene.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/TestServer.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Utils/AnyRpcUtils.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Utils/DebugDump.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Utils/DebugDump.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Utils/QtEventRecorder.cpp">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/src/Utils/QtEventRecorder.h">
+			<Option target="Spix"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/lib/cmake/SpixConfig.cmake.in">
+			<Option virtualFolder="CMake Files\lib\cmake\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5/Qt5Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5/Qt5ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5/Qt5ModuleLocation.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWaylandEglPlatformIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWaylandIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWaylandXCompositeEglPlatformIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWaylandXCompositeGlxPlatformIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Quick/Qt5QuickConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Quick\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Quick/Qt5QuickConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Quick\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5QmlModels/Qt5QmlModelsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5QmlModels\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5QmlModels/Qt5QmlModelsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5QmlModels\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5QmlConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5QmlConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5QmlConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QDebugMessageServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QLocalClientConnectionFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlDebugServerFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlDebuggerServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlInspectorServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlNativeDebugConnectorFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlNativeDebugServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlPreviewServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQmlProfilerServiceFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QQuickProfilerAdapterFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Qml/Qt5Qml_QTcpServerConnectionFactory.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Qml\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/../../../../opt/qt5/lib/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\qt5\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="/home/developer/workspace/spix/cmake/modules/FindAnyRPC.cmake">
+			<Option virtualFolder="CMake Files\cmake\modules\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
