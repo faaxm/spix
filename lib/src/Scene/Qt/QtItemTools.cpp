@@ -48,7 +48,7 @@ namespace spix {
 			if (object != nullptr)
 			{
 				// Allow to override id with objectName
-				if(object->objectName() != "")
+				if(!object->objectName().isEmpty())
 				{
 					return object->objectName();
 				}
