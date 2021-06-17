@@ -6,6 +6,7 @@
 
 #include "QtItemTools.h"
 
+#include <QQmlContext>
 #include <QQuickItem>
 
 namespace spix {
@@ -31,7 +32,7 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
     QQuickItem* item = nullptr;
     do {
         item = RepeaterChildAtIndex(repeater, itemIndex);
-        if (item && item->objectName() == name) {
+        if (item && GetObjectName(item) == name) {
             break;
         }
 
@@ -41,11 +42,29 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
     return item;
 }
 
+QString GetObjectName(QObject* object)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    // Allow to override id with objectName
+    if (!object->objectName().isEmpty()) {
+        return object->objectName();
+    }
+    QQmlContext* const context = qmlContext(object);
+    if (context) {
+        return context->nameForObject(object);
+    }
+
+    return object->objectName();
+}
+
 QObject* FindChildItem(QObject* object, const QString& name)
 {
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         for (auto child : qquickitem->childItems()) {
-            if (child->objectName() == name) {
+            if (GetObjectName(child) == name) {
                 return child;
             }
             if (auto item = FindChildItem(child, name)) {
@@ -54,7 +73,7 @@ QObject* FindChildItem(QObject* object, const QString& name)
         }
     } else {
         for (auto child : object->children()) {
-            if (child->objectName() == name) {
+            if (GetObjectName(child) == name) {
                 return child;
             }
             if (auto item = FindChildItem(child, name)) {
