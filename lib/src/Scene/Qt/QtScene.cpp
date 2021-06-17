@@ -25,7 +25,7 @@ QQuickWindow* getQQuickWindowWithName(const std::string& name)
     auto windows = QGuiApplication::topLevelWindows();
     for (const auto& window : windows) {
         QQuickWindow* qquickWindow = qobject_cast<QQuickWindow*>(window);
-        if (qquickWindow && (spix::qt::getObjectId(qquickWindow) == qtName)) {
+        if (qquickWindow && (spix::qt::GetObjectName(qquickWindow) == qtName)) {
             foundWindow = qquickWindow;
             break;
         }

@@ -8,8 +8,6 @@
 
 #include <QQmlContext>
 #include <QQuickItem>
-#include <iostream>
-
 namespace spix {
 namespace qt {
 
@@ -33,7 +31,7 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
     QQuickItem* item = nullptr;
     do {
         item = RepeaterChildAtIndex(repeater, itemIndex);
-        if (item && getObjectId(item) == name) {
+        if (item && GetObjectName(item) == name) {
             break;
         }
 
@@ -43,20 +41,21 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
     return item;
 }
 
-QString getObjectId(QObject* object)
+QString GetObjectName(QObject* object)
 {
-    if (object != nullptr) {
-        // Allow to override id with objectName
-        if (!object->objectName().isEmpty()) {
-            return object->objectName();
-        }
-        QQmlContext* const context = qmlContext(object);
-        if (context) {
-            return context->nameForObject(object);
-        }
+	if(object == nullptr) {
+		return "";
+	}
+
+    // Allow to override id with objectName
+    if (!object->objectName().isEmpty()) {
+        return object->objectName();
+    }
+    QQmlContext* const context = qmlContext(object);
+    if (context) {
+        return context->nameForObject(object);
     }
 
-    // Fallback if item id is not found
     return object->objectName();
 }
 
@@ -64,7 +63,7 @@ QObject* FindChildItem(QObject* object, const QString& name)
 {
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         for (auto child : qquickitem->childItems()) {
-            if (getObjectId(child) == name) {
+            if (GetObjectName(child) == name) {
                 return child;
             }
             if (auto item = FindChildItem(child, name)) {
@@ -73,7 +72,7 @@ QObject* FindChildItem(QObject* object, const QString& name)
         }
     } else {
         for (auto child : object->children()) {
-            if (getObjectId(child) == name) {
+            if (GetObjectName(child) == name) {
                 return child;
             }
             if (auto item = FindChildItem(child, name)) {
@@ -84,5 +83,6 @@ QObject* FindChildItem(QObject* object, const QString& name)
 
     return nullptr;
 }
+
 } // namespace qt
 } // namespace spix

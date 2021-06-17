@@ -20,7 +20,7 @@ extern const char* item_at_method_name;
 QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index);
 QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name);
 
-QString getObjectId(QObject* object);
+QString GetObjectName(QObject* object);
 
 /**
  * @brief Find a child object with the given name.
@@ -36,5 +36,6 @@ T FindChildItem(QObject* object, const QString& name)
 {
     return qobject_cast<T>(FindChildItem(object, name));
 }
+
 } // namespace qt
 } // namespace spix
