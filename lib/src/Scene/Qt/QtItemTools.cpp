@@ -8,6 +8,7 @@
 
 #include <QQmlContext>
 #include <QQuickItem>
+
 namespace spix {
 namespace qt {
 
@@ -43,9 +44,9 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
 
 QString GetObjectName(QObject* object)
 {
-	if(object == nullptr) {
-		return "";
-	}
+    if (object == nullptr) {
+        return "";
+    }
 
     // Allow to override id with objectName
     if (!object->objectName().isEmpty()) {
