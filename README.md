@@ -1,4 +1,4 @@
-[![Build and Test](https://github.com/faaxm/spix-workflow/actions/workflows/build.yml/badge.svg)](https://github.com/faaxm/spix-workflow/actions/workflows/build.yml)
+[![Build and Test](https://github.com/faaxm/spix/actions/workflows/build.yml/badge.svg)](https://github.com/faaxm/spix/actions/workflows/build.yml)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/faaxm)
 
 # Spix
