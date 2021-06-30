@@ -1,0 +1,11 @@
+name: Verify Formatting
+on: [push]
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Verify clang-format
+        run: sh ./ci/verify-clangformat.sh

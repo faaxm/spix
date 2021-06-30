@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.12)
 project(Spix LANGUAGES CXX)
 
 option(SPIX_BUILD_EXAMPLES "Build Spix examples." ON)
