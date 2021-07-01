@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, ubuntu-18.04, windows-latest, macos-latest, macos-10.15]
+        os: [ubuntu-latest, ubuntu-20.04, windows-latest, macos-latest, macos-10.15]
         build_type: ['Release', 'Debug']
         shared_libs: ['ON', 'OFF']
         include:
@@ -22,9 +22,6 @@ jobs:
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
           - os: ubuntu-20.04
-            triplet: 'x64-linux'
-            cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
-          - os: ubuntu-18.04
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
           - os: windows-latest
