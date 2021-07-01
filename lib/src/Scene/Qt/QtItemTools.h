@@ -20,6 +20,8 @@ extern const char* item_at_method_name;
 QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index);
 QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name);
 
+QString GetObjectName(QObject* object);
+
 /**
  * @brief Find a child object with the given name.
  *

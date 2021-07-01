@@ -1,4 +1,5 @@
 .DS_Store
 *.swp
+.idea
 build
 dep-libs

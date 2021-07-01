@@ -1,5 +1,4 @@
-[![Build Status](https://www.travis-ci.org/faaxm/spix.svg?branch=master)](https://www.travis-ci.org/faaxm/spix)
-[![Build status](https://ci.appveyor.com/api/projects/status/9f5m2ya9uu9ddxnp?svg=true)](https://ci.appveyor.com/project/faaxm/spix)
+[![Build and Test](https://github.com/faaxm/spix/actions/workflows/build.yml/badge.svg)](https://github.com/faaxm/spix/actions/workflows/build.yml)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/faaxm)
 
 # Spix
