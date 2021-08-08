@@ -9,6 +9,7 @@
 #include <QObject>
 #include <Spix/TestServer.h>
 #include <memory>
+
 #include "spix_export.h"
 
 namespace spix {
