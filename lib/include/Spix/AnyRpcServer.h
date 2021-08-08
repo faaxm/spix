@@ -7,6 +7,7 @@
 #pragma once
 
 #include <Spix/TestServer.h>
+
 #include "spix_export.h"
 
 namespace spix {
