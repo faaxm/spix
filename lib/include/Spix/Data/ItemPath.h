@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "spix_export.h"
+
 namespace spix {
 
 /**
@@ -26,7 +28,7 @@ namespace spix {
  *
  * In QML, items can be named by setting the 'objectName' string property.
  */
-class ItemPath {
+class SPIX_EXPORT ItemPath {
 public:
     ItemPath();
     ItemPath(const char* path);

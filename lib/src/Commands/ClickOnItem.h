@@ -6,13 +6,15 @@
 
 #pragma once
 
+#include "spix_export.h"
+
 #include "Command.h"
 #include <Spix/Data/ItemPosition.h>
 
 namespace spix {
 namespace cmd {
 
-class ClickOnItem : public Command {
+class SPIX_EXPORT ClickOnItem : public Command {
 public:
     ClickOnItem(ItemPosition path);
 

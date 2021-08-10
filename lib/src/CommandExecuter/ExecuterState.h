@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "spix_export.h"
+
 #include <string>
 #include <vector>
 
@@ -13,7 +15,7 @@ namespace spix {
 
 using CommandError = std::string;
 
-class ExecuterState {
+class SPIX_EXPORT ExecuterState {
 public:
     using Errors = std::vector<CommandError>;
 

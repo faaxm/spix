@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "spix_export.h"
+
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
 #include <Spix/Data/PasteboardContent.h>
@@ -13,7 +15,7 @@
 namespace spix {
 namespace cmd {
 
-class DropFromExt : public Command {
+class SPIX_EXPORT DropFromExt : public Command {
 public:
     DropFromExt(ItemPath path, PasteboardContent content);
 

@@ -14,6 +14,8 @@
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
 
+#include "spix_export.h"
+
 namespace spix {
 
 class CommandExecuter;
@@ -31,7 +33,7 @@ class CommandExecuter;
  * The code in `executeTest` is executed in its own thread so that
  * it does not affect the execution of the main application.
  */
-class TestServer {
+class SPIX_EXPORT TestServer {
 public:
     virtual ~TestServer();
 

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "spix_export.h"
+
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
 #include <string>
@@ -15,7 +17,7 @@ namespace spix {
 /**
  * @brief Position in the scene, relative to an item
  */
-class ItemPosition {
+class SPIX_EXPORT ItemPosition {
 public:
     /**
      * @brief Construct an ItemPosition with a proportional and a fixed position offset

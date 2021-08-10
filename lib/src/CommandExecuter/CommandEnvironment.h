@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "spix_export.h"
+
 #include <CommandExecuter/ExecuterState.h>
 
 #include <string>
@@ -17,7 +19,7 @@ class Scene;
 
 using CommandError = std::string;
 
-class CommandEnvironment {
+class SPIX_EXPORT CommandEnvironment {
 public:
     CommandEnvironment(Scene& scene, ExecuterState& state);
 
