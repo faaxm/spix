@@ -17,6 +17,9 @@ jobs:
           - os: ubuntu-latest
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
+          - os: ubuntu-latest
+            triplet: 'x64-linux'
+            cmake_flags: '-DCMAKE_CXX_COMPILER=clang++ -DBUILD_SHARED_LIBS=ON'
           - os: ubuntu-20.04
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
