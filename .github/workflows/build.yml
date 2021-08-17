@@ -36,6 +36,9 @@ jobs:
           - os: macos-10.15
             triplet: 'x64-osx'
             cmake_flags: ''
+        exclude:
+          - os: windows-latest
+            shared_libs: 'ON'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
