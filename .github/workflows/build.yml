@@ -37,6 +37,7 @@ jobs:
             triplet: 'x64-osx'
             cmake_flags: ''
         exclude:
+        # Disabled until https://github.com/sgieseking/anyrpc/pull/43 is in place
           - os: windows-latest
             shared_libs: 'ON'
     steps:
