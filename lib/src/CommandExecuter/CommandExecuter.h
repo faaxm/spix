@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "spix_export.h"
+#include <Spix/spix_export.h>
 
 #include <CommandExecuter/ExecuterState.h>
 #include <Commands/Command.h>

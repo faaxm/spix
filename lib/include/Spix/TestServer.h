@@ -14,7 +14,7 @@
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
 
-#include "spix_export.h"
+#include <Spix/spix_export.h>
 
 namespace spix {
 

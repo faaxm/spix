@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include "spix_export.h"
+#include <Spix/spix_export.h>
 
 namespace spix {
 

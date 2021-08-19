@@ -134,7 +134,9 @@ target_link_libraries(Spix
 # Export headers
 #
 include(GenerateExportHeader)
-generate_export_header(Spix)
+generate_export_header(Spix
+  EXPORT_FILE_NAME "Spix/spix_export.h"
+)
 
 #
 # SpixConfig.cmake File
@@ -158,7 +160,7 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 install(DIRECTORY include/Spix DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/spix_export.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Spix)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Spix/spix_export.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Spix)
 install(
     EXPORT SpixTargets
     FILE SpixTargets.cmake
