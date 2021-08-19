@@ -58,3 +58,20 @@ jobs:
       
       - name: "Run Tests"
         run: cd build && ctest -VV -C ${{ matrix.build_type }} && cd ..
+      
+      - name: "Install Spix (*nix)"
+        if: ${{ !contains(matrix.os, 'windows') }}
+        run: sudo cmake --install build --config ${{ matrix.build_type }}
+      
+      - name: "Install Spix (win)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: cmake --install build --config ${{ matrix.build_type }}
+      
+      - name: "Build Standalone Example"
+        run: |
+          cd examples/BasicStandalone
+          mkdir build
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ${{ matrix.cmake_flags}} .
+          cmake --build build --config ${{ matrix.build_type }}
+
+
