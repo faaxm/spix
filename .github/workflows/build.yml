@@ -13,7 +13,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, ubuntu-20.04, ubuntu-18.04, windows-latest, macos-latest, macos-10.15]
         build_type: ['Release', 'Debug']
+        shared_libs: ['ON', 'OFF']
         include:
+          - os: ubuntu-latest
+            triplet: 'x64-linux'
+            cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
           - os: ubuntu-latest
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
@@ -32,6 +36,10 @@ jobs:
           - os: macos-10.15
             triplet: 'x64-osx'
             cmake_flags: ''
+        exclude:
+        # Disabled until https://github.com/sgieseking/anyrpc/pull/43 is in place
+          - os: windows-latest
+            shared_libs: 'ON'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -42,12 +50,13 @@ jobs:
       - name: Install dependencies
         env:
           CI_BUILD_TYPE: ${{ matrix.build_type }}
+          SHARED_LIBS: ${{ matrix.shared_libs }}
         run: sh ./ci/install-deps.sh
 
       - name: "Configure"
         run: |
           mkdir build
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=ON -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.cmake_flags}} .
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=ON -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.cmake_flags}} -DBUILD_SHARED_LIBS=${{ matrix.shared_libs }} .
       
       - name: "Print cmake compile commands"
         if: ${{ !contains(matrix.os, 'windows') }}

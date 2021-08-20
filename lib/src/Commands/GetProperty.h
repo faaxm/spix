@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
 
@@ -14,7 +16,7 @@
 namespace spix {
 namespace cmd {
 
-class GetProperty : public Command {
+class SPIX_EXPORT GetProperty : public Command {
 public:
     GetProperty(ItemPath path, std::string propertyName, std::promise<std::string> promise);
 

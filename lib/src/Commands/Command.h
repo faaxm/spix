@@ -6,12 +6,14 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <CommandExecuter/CommandEnvironment.h>
 
 namespace spix {
 namespace cmd {
 
-class Command {
+class SPIX_EXPORT Command {
 public:
     virtual ~Command() = default;
 

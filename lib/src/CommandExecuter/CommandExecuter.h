@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <CommandExecuter/ExecuterState.h>
 #include <Commands/Command.h>
 
@@ -27,7 +29,7 @@ class Scene;
  * Commands can be enqueued from any thread, but all other
  * methods have to be called from the main thread.
  */
-class CommandExecuter {
+class SPIX_EXPORT CommandExecuter {
 public:
     CommandExecuter();
 

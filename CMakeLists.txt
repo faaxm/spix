@@ -7,6 +7,10 @@ option(SPIX_BUILD_TESTS "Build Spix unit tests." OFF)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_CXX_STANDARD 14)
 
+# Hide symbols unless explicitly flagged with SPIX_EXPORT
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
 add_subdirectory(lib)
 
 if(SPIX_BUILD_EXAMPLES)

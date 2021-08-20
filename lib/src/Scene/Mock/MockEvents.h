@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <Scene/Events.h>
 #include <Scene/Mock/MockItem.h>
 
@@ -13,7 +15,7 @@
 
 namespace spix {
 
-class MockEvents : public Events {
+class SPIX_EXPORT MockEvents : public Events {
 public:
     void mouseDown(Item* item, Point loc, MouseButton button) override;
     void mouseUp(Item* item, Point loc, MouseButton button) override;

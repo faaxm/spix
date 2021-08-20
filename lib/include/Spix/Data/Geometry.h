@@ -6,11 +6,13 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 namespace spix {
 
 using Real = double;
 
-struct Size {
+struct SPIX_EXPORT Size {
     Size();
     Size(Real width, Real height);
 
@@ -18,7 +20,7 @@ struct Size {
     Real height;
 };
 
-struct Point {
+struct SPIX_EXPORT Point {
     Point();
     Point(Real x, Real y);
 
@@ -26,7 +28,7 @@ struct Point {
     Real y;
 };
 
-struct Rect {
+struct SPIX_EXPORT Rect {
     Rect();
     Rect(Real x, Real y, Real width, Real height);
 

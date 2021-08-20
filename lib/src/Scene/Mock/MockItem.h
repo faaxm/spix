@@ -6,13 +6,15 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <Scene/Item.h>
 
 #include <map>
 
 namespace spix {
 
-class MockItem : public Item {
+class SPIX_EXPORT MockItem : public Item {
 public:
     MockItem(Size size);
 

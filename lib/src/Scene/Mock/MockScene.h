@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <Scene/Mock/MockEvents.h>
 #include <Scene/Mock/MockItem.h>
 #include <Scene/Scene.h>
@@ -13,7 +15,7 @@
 
 namespace spix {
 
-class MockScene : public Scene {
+class SPIX_EXPORT MockScene : public Scene {
 public:
     // Request objects
     std::unique_ptr<Item> itemAtPath(const ItemPath& path) override;

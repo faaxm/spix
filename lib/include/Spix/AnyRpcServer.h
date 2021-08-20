@@ -8,6 +8,8 @@
 
 #include <Spix/TestServer.h>
 
+#include <Spix/spix_export.h>
+
 namespace spix {
 
 struct AnyRpcServerPimpl;
@@ -20,7 +22,7 @@ struct AnyRpcServerPimpl;
  * application through external scripts (e.g. python with
  * its xml-rpc library).
  */
-class AnyRpcServer : public TestServer {
+class SPIX_EXPORT AnyRpcServer : public TestServer {
 public:
     AnyRpcServer(int anyrpcPort = 9000);
     ~AnyRpcServer() override;

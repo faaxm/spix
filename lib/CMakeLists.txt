@@ -4,7 +4,6 @@
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-
 #
 # Dependencies
 #
@@ -117,6 +116,7 @@ add_library(Spix ${SOURCES} ${MOC_FILES})
 target_include_directories(Spix
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
         src
@@ -130,6 +130,13 @@ target_link_libraries(Spix
         AnyRPC::anyrpc
 )
 
+#
+# Export headers
+#
+include(GenerateExportHeader)
+generate_export_header(Spix
+  EXPORT_FILE_NAME "Spix/spix_export.h"
+)
 
 #
 # SpixConfig.cmake File
@@ -153,6 +160,7 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 install(DIRECTORY include/Spix DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Spix/spix_export.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Spix)
 install(
     EXPORT SpixTargets
     FILE SpixTargets.cmake

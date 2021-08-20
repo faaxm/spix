@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <Spix/spix_export.h>
+
 #include <string>
 #include <vector>
 
@@ -17,7 +19,7 @@ namespace spix {
  * This data can be used to represent MIME data that is dropped onto the
  * application from external applications.
  */
-class PasteboardContent {
+class SPIX_EXPORT PasteboardContent {
 public:
     void addUrl(std::string url);
     bool hasUrls();
@@ -27,6 +29,6 @@ private:
     std::vector<std::string> m_urls;
 };
 
-PasteboardContent makePasteboardContentWithUrls(const std::vector<std::string>& urls);
+PasteboardContent SPIX_EXPORT makePasteboardContentWithUrls(const std::vector<std::string>& urls);
 
 } // namespace spix
