@@ -16,6 +16,7 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <Spix/Events/MouseButtonCodes.h>
 #include <Spix/QtQmlBot.h>
 
 #include <atomic>
@@ -62,6 +63,8 @@ TEST(GTestExample, BasicUITest)
     srv->wait(std::chrono::milliseconds(500));
     srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
     srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"), spix::MouseButtonCodes::Right);
+    srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
 
@@ -70,7 +73,8 @@ Button 2 clicked
 Button 2 clicked
 Button 1 clicked
 Button 2 clicked
-Button 1 clicked)RSLT";
+Button 1 clicked
+Button 1 right clicked)RSLT";
 
     EXPECT_EQ(result, expected_result);
 

@@ -63,7 +63,12 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 
 void TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, Events::MouseButtons::left);
+}
+
+void TestServer::mouseClick(ItemPath path, int mouseButton)
+{
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton);
 }
 
 void TestServer::mouseBeginDrag(ItemPath path)
