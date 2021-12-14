@@ -9,12 +9,13 @@
 #include <CommandExecuter/CommandExecuter.h>
 #include <Commands/ClickOnItem.h>
 #include <Commands/CustomCmd.h>
-#include <Scene/Mock/MockScene.h>
 #include <Scene/Events.h>
+#include <Scene/Mock/MockScene.h>
 
 TEST(ClickOnItemTest, ErrorOnMissingItem)
 {
-    auto command = std::make_unique<spix::cmd::ClickOnItem>(spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
+    auto command = std::make_unique<spix::cmd::ClickOnItem>(
+        spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
 
     spix::MockScene scene;
     spix::CommandExecuter exec;
@@ -34,7 +35,8 @@ TEST(ClickOnItemTest, ClickItem)
     bool didPostClickEvent = false;
     bool mouseDown = false;
 
-    auto command = std::make_unique<spix::cmd::ClickOnItem>(spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
+    auto command = std::make_unique<spix::cmd::ClickOnItem>(
+        spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
 
     spix::MockScene scene;
     scene.addItemAtPath(spix::Size(100.0, 30.0), "window/some/item");
