@@ -24,6 +24,8 @@
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
+#include <Spix/Events/MouseButtonCodes.h>
+
 namespace spix {
 
 TestServer::~TestServer()
@@ -63,7 +65,7 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 
 void TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, Events::MouseButtons::left);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtonCodes::Left);
 }
 
 void TestServer::mouseClick(ItemPath path, int mouseButton)
