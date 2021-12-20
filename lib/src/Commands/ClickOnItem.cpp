@@ -11,7 +11,7 @@
 namespace spix {
 namespace cmd {
 
-ClickOnItem::ClickOnItem(ItemPosition path, Events::MouseButton mouseButton)
+ClickOnItem::ClickOnItem(ItemPosition path, MouseButton mouseButton)
 : m_position(std::move(path))
 , m_mouseButton(mouseButton)
 {

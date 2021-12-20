@@ -6,7 +6,7 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <Spix/Events/MouseButtonCodes.h>
+#include <Spix/Events/Identifiers.h>
 #include <Spix/QtQmlBot.h>
 
 #include <iostream>
@@ -27,7 +27,7 @@ protected:
         wait(std::chrono::milliseconds(500));
         mouseClick(spix::ItemPath("mainWindow/Button_1"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/Button_1"), spix::MouseButtonCodes::Right);
+        mouseClick(spix::ItemPath("mainWindow/Button_1"), spix::MouseButtons::Right);
         wait(std::chrono::milliseconds(500));
 
         auto result = getStringProperty("mainWindow/results", "text");

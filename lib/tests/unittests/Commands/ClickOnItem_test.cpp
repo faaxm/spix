@@ -14,8 +14,8 @@
 
 TEST(ClickOnItemTest, ErrorOnMissingItem)
 {
-    auto command = std::make_unique<spix::cmd::ClickOnItem>(
-        spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
+    auto command
+        = std::make_unique<spix::cmd::ClickOnItem>(spix::ItemPosition("window/some/item"), spix::MouseButtons::Left);
 
     spix::MockScene scene;
     spix::CommandExecuter exec;
@@ -35,8 +35,8 @@ TEST(ClickOnItemTest, ClickItem)
     bool didPostClickEvent = false;
     bool mouseDown = false;
 
-    auto command = std::make_unique<spix::cmd::ClickOnItem>(
-        spix::ItemPosition("window/some/item"), spix::Events::MouseButtons::left);
+    auto command
+        = std::make_unique<spix::cmd::ClickOnItem>(spix::ItemPosition("window/some/item"), spix::MouseButtons::Left);
 
     spix::MockScene scene;
     scene.addItemAtPath(spix::Size(100.0, 30.0), "window/some/item");

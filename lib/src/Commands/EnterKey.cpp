@@ -11,7 +11,7 @@
 namespace spix {
 namespace cmd {
 
-EnterKey::EnterKey(ItemPath path, int keyCode, Events::KeyModifier mod)
+EnterKey::EnterKey(ItemPath path, int keyCode, KeyModifier mod)
 : m_path(std::move(path))
 , m_keyCode(keyCode)
 , m_mod(mod)

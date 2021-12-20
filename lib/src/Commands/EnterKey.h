@@ -15,14 +15,14 @@ namespace cmd {
 
 class EnterKey : public Command {
 public:
-    EnterKey(ItemPath path, int keyCode, Events::KeyModifier mod);
+    EnterKey(ItemPath path, int keyCode, KeyModifier mod);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPath m_path;
     int m_keyCode;
-    Events::KeyModifier m_mod;
+    KeyModifier m_mod;
 };
 
 } // namespace cmd

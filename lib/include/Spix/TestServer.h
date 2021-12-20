@@ -13,6 +13,7 @@
 
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
+#include <Spix/Events/Identifiers.h>
 
 #include <Spix/spix_export.h>
 
@@ -45,7 +46,7 @@ public:
     // Commands
     void wait(std::chrono::milliseconds waitTime);
     void mouseClick(ItemPath path);
-    void mouseClick(ItemPath path, int mouseButton);
+    void mouseClick(ItemPath path, MouseButton mouseButton);
     void mouseBeginDrag(ItemPath path);
     void mouseEndDrag(ItemPath path);
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);

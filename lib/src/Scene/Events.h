@@ -9,6 +9,7 @@
 #include <Scene/Item.h>
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/PasteboardContent.h>
+#include <Spix/Events/Identifiers.h>
 
 #include <string>
 
@@ -16,23 +17,6 @@ namespace spix {
 
 class Events {
 public:
-    struct MouseButtons {
-        static const unsigned none = 0;
-        static const unsigned left = 1 << 0;
-        static const unsigned right = 1 << 1;
-        static const unsigned middle = 1 << 2;
-    };
-    using MouseButton = unsigned;
-
-    struct KeyModifiers {
-        static const unsigned none = 0;
-        static const unsigned shift = 1 << 0;
-        static const unsigned control = 1 << 1;
-        static const unsigned alt = 1 << 2;
-        static const unsigned meta = 1 << 3;
-    };
-    using KeyModifier = unsigned;
-
     virtual ~Events() = default;
 
     virtual void mouseDown(Item* item, Point loc, MouseButton button) = 0;
