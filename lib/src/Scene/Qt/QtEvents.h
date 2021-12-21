@@ -23,7 +23,7 @@ public:
 
 private:
     /// Keep track of which buttons are currently pressed
-    Events::MouseButton m_pressedMouseButtons = Events::MouseButtons::none;
+    MouseButton m_pressedMouseButtons = MouseButtons::None;
 };
 
 } // namespace spix

@@ -24,6 +24,8 @@
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
+#include <Spix/Events/Identifiers.h>
+
 namespace spix {
 
 TestServer::~TestServer()
@@ -63,7 +65,12 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 
 void TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left);
+}
+
+void TestServer::mouseClick(ItemPath path, MouseButton mouseButton)
+{
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton);
 }
 
 void TestServer::mouseBeginDrag(ItemPath path)

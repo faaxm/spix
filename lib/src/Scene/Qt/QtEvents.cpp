@@ -37,46 +37,46 @@ QQuickWindow* getWindowAndPositionForItem(Item* item, Point relToItemPos, QPoint
     return window;
 }
 
-Qt::MouseButton getQtMouseButtonValue(Events::MouseButton button)
+Qt::MouseButton getQtMouseButtonValue(MouseButton button)
 {
     unsigned qtButton = Qt::MouseButton::NoButton;
 
-    if (button & Events::MouseButtons::left) {
+    if (button & MouseButtons::Left) {
         qtButton |= Qt::MouseButton::LeftButton;
     }
 
-    if (button & Events::MouseButtons::right) {
+    if (button & MouseButtons::Right) {
         qtButton |= Qt::MouseButton::RightButton;
     }
 
-    if (button & Events::MouseButtons::middle) {
+    if (button & MouseButtons::Middle) {
         qtButton |= Qt::MouseButton::MiddleButton;
     }
 
     return static_cast<Qt::MouseButton>(qtButton);
 }
 
-Qt::KeyboardModifiers getQtKeyboardModifiers(QtEvents::KeyModifier mod)
+Qt::KeyboardModifiers getQtKeyboardModifiers(KeyModifier mod)
 {
     Qt::KeyboardModifiers qtmod = Qt::NoModifier;
 
-    if (mod & QtEvents::KeyModifiers::shift) {
+    if (mod & KeyModifiers::Shift) {
         qtmod = qtmod | Qt::ShiftModifier;
     }
-    if (mod & QtEvents::KeyModifiers::control) {
+    if (mod & KeyModifiers::Control) {
         qtmod = qtmod | Qt::ControlModifier;
     }
-    if (mod & QtEvents::KeyModifiers::alt) {
+    if (mod & KeyModifiers::Alt) {
         qtmod = qtmod | Qt::AltModifier;
     }
-    if (mod & QtEvents::KeyModifiers::meta) {
+    if (mod & KeyModifiers::Meta) {
         qtmod = qtmod | Qt::MetaModifier;
     }
 
     return qtmod;
 }
 
-void sendQtKeyEvent(Item* item, bool press, int keyCode, QtEvents::KeyModifier mod)
+void sendQtKeyEvent(Item* item, bool press, int keyCode, KeyModifier mod)
 {
     auto qtitem = dynamic_cast<QtItem*>(item);
     if (!qtitem)

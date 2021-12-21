@@ -7,7 +7,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <Spix/Events/KeyCodes.h>
+#include <Spix/Events/Identifiers.h>
 #include <Spix/QtQmlBot.h>
 
 #include <iostream>
