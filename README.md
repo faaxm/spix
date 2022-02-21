@@ -40,8 +40,133 @@ and make sure that it behaves as you expect. However, you can also use Spix as
 an easy way to remote control existing Qt/QML applications or to automatically
 generate and update screenshots for your documentation.
 
+# Requirements
+* Qt (both 5 and 6 supported)
+* [AnyRPC](https://github.com/sgieseking/anyrpc)
+
+# Current Features
+* Send mouse events (click, move, drag/drop)
+* Drop mime data from external apps
+* Enter text
+* Check existence and visibility of items
+* Get property values of items (text, position, color, ...)
+* Take and save a screenshot
+* Quit the app
+* Remote control, also of embedded devices / iOS
+
+# Setting Up Spix
+
+## Installing AnyRPC
+
+Spix requires [AnyRPC](https://github.com/sgieseking/anyrpc) be installed on the local machine before building. For *nix machines, AnyRPC can be built/installed using CMake:
+```sh
+# in a temporary directory
+git clone https://github.com/sgieseking/anyrpc.git
+cd anyrpc
+mkdir build
+cd build
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DBUILD_PROTOCOL_MESSAGEPACK=OFF ..
+cmake --build .
+sudo cmake --install .
+```
+
+For non-*nix machines, checkout the [CI install script](ci/install-deps.sh).
+
+## Installing Spix
+
+Spix uses cmake and can be build with the standard cmake commands once cloned:
+```sh
+git clone https://github.com/faaxm/spix
+cd spix
+mkdir build && cd build
+cmake -DSPIX_QT_MAJOR=6 ..
+cmake --build .
+sudo cmake --install .
+```
+> Change SPIX_QT_MAJOR to 5 to build against Qt5 instead of Qt6.
+
+If you installed the dependencies (like AnyRPC) in a non-standard directory you can point cmake to it by setting `CMAKE_PREFIX_PATH`, so
+instead of `cmake ..` you run:
+```sh
+cmake -DCMAKE_PREFIX_PATH=/path/to/libs ..
+```
+
+## Including Spix in your Qt project
+
+If using qmake, add the following to your Qt `.pro` file:
+```
+QT += quick
+INCLUDEPATH += /usr/local/include
+LIBS += -lSpix -lanyrpc
+```
+If using CMake, add the following to your `CMakeLists.txt`:
+```
+find_package(Spix REQUIRED)
+```
+
+Update your `main(...)` to start the Spix RPC server:
+```C++
+#include <Spix/AnyRpcServer.h>
+#include <Spix/QtQmlBot.h>
+
+int main(...) {
+    ...
+    spix::AnyRpcServer server;
+    auto bot = new spix::QtQmlBot();
+    bot->runTestServer(server);
+    ...
+}
+```
+Finally, if you're using a `QQuickView` as your root window, you'll need to give it an object name in your `main` (otherwise the root window object name will be defined in your QML):
+```C++
+int main(...) {
+    QQuickView view;
+    view.setObjectName("root")
+    ...
+}
+```
+
+# Using Spix
+
+The easiest method of interacting with Spix is using the [XMLRPC client built into python](https://docs.python.org/3/library/xmlrpc.client.html#module-xmlrpc.client):
+```python
+import xmlrpc.client
+
+s = xmlrpc.client.ServerProxy('http://localhost:9000') # default port is 9000
+s.method(<path>, <options>)
+# for example:
+s.mouseClick("root/Button_2")
+resultText = s.getStringProperty("root/results", "text")
+```
+
+You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](lib/src/AnyRpcServer.cpp).
+```python
+print(s.system.listMethods())
+# ['command', 'enterKey', 'existsAndVisible', 'getBoundingBox', 'getErrors', 'getStringProperty', 'inputText', 'mouseBeginDrag', 'mouseClick', 'mouseDropUrls', 'mouseEndDrag', 'quit', 'setStringProperty', 'system.listMethods', 'system.methodHelp', 'takeScreenshot', 'wait']
+print(s.system.methodHelp('mouseClick'))
+# Click on the object at the given path
+```
+
+Spix uses a slash-separated path format to select Qt objects. Selectors match against `objectName` or `id` if no object name is defined.
+```
+<root>/<child0>(/<childN>...)
+```
+Spix matches children recursivley, allowing as much flexibility as needed:
+```
+# matches any `button` that is a descendant of `root` (even subchildren)
+'root/button'
+# matches any `button` that is a descendant of `numberpad` which is in turn a descendant of `root`.
+'root/numberpad/button'
+# and so on
+```
+
+More specifically, Spix's matching processes works as follows:
+* `<root>` matches a top-level [`QQuickWindow`](https://doc-snapshots.qt.io/qt6-dev/qquickwindow.html) whose `objectName` (or `id` if `objectName` is empty) matches the specified string. Top-level windows are enumerated by [`QGuiApplication::topLevelWindows`](https://doc.qt.io/qt-6/qguiapplication.html#topLevelWindows).
+* `<child>` matches the first child object whose `objectName` (or `id` if `objectName` is empty) matches the specified string using a recursive search of all children and subchildren of the root. This process repeats for every subsequent child path entry.
+
+
 ## Two modes of operation
-Spix can be used in two ways, which are different in how events are generated and sent
+In general, Spix can be used in two ways, which are different in how events are generated and sent
 to your application:
 
 ### Generate Qt events directly
@@ -57,36 +182,3 @@ In this case, Spix is not generating the events itself. Instead, you use a scrip
 Spix for the screen coordinates of qt objects and then generate events on the system level
 through other tools. One option is to use python together with PyAutoGUI for this, as is
 done in the [RemoteCtrl](examples/RemoteCtrl) example.
-
-# Requirements
-* Qt
-* AnyRPC
-
-# Current Features
-* Send mouse events (click, move, drag/drop)
-* Drop mime data from external apps
-* Enter text
-* Check existence and visibility of items
-* Get property values of items (text, position, color, ...)
-* Take and save a screenshot
-* Quit the app
-* Remote control, also of embedded devices / iOS
-
-# Building Spix
-Spix uses cmake and can be build with the standard cmake commands once cloned:
-```sh
-git clone https://github.com/faaxm/spix
-cd spix
-mkdir build && cd build
-cmake ..
-cmake --build .
-```
-You can also have a look at the build scripts in `ci/`, which are run on the
-build server to build and test Spix.
-
-If you installed the dependencies (like AnyRPC) in a non-standard directory
-you can point cmake to it by setting `CMAKE_PREFIX_PATH`, so
-instead of `cmake ..` you run:
-```sh
-cmake -DCMAKE_PREFIX_PATH=/path/to/libs ..
-```
