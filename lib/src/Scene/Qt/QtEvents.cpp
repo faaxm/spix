@@ -114,9 +114,17 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
     if (!window)
         return;
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    // Qt6 expects the mouse to be down during the event
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
     m_pressedMouseButtons ^= button;
+#else
+    // Qt5 expects the mouse to be up during the event
+    m_pressedMouseButtons ^= button;
+    Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
+    Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+#endif
 
     QMouseEvent* event
         = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
