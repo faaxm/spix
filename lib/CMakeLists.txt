@@ -8,14 +8,14 @@ include(CMakePackageConfigHelpers)
 # Dependencies
 #
 find_package(Threads REQUIRED)
-find_package(Qt5
+find_package(AnyRPC REQUIRED)
+find_package(Qt${SPIX_QT_MAJOR}
     COMPONENTS
         Core
         Gui
         Quick
     REQUIRED)
-find_package(AnyRPC REQUIRED)
-
+message("Building Spix for Qt ${SPIX_QT_MAJOR}")
 
 #
 # Sources
@@ -106,7 +106,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 #
 # Qt MOC Files
 #
-qt5_wrap_cpp(MOC_FILES "include/Spix/QtQmlBot.h")
+cmake_language(CALL "qt${SPIX_QT_MAJOR}_wrap_cpp" MOC_FILES "include/Spix/QtQmlBot.h")
 
 
 #
@@ -124,9 +124,9 @@ target_include_directories(Spix
 target_link_libraries(Spix
     PUBLIC
         Threads::Threads
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Quick
+        Qt${SPIX_QT_MAJOR}::Core
+        Qt${SPIX_QT_MAJOR}::Gui
+        Qt${SPIX_QT_MAJOR}::Quick
         AnyRPC::anyrpc
 )
 

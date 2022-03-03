@@ -102,8 +102,8 @@ void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
 
-    QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, Qt::KeyboardModifier());
+    QMouseEvent* event
+        = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
     QGuiApplication::postEvent(window, event);
 }
 
@@ -114,12 +114,20 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
     if (!window)
         return;
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    // Qt6 expects the mouse to be down during the event
+    Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
+    Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+    m_pressedMouseButtons ^= button;
+#else
+    // Qt5 expects the mouse to be up during the event
     m_pressedMouseButtons ^= button;
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+#endif
 
-    QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, Qt::KeyboardModifier());
+    QMouseEvent* event
+        = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
     QGuiApplication::postEvent(window, event);
 }
 
@@ -134,14 +142,14 @@ void QtEvents::mouseMove(Item* item, Point loc)
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() -= 1;
-    QMouseEvent* mouseMoveEvent = new QMouseEvent(
-        QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::KeyboardModifier());
+    QMouseEvent* mouseMoveEvent
+        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
     QGuiApplication::postEvent(window, mouseMoveEvent);
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() += 1;
-    mouseMoveEvent = new QMouseEvent(
-        QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::KeyboardModifier());
+    mouseMoveEvent
+        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
     QGuiApplication::postEvent(window, mouseMoveEvent);
 }
 
@@ -153,8 +161,7 @@ void QtEvents::stringInput(Item* item, const std::string& text)
 
     auto window = qtitem->qquickitem()->window();
 
-    auto keyDownEvent
-        = new QKeyEvent(QEvent::KeyPress, 0 /* key id */, Qt::KeyboardModifier(), QString::fromStdString(text));
+    auto keyDownEvent = new QKeyEvent(QEvent::KeyPress, 0 /* key id */, Qt::NoModifier, QString::fromStdString(text));
     QGuiApplication::postEvent(window, keyDownEvent);
 }
 
@@ -189,15 +196,15 @@ void QtEvents::extMouseDrop(Item* item, Point loc, PasteboardContent& content)
     mimeData->setUrls(urlList);
 
     auto enter = new QDragEnterEvent(windowLocInt, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
-        Qt::MouseButton::NoButton, Qt::KeyboardModifier());
+        Qt::MouseButton::NoButton, Qt::NoModifier);
     QGuiApplication::postEvent(window, enter);
 
     auto move = new QDragMoveEvent(windowLocInt, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
-        Qt::MouseButton::NoButton, Qt::KeyboardModifier());
+        Qt::MouseButton::NoButton, Qt::NoModifier);
     QGuiApplication::postEvent(window, move);
 
     auto drop = new QDropEvent(windowLoc, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
-        Qt::MouseButton::NoButton, Qt::KeyboardModifier());
+        Qt::MouseButton::NoButton, Qt::NoModifier);
     QGuiApplication::postEvent(window, drop);
 }
 

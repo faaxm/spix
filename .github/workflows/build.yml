@@ -11,9 +11,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, ubuntu-18.04, windows-latest, macos-latest, macos-10.15]
+        os: [ubuntu-latest, ubuntu-20.04, windows-latest, macos-latest, macos-10.15]
         build_type: ['Release', 'Debug']
         shared_libs: ['ON', 'OFF']
+        qt_version: [[5, 12, 12], [5, 15, 2], [6, 2, 3]]
         include:
           - os: ubuntu-latest
             triplet: 'x64-linux'
@@ -22,9 +23,6 @@ jobs:
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
           - os: ubuntu-20.04
-            triplet: 'x64-linux'
-            cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
-          - os: ubuntu-18.04
             triplet: 'x64-linux'
             cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
           - os: windows-latest
@@ -44,8 +42,19 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1  # not v2!
+        with:
+          path: ../Qt
+          key: ${{ runner.os }}-${{ join(matrix.qt_version, '.') }}-QtCache
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '>=1.2.1'
+          version: ${{ join(matrix.qt_version, '.') }}
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
       - name: Install dependencies
         env:
@@ -56,7 +65,7 @@ jobs:
       - name: "Configure"
         run: |
           mkdir build
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=ON -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.cmake_flags}} -DBUILD_SHARED_LIBS=${{ matrix.shared_libs }} .
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=ON -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.cmake_flags}} -DBUILD_SHARED_LIBS=${{ matrix.shared_libs }} -DSPIX_QT_MAJOR=${{ matrix.qt_version[0] }} .
       
       - name: "Print cmake compile commands"
         if: ${{ !contains(matrix.os, 'windows') }}
@@ -67,6 +76,19 @@ jobs:
       
       - name: "Run Tests"
         run: cd build && ctest -VV -C ${{ matrix.build_type }} && cd ..
+      
+      - name: "Test GTest Examples (*nix)"
+        # Qt6 on GitHub Actions MacOS is currently bugged: https://bugreports.qt.io/browse/QTIFW-1592
+        if: ${{ !contains(matrix.os, 'windows') && !(contains(matrix.os, 'mac') && matrix.qt_version[0] == 6) }}
+        run: |
+          build/examples/GTest/SpixGTestExample -platform minimal
+          build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest -platform minimal
+
+      - name: "Test GTest Examples (win)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          .\build\examples\GTest\${{ matrix.build_type }}\SpixGTestExample.exe -platform minimal
+          .\build\examples\RepeaterLoader\${{ matrix.build_type }}\SpixRepeaterLoaderExampleGTest.exe -platform minimal
       
       - name: "Install Spix (*nix)"
         if: ${{ !contains(matrix.os, 'windows') }}
@@ -80,7 +102,7 @@ jobs:
         run: |
           cd examples/BasicStandalone
           mkdir build
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ${{ matrix.cmake_flags}} .
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSPIX_QT_MAJOR=${{ matrix.qt_version[0] }} ${{ matrix.cmake_flags}} .
           cmake --build build --config ${{ matrix.build_type }}
 
 
