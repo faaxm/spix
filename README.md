@@ -1,5 +1,9 @@
 [![Build and Test](https://github.com/faaxm/spix/actions/workflows/build.yml/badge.svg)](https://github.com/faaxm/spix/actions/workflows/build.yml)
 
+<p align="center">
+    <img alt="Spix Logo" src="https://www.f-ax.de/ext_files/spix_logo.png" height="110">
+</p>
+
 # Spix
 Spix is a minimally invasive UI testing library that enables your
 Qt/QML app's UI to be controlled either via c++ code, or through an http RPC
