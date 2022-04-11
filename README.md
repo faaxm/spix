@@ -1,7 +1,7 @@
 [![Build and Test](https://github.com/faaxm/spix/actions/workflows/build.yml/badge.svg)](https://github.com/faaxm/spix/actions/workflows/build.yml)
 
 <p align="center">
-    <img alt="Spix Logo" src="https://www.f-ax.de/ext_files/spix_logo.png" height="100">
+    <img alt="Spix Logo" src="https://www.f-ax.de/ext_files/spix_logo.png" height="110">
 </p>
 
 # Spix
