@@ -1,4 +1,5 @@
 find_package(GTest REQUIRED)
+find_package(AnyRPC REQUIRED)
 
 set(TEST_SOURCES
     unittests_main.cpp
@@ -20,5 +21,5 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${TEST_SOURCES
 
 add_executable(Spix_test ${TEST_SOURCES})
 target_include_directories(Spix_test PRIVATE ../src)
-target_link_libraries(Spix_test Spix GTest::GTest)
+target_link_libraries(Spix_test Spix AnyRPC::anyrpc GTest::GTest)
 add_test( NAME SpixUnitTests COMMAND Spix_test )
