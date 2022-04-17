@@ -1,8 +1,11 @@
 import xmlrpc.client
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
-print("Available Methods:")
-print(s.system.listMethods())
+print("[+] Available Methods:")
+for method in s.system.listMethods():
+    print("\t- ","{:20s}".format(method), " : ", end="")
+    print(s.system.methodHelp(method))
+
 s.mouseClick("mainWindow/Button_1")
 s.wait(200)
 s.mouseClick("mainWindow/Button_2")
