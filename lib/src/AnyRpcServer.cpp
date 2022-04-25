@@ -99,6 +99,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Executes a generic command | command(string command, string payload)",
         [this](std::string command, std::string payload) { genericCommand(command, payload); });
 
+    utils::AddFunctionToAnyRpc<std::vector<std::string>(std::string)>(methodManager, "searchItem",
+        "Given an incomplete path to item, return a list of complete path possibles | searchItem(string path)",
+        [this](std::string path) {  return searchItem(std::move(path)); });
+
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
 

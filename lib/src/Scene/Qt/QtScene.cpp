@@ -14,6 +14,9 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickWindow>
+#include <QString>
+
+#include <vector>
 
 namespace {
 
@@ -128,6 +131,15 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
     // crop the window image to the item rect
     auto image = windowImage.copy(imageCropRect);
     image.save(QString::fromStdString(filePath));
+}
+
+std::vector<std::string> QtScene::searchEveryCompletePath(const ItemPath& path){
+    auto windowName = path.rootComponent();
+    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
+    std::vector<std::string> pathsList = {};
+    spix::qt::SearchEveryCompletePath(itemWindow, QString(path.subPath(1).string().c_str()), pathsList, QString(path.rootComponent().c_str()));
+    return pathsList;
+
 }
 
 } // namespace spix

@@ -23,6 +23,7 @@
 #include <Commands/Screenshot.h>
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
+#include <Commands/SearchItem.h>
 
 #include <Spix/Events/Identifiers.h>
 
@@ -157,6 +158,16 @@ void TestServer::takeScreenshot(ItemPath targetItem, std::string filePath)
 void TestServer::quit()
 {
     m_cmdExec->enqueueCommand<cmd::Quit>();
+}
+
+std::vector<std::string> TestServer::searchItem(ItemPath path)
+{
+    std::promise<std::vector<std::string>> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::SearchItem>(path, false, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
 } // namespace spix

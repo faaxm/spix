@@ -62,6 +62,8 @@ set(SOURCES
     src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
+    src/Commands/SearchItem.cpp
+    src/Commands/SearchItem.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h

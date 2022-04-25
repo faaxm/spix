@@ -61,6 +61,8 @@ public:
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
 
+    std::vector<std::string> searchItem(ItemPath path);
+
     void takeScreenshot(ItemPath targetItem, std::string filePath);
     void quit();
 

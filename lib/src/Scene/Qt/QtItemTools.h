@@ -9,6 +9,8 @@
 #include <QObject>
 #include <QQuickItem>
 
+#include <vector>
+
 class QString;
 
 namespace spix {
@@ -30,6 +32,8 @@ QString GetObjectName(QObject* object);
  * `children()`, but rather its `childItems()`.
  */
 QObject* FindChildItem(QObject* object, const QString& name);
+
+void SearchEveryCompletePath(QObject* object, const QString& name, std::vector<std::string>& pathsList, QString path);
 
 template <typename T>
 T FindChildItem(QObject* object, const QString& name)

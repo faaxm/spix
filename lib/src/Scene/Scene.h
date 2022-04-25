@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace spix {
 
@@ -37,6 +38,7 @@ public:
 
     // Tasks
     virtual void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) = 0;
+    virtual std::vector<std::string> searchEveryCompletePath(const ItemPath&) = 0;
 };
 
 } // namespace spix
