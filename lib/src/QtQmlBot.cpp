@@ -7,6 +7,7 @@
 #include <Spix/QtQmlBot.h>
 
 #include <CommandExecuter/CommandExecuter.h>
+#include <QtDebug>
 #include <Scene/Qt/QtScene.h>
 #include <Spix/TestServer.h>
 
@@ -24,6 +25,7 @@ QtQmlBot::~QtQmlBot() = default;
 
 void QtQmlBot::runTestServer(TestServer& server)
 {
+    qInfo() << "Spix server is enabled. Only use this in a safe environment.";
     server.setCommandExecuter(m_cmdExec.get());
     server.start();
 }

@@ -6,7 +6,10 @@
 
 #include "QtItem.h"
 
+#include <QMetaObject>
 #include <QQuickItem>
+
+#include <Scene/Qt/QtItemTools.h>
 
 namespace spix {
 
@@ -47,6 +50,33 @@ std::string QtItem::stringProperty(const std::string& name) const
 void QtItem::setStringProperty(const std::string& name, const std::string& value)
 {
     m_item->setProperty(name.c_str(), value.c_str());
+}
+
+bool QtItem::invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret)
+{
+    if (args.size() > 10)
+        return false;
+
+    std::vector<QVariant> qtVars;
+    for (auto arg : args)
+        qtVars.push_back(qt::VariantToQVariant(arg));
+
+    QMetaMethod match;
+    bool matched = spix::qt::GetMethodMetaForArgs(*m_item, method, qtVars, match);
+    if (!matched)
+        return false;
+
+    qt::QMLReturnVariant retVar;
+    QGenericReturnArgument retArg = qt::GetReturnArgForQMetaType(match.returnType(), retVar);
+    std::vector<QGenericArgument> qtArgs = qt::ConvertAndCreateQArgumentsForMethod(match, qtVars);
+
+    bool success = match.invoke(m_item, Qt::ConnectionType::DirectConnection, retArg, qtArgs[0], qtArgs[1], qtArgs[2],
+        qtArgs[3], qtArgs[4], qtArgs[5], qtArgs[6], qtArgs[7], qtArgs[8], qtArgs[9]);
+    if (success) {
+        ret = qt::QMLReturnVariantToVariant(retVar);
+        return true;
+    }
+    return false;
 }
 
 bool QtItem::visible() const

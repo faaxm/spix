@@ -40,6 +40,12 @@ void MockItem::setStringProperty(const std::string& name, const std::string& val
 {
 }
 
+bool MockItem::invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret)
+{
+    ret = Variant(nullptr);
+    return true;
+}
+
 bool MockItem::visible() const
 {
     return true;
