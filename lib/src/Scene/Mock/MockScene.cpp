@@ -24,8 +24,9 @@ Events& MockScene::events()
     return m_events;
 }
 
-void MockScene::takeScreenshot(const ItemPath&, const std::string&)
+bool MockScene::takeScreenshot(Item&, const std::string&)
 {
+    return true;
 }
 
 void MockScene::addItemAtPath(MockItem item, const ItemPath& path)

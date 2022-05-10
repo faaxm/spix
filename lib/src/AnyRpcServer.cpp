@@ -86,7 +86,7 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Returns internal errors that occurred during test execution | getErrors() : (strings) [error1, ...]",
         [this]() { return getErrors(); });
 
-    utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "takeScreenshot",
+    utils::AddFunctionToAnyRpc<bool(std::string, std::string)>(methodManager, "takeScreenshot",
         "Take a screenshot of the object and save it as a file | takeScreenshot(string pathToTargetedItem, string "
         "filePath)",
         [this](std::string targetItem, std::string filePath) {

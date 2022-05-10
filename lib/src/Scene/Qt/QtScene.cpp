@@ -108,12 +108,9 @@ Events& QtScene::events()
     return m_events;
 }
 
-void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& filePath)
+bool QtScene::takeScreenshot(Item& targetItem, const std::string& filePath)
 {
-    auto item = getQQuickItemAtPath(targetItem);
-    if (!item) {
-        return;
-    }
+    auto item = dynamic_cast<QtItem&>(targetItem).qquickitem();
 
     // take screenshot of the full window
     auto windowImage = item->window()->grabWindow();
@@ -127,7 +124,7 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
 
     // crop the window image to the item rect
     auto image = windowImage.copy(imageCropRect);
-    image.save(QString::fromStdString(filePath));
+    return image.save(QString::fromStdString(filePath));
 }
 
 } // namespace spix

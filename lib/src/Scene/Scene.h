@@ -36,7 +36,7 @@ public:
     virtual Events& events() = 0;
 
     // Tasks
-    virtual void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) = 0;
+    virtual bool takeScreenshot(Item& targetItem, const std::string& filePath) = 0;
 };
 
 } // namespace spix

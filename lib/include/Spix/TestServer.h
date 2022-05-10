@@ -61,7 +61,7 @@ public:
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
 
-    void takeScreenshot(ItemPath targetItem, std::string filePath);
+    bool takeScreenshot(ItemPath targetItem, std::string filePath);
     void quit();
 
 protected:

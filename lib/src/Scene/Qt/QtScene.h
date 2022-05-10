@@ -27,7 +27,7 @@ public:
     Events& events() override;
 
     // Tasks
-    void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
+    bool takeScreenshot(Item& targetItem, const std::string& filePath) override;
 
 private:
     QtEvents m_events;

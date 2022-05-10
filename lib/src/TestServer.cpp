@@ -149,9 +149,13 @@ std::vector<std::string> TestServer::getErrors()
     return result.get();
 }
 
-void TestServer::takeScreenshot(ItemPath targetItem, std::string filePath)
+bool TestServer::takeScreenshot(ItemPath targetItem, std::string filePath)
 {
-    m_cmdExec->enqueueCommand<cmd::Screenshot>(targetItem, std::move(filePath));
+    std::promise<bool> promise;
+    auto result = promise.get_future();
+    m_cmdExec->enqueueCommand<cmd::Screenshot>(targetItem, std::move(filePath), std::move(promise));
+
+    return result.get();
 }
 
 void TestServer::quit()

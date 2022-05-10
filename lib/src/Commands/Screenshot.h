@@ -9,18 +9,21 @@
 #include "Command.h"
 #include <Spix/Data/ItemPath.h>
 
+#include <future>
+
 namespace spix {
 namespace cmd {
 
 class Screenshot : public Command {
 public:
-    Screenshot(ItemPath targetItemPath, std::string filePath);
+    Screenshot(ItemPath targetItemPath, std::string filePath, std::promise<bool> promise);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPath m_itemPath;
     std::string m_filePath;
+    std::promise<bool> m_promise;
 };
 
 } // namespace cmd

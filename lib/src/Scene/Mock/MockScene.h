@@ -24,7 +24,7 @@ public:
     Events& events() override;
 
     // Tasks
-    void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
+    bool takeScreenshot(Item& targetItem, const std::string& filePath) override;
 
     // Mock stuff
     void addItemAtPath(MockItem item, const ItemPath& path);
