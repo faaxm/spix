@@ -54,6 +54,7 @@ generate and update screenshots for your documentation.
 * Enter text
 * Check existence and visibility of items
 * Get property values of items (text, position, color, ...)
+* Invoke a method on an object
 * Take and save a screenshot
 * Quit the app
 * Remote control, also of embedded devices / iOS
@@ -146,7 +147,7 @@ resultText = s.getStringProperty("root/results", "text")
 You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](lib/src/AnyRpcServer.cpp).
 ```python
 print(s.system.listMethods())
-# ['command', 'enterKey', 'existsAndVisible', 'getBoundingBox', 'getErrors', 'getStringProperty', 'inputText', 'mouseBeginDrag', 'mouseClick', 'mouseDropUrls', 'mouseEndDrag', 'quit', 'setStringProperty', 'system.listMethods', 'system.methodHelp', 'takeScreenshot', 'wait']
+# ['command', 'enterKey', 'existsAndVisible', 'getBoundingBox', 'getErrors', 'getStringProperty', 'inputText', 'invokeMethod', 'mouseBeginDrag', 'mouseClick', 'mouseDropUrls', 'mouseEndDrag', 'quit', 'setStringProperty', 'system.listMethods', 'system.methodHelp', 'takeScreenshot', 'wait']
 print(s.system.methodHelp('mouseClick'))
 # Click on the object at the given path
 ```
@@ -168,6 +169,67 @@ More specifically, Spix's matching processes works as follows:
 * `<root>` matches a top-level [`QQuickWindow`](https://doc-snapshots.qt.io/qt6-dev/qquickwindow.html) whose `objectName` (or `id` if `objectName` is empty) matches the specified string. Top-level windows are enumerated by [`QGuiApplication::topLevelWindows`](https://doc.qt.io/qt-6/qguiapplication.html#topLevelWindows).
 * `<child>` matches the first child object whose `objectName` (or `id` if `objectName` is empty) matches the specified string using a recursive search of all children and subchildren of the root. This process repeats for every subsequent child path entry.
 
+### Invoking QML methods
+
+Spix can directly invoke both internal and custom methods in QML objects: this can be a handy way to automate interactions that Spix doesn't support normally. For example, we can control the cursor in a `TextArea` by calling [`TextArea.select`](https://doc-snapshots.qt.io/qt6-6.2/qml-qtquick-textedit.html#select-method):
+```qml
+TextArea {
+    id: textArea
+}
+```
+```python
+# select characters 100-200
+s.invokeMethod("root/textArea", "select", [100, 200])
+```
+
+In addition, you can use custom functions in the QML to implement more complicated interactions, and have Spix interact with the function:
+```qml
+TextArea {
+    id: textArea
+    function customFunction(arg1, arg2) {
+        // insert QML interactions here
+        return {'key1': true, 'key2': false}
+    }
+}
+```
+```python
+# invoke the custom function
+result = s.invokeMethod("root/textArea", "customFunction", ['a string', 34])
+# prints {'key1': True, 'key2': False}
+print(result)
+```
+
+Spix supports the following types as arguments/return values:
+| Python Type       | XMLRPC Type          | QML Type(s)     | JavaScript Type(s)| Notes                                            |
+|-------------------|----------------------|-----------------|-------------------|--------------------------------------------------|
+| int               | \<int\>              | int             | number            | Values over/under int max are upcasted to double |
+| bool              | \<boolean\>          | bool            | boolean           |                                                  |
+| str               | \<string\>           | string          | string            |                                                  |
+| float             | \<double\>           | double, real    | number            | Defaults to double                               |
+| datetime.datetime | \<dateTime.iso8601\> | date            | Date              | No timezone support (always uses local timezone) |
+| dict              | \<struct\>           | var             | object            | String keys only                                 |
+| list              | \<array\>            | var             | Array             |                                                  |
+| None              | no type              | null, undefined | object, undefined | Defaults to null                                 |                              |
+
+In general Spix will attempt to coerce the arguments and return value to the correct types to match the method being invoked. Valid conversion are listed under the [`QVariant` docs](https://doc.qt.io/qt-5/qvariant.html#canConvert). If Spix cannot find a valid conversion it will generate an error.
+```qml
+Item {
+    id: item
+    function test(arg1: bool) {
+        ...
+    }
+}
+```
+```python
+# ok
+s.invokeMethod("root/item", "test", [False])
+
+# argument will implicitly be converted to a boolean (True) to match the declaration type
+s.invokeMethod("root/item", "test", [34])
+
+# no conversion from object to boolean, so an error is thrown
+s.invokeMethod("root/item", "test", [{}])
+```
 
 ## Two modes of operation
 In general, Spix can be used in two ways, which are different in how events are generated and sent
@@ -176,7 +238,7 @@ to your application:
 ### Generate Qt events directly
 You can use Spix to directly create Qt events, either from C++ as a unit test, or from
 an external script via the network through RPC. Since the Qt events are generated directly inside the
-app, and do not come from the system, the mouse coursor will not actually move and interaction
+app, and do not come from the system, the mouse cursor will not actually move and interaction
 with other applications is limited. On the plus side, this mechanism is independent from
 the system your app is running on and can easily be used to control software on an embedded
 device via the network (RPC).

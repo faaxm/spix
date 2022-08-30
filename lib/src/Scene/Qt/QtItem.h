@@ -22,6 +22,7 @@ public:
     Rect bounds() const override;
     std::string stringProperty(const std::string& name) const override;
     void setStringProperty(const std::string& name, const std::string& value) override;
+    bool invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret) override;
     bool visible() const override;
 
     QQuickItem* qquickitem();

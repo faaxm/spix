@@ -19,6 +19,7 @@
 #include <Commands/GetProperty.h>
 #include <Commands/GetTestStatus.h>
 #include <Commands/InputText.h>
+#include <Commands/InvokeMethod.h>
 #include <Commands/Quit.h>
 #include <Commands/Screenshot.h>
 #include <Commands/SetProperty.h>
@@ -117,6 +118,16 @@ std::string TestServer::getStringProperty(ItemPath path, std::string propertyNam
 void TestServer::setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue)
 {
     m_cmdExec->enqueueCommand<cmd::SetProperty>(path, std::move(propertyName), std::move(propertyValue));
+}
+
+Variant TestServer::invokeMethod(ItemPath path, std::string method, std::vector<Variant> args)
+{
+    std::promise<Variant> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::InvokeMethod>(path, std::move(method), std::move(args), std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
 Rect TestServer::getBoundingBox(ItemPath path)

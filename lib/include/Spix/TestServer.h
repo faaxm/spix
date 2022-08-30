@@ -13,6 +13,7 @@
 
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
+#include <Spix/Data/Variant.h>
 #include <Spix/Events/Identifiers.h>
 
 #include <Spix/spix_export.h>
@@ -57,6 +58,7 @@ public:
 
     std::string getStringProperty(ItemPath path, std::string propertyName);
     void setStringProperty(ItemPath path, std::string propertyName, std::string propertyValue);
+    Variant invokeMethod(ItemPath path, std::string method, std::vector<Variant> args);
     Rect getBoundingBox(ItemPath path);
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();

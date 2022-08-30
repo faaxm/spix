@@ -6,8 +6,12 @@
 
 #pragma once
 
+#include <Spix/Data/Variant.h>
+
+#include <QDateTime>
 #include <QObject>
 #include <QQuickItem>
+#include <QVariant>
 
 class QString;
 
@@ -36,6 +40,19 @@ T FindChildItem(QObject* object, const QString& name)
 {
     return qobject_cast<T>(FindChildItem(object, name));
 }
+
+using QMLReturnVariant = std::variant<std::nullptr_t, bool, int, float, double, QString, QDateTime, QVariant>;
+QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& toInitialize);
+
+QVariant VariantToQVariant(const Variant& var);
+Variant QVariantToVariant(const QVariant& var);
+Variant QMLReturnVariantToVariant(const QMLReturnVariant& var);
+
+bool CanConvertArgTypes(const QMetaMethod& metaMethod, const std::vector<QVariant>& varargs);
+bool GetMethodMetaForArgs(
+    const QObject& obj, const std::string& method, const std::vector<QVariant>& varargs, QMetaMethod& ret);
+std::vector<QGenericArgument> ConvertAndCreateQArgumentsForMethod(
+    const QMetaMethod& metaMethod, std::vector<QVariant>& varargs);
 
 } // namespace qt
 } // namespace spix

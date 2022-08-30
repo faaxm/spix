@@ -7,6 +7,7 @@
 #pragma once
 
 #include <Spix/Data/Geometry.h>
+#include <Spix/Data/Variant.h>
 
 #include <string>
 
@@ -29,6 +30,7 @@ public:
     virtual Rect bounds() const = 0;
     virtual std::string stringProperty(const std::string& name) const = 0;
     virtual void setStringProperty(const std::string& name, const std::string& value) = 0;
+    virtual bool invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret) = 0;
     virtual bool visible() const = 0;
 };
 

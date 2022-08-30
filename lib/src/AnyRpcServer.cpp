@@ -5,8 +5,8 @@
  ****/
 
 #include <Spix/AnyRpcServer.h>
-#include <Utils/AnyRpcUtils.h>
-#include <anyrpc/anyrpc.h>
+#include <Spix/Data/Variant.h>
+#include <Utils/AnyRpcFunction.h>
 #include <atomic>
 
 namespace spix {
@@ -68,6 +68,12 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "new_value)",
         [this](std::string path, std::string property, std::string value) {
             setStringProperty(std::move(path), std::move(property), std::move(value));
+        });
+
+    utils::AddFunctionToAnyRpc<Variant(std::string, std::string, std::vector<Variant>)>(methodManager, "invokeMethod",
+        "Invoke a method on a QML object | invokeMethod(string path, string method, any[] args)",
+        [this](std::string path, std::string method, std::vector<Variant> args) {
+            return invokeMethod(std::move(path), std::move(method), std::move(args));
         });
 
     utils::AddFunctionToAnyRpc<std::vector<double>(std::string)>(methodManager, "getBoundingBox",

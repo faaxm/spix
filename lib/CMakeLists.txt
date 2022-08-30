@@ -54,6 +54,8 @@ set(SOURCES
     src/Commands/GetTestStatus.h
     src/Commands/InputText.cpp
     src/Commands/InputText.h
+    src/Commands/InvokeMethod.cpp
+    src/Commands/InvokeMethod.h
     src/Commands/Quit.cpp
     src/Commands/Quit.h
     src/Commands/Screenshot.cpp
@@ -92,8 +94,10 @@ set(SOURCES
     src/Scene/Qt/QtScene.cpp
     src/Scene/Qt/QtScene.h
     src/Scene/Scene.h
-
+    
+    src/Utils/AnyRpcUtils.cpp
     src/Utils/AnyRpcUtils.h
+    src/Utils/AnyRpcFunction.h
     src/Utils/DebugDump.cpp
     src/Utils/DebugDump.h
     src/Utils/QtEventRecorder.cpp
