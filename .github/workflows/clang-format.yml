@@ -7,5 +7,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Verify clang-format
-        run: sh ./ci/verify-clangformat.sh
+      - uses: DoozyX/clang-format-lint-action@v0.14
+        with:
+          source: '.'
+          extensions: 'h,cpp'
+          clangFormatVersion: 11
+          style: file

@@ -1,2 +1,2 @@
 #!/bin/sh
-find . | grep -v -E "/(build|dep-libs)/.*" | grep -E "\\.(cpp|h)$" | xargs -L1 clang-format -i
+find . \( -iname "*.cpp" -or -iname "*.h" \) -not \( -ipath "*/build/*" -or -ipath "./dep-libs/*" \) | xargs -L1 clang-format-11 -i
