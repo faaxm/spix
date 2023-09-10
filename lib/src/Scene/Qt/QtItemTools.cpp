@@ -95,25 +95,25 @@ QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& retV
         return QGenericReturnArgument();
     case QMetaType::Type::Bool:
         retVar = bool();
-        return Q_RETURN_ARG(bool, std::get<bool>(retVar));
+        return QReturnArgument<bool>("bool", std::get<bool>(retVar));
     case QMetaType::Type::Int:
         retVar = int();
-        return Q_RETURN_ARG(int, std::get<int>(retVar));
+        return QReturnArgument<int>("int", std::get<int>(retVar));
     case QMetaType::Type::Float:
         retVar = float();
-        return Q_RETURN_ARG(float, std::get<float>(retVar));
+        return QReturnArgument<float>("float", std::get<float>(retVar));
     case QMetaType::Type::Double:
         retVar = double();
-        return Q_RETURN_ARG(double, std::get<double>(retVar));
+        return QReturnArgument<double>("double", std::get<double>(retVar));
     case QMetaType::Type::QString:
         retVar = QString();
-        return Q_RETURN_ARG(QString, std::get<QString>(retVar));
+        return QReturnArgument<QString>("QString", std::get<QString>(retVar));
     case QMetaType::Type::QDateTime:
         retVar = QDateTime();
-        return Q_RETURN_ARG(QDateTime, std::get<QDateTime>(retVar));
+        return QReturnArgument<QDateTime>("QDateTime", std::get<QDateTime>(retVar));
     default:
         retVar = QVariant();
-        return Q_RETURN_ARG(QVariant, std::get<QVariant>(retVar));
+        return QReturnArgument<QVariant>("QVariant", std::get<QVariant>(retVar));
     }
 }
 
@@ -288,7 +288,7 @@ std::vector<QGenericArgument> ConvertAndCreateQArgumentsForMethod(
                 varargs[i].convert(targetType);
                 qtArgs.push_back(QGenericArgument(varargs[i].typeName(), varargs[i].data()));
             } else {
-                qtArgs.push_back(Q_ARG(QVariant, varargs[i]));
+                qtArgs.push_back(QArgument<QVariant>("QVariant", varargs[i]));
             }
         } else
             qtArgs.push_back(QGenericArgument());
