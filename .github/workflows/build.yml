@@ -13,13 +13,17 @@ jobs:
       matrix:
         base: [
           # Qt v5.15.2
-          {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
+          {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
           {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           {name: 'qt-5.15.2 macos', os: macos-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
           # Qt v6.2.3
           {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON'},
           {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON'},
+          # Qt v6.5.0
+          {name: 'qt-6.5.0 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON'},
+          {name: 'qt-6.5.0 windows', os: windows-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-6.5.0 macos', os: macos-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON'},
           # shared libs
           {name: 'shared-libs ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF'},
           {name: 'shared-libs windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
