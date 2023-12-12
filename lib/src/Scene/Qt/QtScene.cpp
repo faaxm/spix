@@ -95,12 +95,16 @@ namespace spix {
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
     auto windowName = path.rootComponent();
-    QQuickItem* item = getQQuickItemAtPath(path);
+    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
 
-    if (item) {
-        return std::make_unique<QtItem>(item);
+    if (!itemWindow) {
+        return {};
     }
-    return std::unique_ptr<QtItem>();
+    if (path.length() <= 1) {
+        return std::make_unique<QtItem>(itemWindow);
+    }
+    auto item = getQQuickItemWithRoot(path.subPath(1), itemWindow);
+    return std::make_unique<QtItem>(item);
 }
 
 Events& QtScene::events()

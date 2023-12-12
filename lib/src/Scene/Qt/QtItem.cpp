@@ -8,6 +8,7 @@
 
 #include <QMetaObject>
 #include <QQuickItem>
+#include <QQuickWindow>
 
 #include <Scene/Qt/QtItemTools.h>
 
@@ -18,9 +19,14 @@ QtItem::QtItem(QQuickItem* item)
 {
 }
 
+QtItem::QtItem(QQuickWindow* window)
+: m_item(window)
+{
+}
+
 Size QtItem::size() const
 {
-    return Size {m_item->width(), m_item->height()};
+    return Size {qquickitem()->width(), qquickitem()->height()};
 }
 
 Point QtItem::position() const
@@ -28,7 +34,7 @@ Point QtItem::position() const
     // the point (0, 0) in item coordinates...
     QPointF localPoint {0.0, 0.0};
     // ...is mapped to global to get the item position on screen
-    auto globalPoint = m_item->mapToGlobal(localPoint);
+    auto globalPoint = qquickitem()->mapToGlobal(localPoint);
 
     return Point {globalPoint.rx(), globalPoint.ry()};
 }
@@ -43,13 +49,13 @@ Rect QtItem::bounds() const
 
 std::string QtItem::stringProperty(const std::string& name) const
 {
-    auto value = m_item->property(name.c_str());
+    auto value = qobject()->property(name.c_str());
     return value.toString().toStdString();
 }
 
 void QtItem::setStringProperty(const std::string& name, const std::string& value)
 {
-    m_item->setProperty(name.c_str(), value.c_str());
+    qobject()->setProperty(name.c_str(), value.c_str());
 }
 
 bool QtItem::invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret)
@@ -62,7 +68,7 @@ bool QtItem::invokeMethod(const std::string& method, const std::vector<Variant>&
         qtVars.push_back(qt::VariantToQVariant(arg));
 
     QMetaMethod match;
-    bool matched = spix::qt::GetMethodMetaForArgs(*m_item, method, qtVars, match);
+    bool matched = spix::qt::GetMethodMetaForArgs(*qobject(), method, qtVars, match);
     if (!matched)
         return false;
 
@@ -70,8 +76,8 @@ bool QtItem::invokeMethod(const std::string& method, const std::vector<Variant>&
     QGenericReturnArgument retArg = qt::GetReturnArgForQMetaType(match.returnType(), retVar);
     std::vector<QGenericArgument> qtArgs = qt::ConvertAndCreateQArgumentsForMethod(match, qtVars);
 
-    bool success = match.invoke(m_item, Qt::ConnectionType::DirectConnection, retArg, qtArgs[0], qtArgs[1], qtArgs[2],
-        qtArgs[3], qtArgs[4], qtArgs[5], qtArgs[6], qtArgs[7], qtArgs[8], qtArgs[9]);
+    bool success = match.invoke(qobject(), Qt::ConnectionType::DirectConnection, retArg, qtArgs[0], qtArgs[1],
+        qtArgs[2], qtArgs[3], qtArgs[4], qtArgs[5], qtArgs[6], qtArgs[7], qtArgs[8], qtArgs[9]);
     if (success) {
         ret = qt::QMLReturnVariantToVariant(retVar);
         return true;
@@ -81,12 +87,33 @@ bool QtItem::invokeMethod(const std::string& method, const std::vector<Variant>&
 
 bool QtItem::visible() const
 {
-    return m_item->isVisible();
+    return qquickitem()->isVisible();
 }
 
 QQuickItem* QtItem::qquickitem()
 {
-    return m_item;
+    if (std::holds_alternative<QQuickWindow*>(m_item))
+        return std::get<QQuickWindow*>(m_item)->contentItem();
+    else
+        return std::get<QQuickItem*>(m_item);
+}
+
+const QQuickItem* QtItem::qquickitem() const
+{
+    if (std::holds_alternative<QQuickWindow*>(m_item))
+        return std::get<QQuickWindow*>(m_item)->contentItem();
+    else
+        return std::get<QQuickItem*>(m_item);
+}
+
+QObject* QtItem::qobject()
+{
+    return std::visit([](auto i) { return static_cast<QObject*>(i); }, m_item);
+}
+
+const QObject* QtItem::qobject() const
+{
+    return std::visit([](auto i) { return static_cast<const QObject*>(i); }, m_item);
 }
 
 } // namespace spix
