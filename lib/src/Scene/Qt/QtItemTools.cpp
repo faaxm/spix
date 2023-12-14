@@ -64,8 +64,14 @@ QString GetObjectName(QObject* object)
 
 QObject* FindChildItem(QObject* object, const QString& name)
 {
+    if (object == nullptr) {
+        return nullptr;
+    }
+
+    using Index = QObjectList::size_type;
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
-        for (auto child : qquickitem->childItems()) {
+        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
+            auto child = qquickitem->childItems().at(i);
             if (GetObjectName(child) == name) {
                 return child;
             }
@@ -74,7 +80,8 @@ QObject* FindChildItem(QObject* object, const QString& name)
             }
         }
     } else {
-        for (auto child : object->children()) {
+        for (Index i = 0; i < object->children().size(); ++i) {
+            auto child = object->children().at(i);
             if (GetObjectName(child) == name) {
                 return child;
             }
