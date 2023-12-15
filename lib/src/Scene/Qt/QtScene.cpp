@@ -97,13 +97,18 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
     auto windowName = path.rootComponent();
     QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
 
-    if (!itemWindow) {
+    if (!itemWindow || !itemWindow->contentItem()) {
         return {};
     }
     if (path.length() <= 1) {
         return std::make_unique<QtItem>(itemWindow);
     }
+
     auto item = getQQuickItemWithRoot(path.subPath(1), itemWindow);
+
+    if (!item) {
+        return {};
+    }
     return std::make_unique<QtItem>(item);
 }
 
