@@ -7,8 +7,11 @@
 #pragma once
 
 #include <Scene/Item.h>
+#include <variant>
 
+class QObject;
 class QQuickItem;
+class QQuickWindow;
 
 namespace spix {
 
@@ -16,6 +19,7 @@ class QtItem : public Item {
 public:
     QtItem() = delete;
     QtItem(QQuickItem* item);
+    QtItem(QQuickWindow* window);
 
     Size size() const override;
     Point position() const override;
@@ -26,9 +30,13 @@ public:
     bool visible() const override;
 
     QQuickItem* qquickitem();
+    const QQuickItem* qquickitem() const;
 
 private:
-    QQuickItem* m_item;
+    QObject* qobject();
+    const QObject* qobject() const;
+
+    std::variant<QQuickItem*, QQuickWindow*> m_item;
 };
 
 } // namespace spix
