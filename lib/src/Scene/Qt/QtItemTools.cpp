@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QQmlContext>
 #include <QQuickItem>
+#include <QRegularExpression>
+#include <optional>
 #include <stdexcept>
 
 namespace spix {
@@ -62,7 +64,39 @@ QString GetObjectName(QObject* object)
     return object->objectName();
 }
 
-QObject* FindChildItem(QObject* object, const QString& name)
+QString TextPropertyByObject(QObject* object)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    auto objectText = object->property("text");
+    auto objectVisible = object->property("visible");
+
+    if (objectText.isNull() || objectVisible.isNull()) {
+        return "";
+    }
+
+    if (objectText.isValid() && objectVisible.toBool()) {
+        return objectText.toString();
+    }
+
+    return "";
+}
+
+QString TypeByObject(QObject* object)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    auto typeName = QString(object->metaObject()->className());
+    typeName.replace(QRegularExpression("QQuick|_QML.*"), "");
+    return typeName;
+}
+
+QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyText = {},
+    const std::optional<QString>& type = {})
 {
     if (object == nullptr) {
         return nullptr;
@@ -75,8 +109,27 @@ QObject* FindChildItem(QObject* object, const QString& name)
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (auto item = FindChildItem(child, name)) {
-                return item;
+            if (propertyText.has_value()) {
+                if (TextPropertyByObject(child) == propertyText.value()) {
+                    return child;
+                }
+
+                if (auto item = FindChildItem(child, name, propertyText, {})) {
+                    return item;
+                }
+            } else if (type.has_value()) {
+                if (TypeByObject(child) == type.value()) {
+                    return child;
+                }
+
+                if (auto item = FindChildItem(child, name, {}, type)) {
+                    return item;
+                }
+
+            } else {
+                if (auto item = FindChildItem(child, name)) {
+                    return item;
+                }
             }
         }
     } else {
@@ -85,13 +138,61 @@ QObject* FindChildItem(QObject* object, const QString& name)
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (auto item = FindChildItem(child, name)) {
-                return item;
+
+            if (propertyText.has_value()) {
+                if (auto item = FindChildItem(child, name, propertyText, {})) {
+                    return item;
+                }
+            } else if (type.has_value()) {
+                if (auto item = FindChildItem(child, name, {}, type)) {
+                    return item;
+                }
+            } else {
+                if (auto item = FindChildItem(child, name)) {
+                    return item;
+                }
             }
         }
     }
 
     return nullptr;
+}
+
+QString getNameForObject(QObject* object)
+{
+    QString name = "#" + spix::qt::TypeByObject(object);
+
+    return name;
+}
+
+QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& type = {})
+{
+    QVector<QObject*> result = {};
+
+    if (object == nullptr) {
+        return {};
+    }
+
+    using Index = QObjectList::size_type;
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
+            auto child = qquickitem->childItems().at(i);
+            if (type.has_value() && TypeByObject(child) == type.value()) {
+                result.push_back(child);
+            }
+            result = result + FindChildItems(child, type);
+        }
+    } else {
+        for (Index i = 0; i < object->children().size(); ++i) {
+            auto child = object->children().at(i);
+            if (type.has_value() && TypeByObject(child) == type.value()) {
+                result.push_back(child);
+            }
+            result = result + FindChildItems(child, type);
+        }
+    }
+
+    return result;
 }
 
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& retVar)
