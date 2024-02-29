@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <QByteArray>
 #include <Scene/Qt/QtEvents.h>
 #include <Scene/Scene.h>
 
@@ -28,6 +29,7 @@ public:
 
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
+    std::string takeScreenshotRemote(const ItemPath& targetItem);
 
 private:
     QtEvents m_events;

@@ -60,6 +60,8 @@ set(SOURCES
     src/Commands/Quit.h
     src/Commands/Screenshot.cpp
     src/Commands/Screenshot.h
+    src/Commands/ScreenshotRemote.cpp
+    src/Commands/ScreenshotRemote.h
     src/Commands/SetProperty.cpp
     src/Commands/SetProperty.h
     src/Commands/Wait.cpp

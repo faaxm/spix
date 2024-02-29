@@ -28,6 +28,11 @@ void MockScene::takeScreenshot(const ItemPath&, const std::string&)
 {
 }
 
+std::string MockScene::takeScreenshotRemote(const ItemPath&)
+{
+    return "Base64 String";
+}
+
 void MockScene::addItemAtPath(MockItem item, const ItemPath& path)
 {
     m_items.emplace(std::make_pair(path.string(), std::move(item)));
