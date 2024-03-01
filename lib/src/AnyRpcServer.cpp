@@ -37,6 +37,25 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "mouseButton)",
         [this](std::string path, int mouseButton) { mouseClick(std::move(path), mouseButton); });
 
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithOffset",
+        "Click on the object at the given path with the given offset"
+        "(absolute pixel) | mouseClickWithOffset(string path, float "
+        "offsetX, float offsetY)",
+        [this](std::string path, double offsetX, double offsetY) {
+            auto proportion = Point(0, 0);
+            auto offset = Point(offsetX, offsetY);
+            mouseClick(std::move(path), proportion, offset);
+        });
+
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithProportion",
+        "Click on the object at the given path with the given proportion (In percent) | "
+        "mouseClickWithProportion(string path, float "
+        "proportionX, float proportionY)",
+        [this](std::string path, double proportionX, double proportionY) {
+            auto proportion = Point(proportionX, proportionY);
+            mouseClick(std::move(path), proportion);
+        });
+
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "mouseBeginDrag",
         "Begin a drag with the mouse | mouseBeginDrag(string path)",
         [this](std::string path) { mouseBeginDrag(std::move(path)); });
