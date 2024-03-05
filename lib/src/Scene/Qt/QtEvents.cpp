@@ -82,11 +82,9 @@ void sendQtKeyEvent(Item* item, bool press, int keyCode, KeyModifier mod)
     if (!qtitem)
         return;
 
-    auto window = qtitem->qquickitem()->window();
-
     auto qtmod = getQtKeyboardModifiers(mod);
     auto keyEvent = new QKeyEvent(press ? QEvent::KeyPress : QEvent::KeyRelease, keyCode, qtmod);
-    QGuiApplication::postEvent(window, keyEvent);
+    QGuiApplication::postEvent(qtitem->qquickitem(), keyEvent);
 }
 
 } // namespace
