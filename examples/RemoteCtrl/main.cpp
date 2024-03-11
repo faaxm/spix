@@ -9,8 +9,6 @@
 #include <Spix/AnyRpcServer.h>
 #include <Spix/QtQmlBot.h>
 
-#include <iostream>
-
 int main(int argc, char* argv[])
 {
     // Init Qt Qml Application
