@@ -8,6 +8,8 @@ using namespace anyrpc;
 /**
  * @brief Example using QtTest for running test cases against a remote server
  *        It also contains some handy helper functions to call remote methods.
+ *
+ *        Run e.g. the RemoteCtrl application as the application under test
  */
 class QtTestExample : public QObject {
     Q_OBJECT
@@ -109,15 +111,30 @@ void QtTestExample::cleanupTestCase()
 
 void QtTestExample::test_case1()
 {
+    setProperty("mainWindow/results", "text", "");
+
     mouseClick("mainWindow/Button_1");
     waitFor(500);
     mouseClick("mainWindow/Button_2");
     waitFor(500);
 
+    // in the "old" variant, this call also triggers mouseArea_2
+    // this is somehow correct, because the mouse area is the top component,
+    // but sometimes we do not want to trigger the top most component in test cases
+    mouseClick("mainWindow/Button_3");
+    waitFor(500);
+    mouseClick("mainWindow/Button_4");
+    waitFor(500);
+
+    mouseClick("mainWindow/mouseArea_1");
+    waitFor(500);
+    mouseClick("mainWindow/mouseArea_2");
+    waitFor(500);
+
     auto resultText = getProperty("mainWindow/results", "text");
     std::cout << resultText.toStdString() << std::endl;
 
-    setProperty("mainWindow/results", "text", "new text");
+    QCOMPARE(resultText, "Button 1 clicked\nButton 2 clicked\nButton 3 clicked\nButton 4 clicked\nMouseArea 1 clicked\nMouseArea 2 clicked");
 }
 
 QTEST_APPLESS_MAIN(QtTestExample)
