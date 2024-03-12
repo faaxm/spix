@@ -64,6 +64,7 @@ public:
     std::vector<std::string> getErrors();
 
     void takeScreenshot(ItemPath targetItem, std::string filePath);
+    std::string takeScreenshotRemote(ItemPath targetItem);
     void quit();
 
 protected:

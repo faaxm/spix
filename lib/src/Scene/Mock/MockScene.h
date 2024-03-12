@@ -25,7 +25,7 @@ public:
 
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
-
+    std::string takeScreenshotRemote(const ItemPath& targetItem);
     // Mock stuff
     void addItemAtPath(MockItem item, const ItemPath& path);
     MockEvents& mockEvents();
