@@ -231,6 +231,27 @@ s.invokeMethod("root/item", "test", [34])
 s.invokeMethod("root/item", "test", [{}])
 ```
 
+###  Using generic/custom command
+You can register your own commands in your C++ Application.
+It could be useful for Example to reset your hole Application.
+
+Register the Commands in your C++ Code:
+```C++
+    ...
+    spix::AnyRpcServer server;
+    server.setGenericCommandHandler([](std::string command, std::string payload) {
+        // do whatever needs to be done
+    });
+    ...
+```
+Now you have all capabilities that the Application has.
+The Payload handling must be done by your own.
+
+You can call this in Python like this:
+```python
+s.command('reset', 'now')
+```
+
 ## Two modes of operation
 In general, Spix can be used in two ways, which are different in how events are generated and sent
 to your application:
