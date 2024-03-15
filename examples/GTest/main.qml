@@ -23,45 +23,50 @@ Window {
         Button {
             objectName: "Button_1"
             text: "Press Me"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 1 right clicked")
-					else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.AllButtons
+
+                onClicked:
+                {
+                    if(mouse.button & Qt.RightButton)
+                        resultsView.appendText("Button 1 right clicked")
+                    else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
                         resultsView.appendText("Button 1 shift clicked")
                     else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier))
                         resultsView.appendText("Button 1 shift control clicked")
                     else
-						resultsView.appendText("Button 1 clicked")
-				}
-			}
+                        resultsView.appendText("Button 1 clicked")
+                }
+            }
         }
-        Button {
-            objectName: "Button_2"
-            text: "Or Click Me"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 2 right clicked")
-					else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
-                        if ((mouse.modifiers & Qt.ControlModifier))
+        Rectangle {
+            width: 100
+            height: 100
+            color: "red"
+            Button {
+                objectName: "Button_2"
+                text: "Or Click Me"
+                width: 99
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons:  Qt.AllButtons
+                    
+                    onClicked:
+                    {
+                        if(mouse.button & Qt.RightButton)
+                            resultsView.appendText("Button 2 right clicked")
+                        else if ((mouse.modifiers & Qt.ControlModifier) && (mouse.modifiers &Qt.ShiftModifier))
                             resultsView.appendText("Button 2 shift control clicked")
+                        else if ((mouse.modifiers & Qt.ShiftModifier))
+                            resultsView.appendText("Button 2 shift clicked")
+                        else if ((mouse.button === Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier))
+                            resultsView.appendText("Button 2 control clicked")
                         else
-                        resultsView.appendText("Button 2 shift clicked")
-                    else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier))
-                        resultsView.appendText("Button 2 control clicked")
-                    else
-						resultsView.appendText("Button 2 clicked")
-				}
-			}
+                            resultsView.appendText("Button 2 clicked")
+                    }
+                }
+            }
         }
     }
 
