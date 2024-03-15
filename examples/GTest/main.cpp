@@ -77,7 +77,51 @@ Button 1 clicked
 Button 1 right clicked)RSLT";
 
     EXPECT_EQ(result, expected_result);
+}
 
+TEST(GTestExample, SearchText)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Look for a Text "Press Me"
+    srv->mouseClick(spix::ItemPath("mainWindow/\"Press Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 1 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchType)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Serach for Type Button in the end of a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Button"));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 1 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeAndTextCombined)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for Type in the center of a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/\"Or Click Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
     srv->quit();
 }
 
