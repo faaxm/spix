@@ -48,9 +48,8 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         });
 
     utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithProportion",
-        "Click on the object at the given path with the given proportion (In percent) | "
-        "mouseClickWithProportion(string path, float "
-        "proportionX, float proportionY)",
+        "Click on the object at the given path with the given proportion (In percent)"
+        "| mouseClickWithProportion(string path, float proportionX, float proportionY)",
         [this](std::string path, double proportionX, double proportionY) {
             auto proportion = Point(proportionX, proportionY);
             mouseClick(std::move(path), proportion);
