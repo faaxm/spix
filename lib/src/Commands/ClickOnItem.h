@@ -17,13 +17,14 @@ namespace cmd {
 
 class SPIX_EXPORT ClickOnItem : public Command {
 public:
-    ClickOnItem(ItemPosition path, MouseButton mouseButton);
+    ClickOnItem(ItemPosition path, MouseButton mouseButton, KeyModifier keyModifier = KeyModifiers::None);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPosition m_position;
     MouseButton m_mouseButton;
+    KeyModifier m_keyModifier;
 };
 
 } // namespace cmd
