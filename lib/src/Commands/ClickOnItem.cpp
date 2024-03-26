@@ -11,9 +11,10 @@
 namespace spix {
 namespace cmd {
 
-ClickOnItem::ClickOnItem(ItemPosition path, MouseButton mouseButton)
+ClickOnItem::ClickOnItem(ItemPosition path, MouseButton mouseButton, KeyModifier keyModifier)
 : m_position(std::move(path))
 , m_mouseButton(mouseButton)
+, m_keyModifier(keyModifier)
 {
 }
 
@@ -29,8 +30,8 @@ void ClickOnItem::execute(CommandEnvironment& env)
 
     auto size = item->size();
     auto mousePoint = m_position.positionForItemSize(size);
-    env.scene().events().mouseDown(item.get(), mousePoint, m_mouseButton);
-    env.scene().events().mouseUp(item.get(), mousePoint, m_mouseButton);
+    env.scene().events().mouseDown(item.get(), mousePoint, m_mouseButton, m_keyModifier);
+    env.scene().events().mouseUp(item.get(), mousePoint, m_mouseButton, m_keyModifier);
 }
 
 } // namespace cmd

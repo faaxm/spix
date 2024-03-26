@@ -65,6 +65,13 @@ TEST(GTestExample, BasicUITest)
     srv->wait(std::chrono::milliseconds(500));
     srv->mouseClick(spix::ItemPath("mainWindow/Button_1"), spix::MouseButtons::Right);
     srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"), spix::MouseButtons::Left, spix::KeyModifiers::Shift);
+    srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"), spix::MouseButtons::Left, spix::KeyModifiers::Control);
+    srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"), spix::MouseButtons::Left,
+        spix::KeyModifiers::Shift | spix::KeyModifiers::Control);
+    srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
 
@@ -74,7 +81,10 @@ Button 2 clicked
 Button 1 clicked
 Button 2 clicked
 Button 1 clicked
-Button 1 right clicked)RSLT";
+Button 1 right clicked
+Button 2 shift clicked
+Button 2 control clicked
+Button 2 shift control clicked)RSLT";
 
     EXPECT_EQ(result, expected_result);
 

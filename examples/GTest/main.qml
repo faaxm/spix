@@ -31,7 +31,11 @@ Window {
 				{
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 1 right clicked")
-					else
+					else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
+                        resultsView.appendText("Button 1 shift clicked")
+                    else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier))
+                        resultsView.appendText("Button 1 shift control clicked")
+                    else
 						resultsView.appendText("Button 1 clicked")
 				}
 			}
@@ -47,7 +51,14 @@ Window {
 				{
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 2 right clicked")
-					else
+					else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
+                        if ((mouse.modifiers & Qt.ControlModifier))
+                            resultsView.appendText("Button 2 shift control clicked")
+                        else
+                        resultsView.appendText("Button 2 shift clicked")
+                    else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier))
+                        resultsView.appendText("Button 2 control clicked")
+                    else
 						resultsView.appendText("Button 2 clicked")
 				}
 			}

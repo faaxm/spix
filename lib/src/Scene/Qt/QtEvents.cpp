@@ -91,7 +91,7 @@ void sendQtKeyEvent(Item* item, bool press, int keyCode, KeyModifier mod)
 
 } // namespace
 
-void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
+void QtEvents::mouseDown(Item* item, Point loc, MouseButton button, KeyModifier mod)
 {
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
@@ -102,12 +102,12 @@ void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
 
-    QMouseEvent* event
-        = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
+    auto qtmod = getQtKeyboardModifiers(mod);
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, qtmod);
     QGuiApplication::postEvent(window, event);
 }
 
-void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
+void QtEvents::mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mod)
 {
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
@@ -125,9 +125,9 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
 #endif
-
+    auto qtmod = getQtKeyboardModifiers(mod);
     QMouseEvent* event
-        = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
+        = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, qtmod);
     QGuiApplication::postEvent(window, event);
 }
 

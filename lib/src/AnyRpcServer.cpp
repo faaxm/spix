@@ -32,10 +32,12 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Click on the object at the given path | mouseClick(string path)",
         [this](std::string path) { mouseClick(std::move(path)); });
 
-    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "mouseClickWithButton",
-        "Click on the object at the given path with the given mouse button | mouseClickWithButton(string path, int "
-        "mouseButton)",
-        [this](std::string path, int mouseButton) { mouseClick(std::move(path), mouseButton); });
+    utils::AddFunctionToAnyRpc<void(std::string, int, int)>(methodManager, "mouseClickWithButton",
+        "Click on the object at the given path with the given mouse button and Control Keys | "
+        "mouseClickWithButton(string path, int mouseButton)",
+        [this](std::string path, int mouseButton, int keyModifier = KeyModifiers::None) {
+            mouseClick(std::move(path), mouseButton, keyModifier);
+        });
 
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "mouseBeginDrag",
         "Begin a drag with the mouse | mouseBeginDrag(string path)",
