@@ -135,7 +135,9 @@ void QtTestExample::test_case1()
     auto resultText = getProperty("mainWindow/results", "text");
     std::cout << resultText.toStdString() << std::endl;
 
-    QCOMPARE(resultText, "Button 1 clicked\nButton 2 clicked\nButton 3 clicked\nButton 4 clicked\nMouseArea 1 clicked\nMouseArea 2 clicked");
+    QCOMPARE(resultText,
+        "Button 1 clicked\nButton 2 clicked\nButton 3 clicked\nButton 4 clicked\nMouseArea 1 clicked\nMouseArea 2 "
+        "clicked");
 }
 
 QTEST_APPLESS_MAIN(QtTestExample)
