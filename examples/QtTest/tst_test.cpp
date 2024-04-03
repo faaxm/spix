@@ -1,6 +1,7 @@
 #include <QtTest>
 
 #include "anyrpc/anyrpc.h"
+
 #include <memory>
 
 using namespace anyrpc;

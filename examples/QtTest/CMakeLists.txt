@@ -7,6 +7,7 @@ enable_testing()
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(AnyRPC REQUIRED)
 find_package(Qt${SPIX_QT_MAJOR} REQUIRED COMPONENTS Test Quick)
 
 set(CMAKE_AUTOUIC ON)
@@ -22,7 +23,10 @@ add_executable(QtTestExample tst_test.cpp)
 add_test(NAME QtTestExample COMMAND QtTestExample)
 
 target_link_libraries(QtTestExample PRIVATE
-    Qt${SPIX_QT_MAJOR}::Test
+    Qt${SPIX_QT_MAJOR}::Test    
     Spix
+
+    PRIVATE
+        AnyRPC::anyrpc
 )
 
