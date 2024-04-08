@@ -41,6 +41,7 @@ Window {
 
                     MouseArea
                     {
+                        id: mouseArea
                         anchors.fill: parent
                         onClicked: itemDisplayLoader.source = "show_" + modelData + ".qml"
                     }

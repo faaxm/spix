@@ -46,7 +46,7 @@ TEST(RepeaterLoaderGTest, RepeaterLoaderTest)
     EXPECT_FALSE(srv->existsAndVisible("mainWindow/ItemDisplayLoader/textItem"))
         << "Error: Item should not be visible at launch.";
 
-    srv->mouseClick("mainWindow/ItemButtons/Item_0");
+    srv->mouseClick("mainWindow/ItemButtons/Item_0/mouseArea");
     srv->wait(std::chrono::milliseconds(500));
 
     EXPECT_TRUE(srv->existsAndVisible("mainWindow/ItemDisplayLoader/textItem"))
@@ -54,18 +54,18 @@ TEST(RepeaterLoaderGTest, RepeaterLoaderTest)
 
     // 'ItemButtons' is not required in the path,
     // as 'gridItem_0' is unique within 'mainWindow'
-    srv->mouseClick("mainWindow/Item_1");
+    srv->mouseClick("mainWindow/Item_1/mouseArea");
     srv->wait(std::chrono::milliseconds(500));
 
     EXPECT_STREQ(srv->getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text").c_str(),
         "I am a view with a pear. Trust me.")
         << "Error: Wrong item displayed.";
 
-    srv->mouseClick("mainWindow/ItemButtons/Item_2");
+    srv->mouseClick("mainWindow/ItemButtons/Item_2/mouseArea");
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick("mainWindow/ItemButtons/Item_0");
+    srv->mouseClick("mainWindow/ItemButtons/Item_0/mouseArea");
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick("mainWindow/ItemButtons/Item_3");
+    srv->mouseClick("mainWindow/ItemButtons/Item_3/mouseArea");
     srv->wait(std::chrono::milliseconds(100));
 
     EXPECT_STREQ(srv->getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text").c_str(),

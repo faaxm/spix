@@ -21,13 +21,13 @@ Window {
         }
 
         Button {
-            objectName: "Button_1"
             text: "Press Me"
 			MouseArea {
+                objectName: "Button_1"
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
 				
-				onClicked:
+                onClicked:
 				{
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 1 right clicked")
@@ -37,13 +37,13 @@ Window {
 			}
         }
         Button {
-            objectName: "Button_2"
             text: "Or Click Me"
 			MouseArea {
+                objectName: "Button_2"
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
 				
-				onClicked:
+                onClicked:
 				{
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 2 right clicked")
