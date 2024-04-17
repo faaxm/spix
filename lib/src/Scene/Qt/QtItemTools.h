@@ -28,6 +28,7 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name);
 QString GetObjectName(QObject* object);
 QString TextPropertyByObject(QObject* object);
 QString TypeByObject(QObject* object);
+
 /**
  * @brief Find a child object with the given name.
  *

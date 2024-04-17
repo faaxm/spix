@@ -158,17 +158,9 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
     return nullptr;
 }
 
-QString getNameForObject(QObject* object)
-{
-    QString name = "#" + spix::qt::TypeByObject(object);
-
-    return name;
-}
-
 QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& type = {})
 {
     QVector<QObject*> result = {};
-
     if (object == nullptr) {
         return {};
     }
@@ -177,21 +169,20 @@ QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& 
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
+            result = result + FindChildItems(child, type);
             if (type.has_value() && TypeByObject(child) == type.value()) {
                 result.push_back(child);
             }
-            result = result + FindChildItems(child, type);
         }
     } else {
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
+            result = result + FindChildItems(child, type);
             if (type.has_value() && TypeByObject(child) == type.value()) {
                 result.push_back(child);
             }
-            result = result + FindChildItems(child, type);
         }
     }
-
     return result;
 }
 
