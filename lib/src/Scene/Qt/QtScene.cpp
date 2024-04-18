@@ -13,6 +13,7 @@
 
 #include <QBuffer>
 #include <QByteArray>
+#include <QFile>
 #include <QGuiApplication>
 #include <QObject>
 #include <QQuickItem>
@@ -190,23 +191,88 @@ QtScene::QtScene()
             QObject::connect(m_filter, &QtEventFilter::pickerModeEntered, m_filter,
                 []() { QGuiApplication::setOverrideCursor(QCursor(Qt::CrossCursor)); });
 
-            QObject::connect(m_filter, &QtEventFilter::pickerModeExited, m_filter,
-                []() { QGuiApplication::restoreOverrideCursor(); });
+            QObject::connect(m_filter, &QtEventFilter::verifyModeEntered, m_filter, [this]() {
+                if (m_isRecording == true) {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::WhatsThisCursor));
+                }
+            });
+
+            QObject::connect(
+                m_filter, &QtEventFilter::modeExited, m_filter, []() { QGuiApplication::restoreOverrideCursor(); });
 
             auto quickWindow = qobject_cast<QQuickWindow*>(window);
-            QObject::connect(m_filter, &QtEventFilter::pickClick, m_filter, [this, quickWindow](QMouseEvent* event) {
+
+            auto objectsFormMouseClick = [this, quickWindow](QMouseEvent* event) {
                 int bestCanidate = -1;
                 bool parentIsGoodCandidate = true;
                 auto objects
                     = recursiveItemsAt(quickWindow->contentItem(), event->pos(), bestCanidate, parentIsGoodCandidate);
+                return objects;
+            };
 
-                if (objects.size() == 1) {
-                    auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
-                    quickItem->setOpacity(0.5);
-                    auto itemPath = ItemPathForObject(quickItem);
+            QObject::connect(m_filter, &QtEventFilter::pickClick, m_filter,
+                [this, quickWindow, objectsFormMouseClick](QMouseEvent* event) {
+                    auto objects = objectsFormMouseClick(event);
+                    if (objects.size() == 1) {
+                        auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
+                        quickItem->setOpacity(0.5);
+                        auto itemPath = ItemPathForObject(quickItem);
 
-                    auto newPath = shortPath(itemPath, quickItem);
-                    qDebug() << "Path: " << QString::fromUtf8(newPath.string().c_str());
+                        auto newPath = shortPath(itemPath, quickItem);
+                        qDebug() << "Path: " << QString::fromUtf8(newPath.string().c_str());
+                    }
+                });
+
+            QObject::connect(m_filter, &QtEventFilter::verifyClick, m_filter,
+                [this, quickWindow, objectsFormMouseClick](QMouseEvent* event) {
+                    if (m_isRecording == true) {
+                        auto objects = objectsFormMouseClick(event);
+
+                        if (objects.size() == 1) {
+                            auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
+                            auto itemPath = ItemPathForObject(quickItem);
+
+                            auto newPath = shortPath(itemPath, quickItem);
+                            m_Recording.append(QString("session.existsAndVisible('"));
+                            m_Recording.append(QString::fromUtf8(newPath.string().c_str()));
+                            m_Recording.append(QString("')\nsession.wait(300)\n"));
+                        }
+                    }
+                });
+
+            QObject::connect(m_filter, &QtEventFilter::click, m_filter,
+                [this, quickWindow, objectsFormMouseClick](QMouseEvent* event) {
+                    if (m_isRecording == true) {
+                        auto objects = objectsFormMouseClick(event);
+
+                        if (objects.size() == 1) {
+                            auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
+                            auto itemPath = ItemPathForObject(quickItem);
+
+                            auto newPath = shortPath(itemPath, quickItem);
+                            m_Recording.append(QString("session.mouseClick('"));
+                            m_Recording.append(QString::fromUtf8(newPath.string().c_str()));
+                            m_Recording.append(QString("')\nsession.wait(300)\n"));
+                        }
+                    }
+                });
+
+            QObject::connect(m_filter, &QtEventFilter::record, m_filter, [this, quickWindow]() {
+                if (m_isRecording == false) {
+                    m_isRecording = true;
+                    m_Recording
+                        = "from xmlrpc.client import ServerProxy \nsession = ServerProxy('http://localhost:9000')\n";
+                } else {
+                    QFile file("record.py");
+
+                    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                        QTextStream stream(&file);
+                        stream << m_Recording;
+                    } else {
+                        qDebug("Failed to create Record File.");
+                    }
+                    file.close();
+                    m_isRecording = false;
                 }
             });
         }

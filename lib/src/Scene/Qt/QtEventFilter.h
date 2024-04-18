@@ -16,8 +16,12 @@ public:
 
 signals:
     void pickerModeEntered(QKeyEvent* event);
-    void pickerModeExited(QKeyEvent* event);
+    void verifyModeEntered(QKeyEvent* event);
+    void modeExited(QKeyEvent* event);
     void pickClick(QMouseEvent* event);
+    void verifyClick(QMouseEvent* event);
+    void click(QMouseEvent* event);
+    void record();
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;

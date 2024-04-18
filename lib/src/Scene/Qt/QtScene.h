@@ -45,6 +45,8 @@ private:
     QtEventFilter* m_filter;
     bool itemHasContents(QQuickItem* item);
     bool isGoodCandidateItem(QQuickItem* item, bool ignoreItemHasContents);
+    bool m_isRecording = false;
+    QString m_Recording;
 };
 
 } // namespace spix
