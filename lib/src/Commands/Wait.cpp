@@ -18,7 +18,7 @@ void Wait::execute(CommandEnvironment&)
 {
 }
 
-bool Wait::canExecuteNow()
+bool Wait::canExecuteNow(CommandEnvironment&)
 {
     if (!m_timerInitialized) {
         m_timerInitialized = true;

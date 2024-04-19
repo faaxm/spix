@@ -18,7 +18,7 @@ public:
     Wait(std::chrono::milliseconds waitTime);
 
     void execute(CommandEnvironment&) override;
-    bool canExecuteNow() override;
+    bool canExecuteNow(CommandEnvironment&) override;
 
 private:
     bool m_timerInitialized = false;
