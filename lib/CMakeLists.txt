@@ -64,6 +64,8 @@ set(SOURCES
     src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
+    src/Commands/WaitForPath.cpp
+    src/Commands/WaitForPath.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h

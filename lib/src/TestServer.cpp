@@ -24,6 +24,7 @@
 #include <Commands/Screenshot.h>
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
+#include <Commands/WaitForPath.h>
 
 #include <Spix/Events/Identifiers.h>
 
@@ -155,6 +156,16 @@ std::vector<std::string> TestServer::getErrors()
     std::promise<std::vector<std::string>> promise;
     auto result = promise.get_future();
     auto cmd = std::make_unique<cmd::GetTestStatus>(true, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
+}
+
+bool TestServer::waitForPath(ItemPath path, std::chrono::milliseconds maxWaitTime)
+{
+    std::promise<bool> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::WaitForPath>(path, maxWaitTime, std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
 
     return result.get();
