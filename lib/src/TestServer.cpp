@@ -64,14 +64,36 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
     m_cmdExec->enqueueCommand<cmd::Wait>(waitTime);
 }
 
-void TestServer::mouseClick(ItemPath path)
+bool TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left);
+    std::promise<bool> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::ClickOnItem>(
+        path, spix::MouseButtons::Left, std::chrono::milliseconds(100), std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
-void TestServer::mouseClick(ItemPath path, MouseButton mouseButton)
+bool TestServer::mouseClick(ItemPath path, MouseButton mouseButton)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton);
+    std::promise<bool> promise;
+    auto result = promise.get_future();
+    auto cmd
+        = std::make_unique<cmd::ClickOnItem>(path, mouseButton, std::chrono::milliseconds(100), std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
+}
+
+bool TestServer::mouseClick(ItemPath path, MouseButton mouseButton, std::chrono::milliseconds timeOut)
+{
+    std::promise<bool> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::ClickOnItem>(path, mouseButton, timeOut, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
 void TestServer::mouseBeginDrag(ItemPath path)
