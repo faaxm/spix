@@ -23,7 +23,7 @@ public:
     CustomCmd(ExecFunction exec, CanExecFunction canExec);
 
     void execute(spix::CommandEnvironment&) override;
-    bool canExecuteNow(CommandEnvironment&) override;
+    bool canExecuteNow(spix::CommandEnvironment&) override;
 
 private:
     ExecFunction m_exec;
