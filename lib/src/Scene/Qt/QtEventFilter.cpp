@@ -28,6 +28,9 @@ bool QtEventFilter::eventFilter(QObject* obj, QEvent* event)
             && keyEvent->key() == Qt::Key_R) {
             emit record();
             return false;
+        } else {
+            emit pressKey(keyEvent);
+            return false;
         }
 
     } else if (event->type() == QEvent::KeyRelease) {

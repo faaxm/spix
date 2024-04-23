@@ -17,6 +17,7 @@ public:
 signals:
     void pickerModeEntered(QKeyEvent* event);
     void verifyModeEntered(QKeyEvent* event);
+    void pressKey(QKeyEvent* event);
     void modeExited(QKeyEvent* event);
     void pickClick(QMouseEvent* event);
     void verifyClick(QMouseEvent* event);

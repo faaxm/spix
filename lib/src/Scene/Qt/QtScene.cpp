@@ -217,9 +217,9 @@ QtScene::QtScene()
                         auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
                         quickItem->setOpacity(0.5);
                         auto itemPath = ItemPathForObject(quickItem);
-
                         auto newPath = shortPath(itemPath, quickItem);
-                        qDebug() << "Path: " << QString::fromUtf8(newPath.string().c_str());
+
+                        qDebug() << "Path: " << QString::fromStdString(newPath.string());
                     }
                 });
 
@@ -231,10 +231,10 @@ QtScene::QtScene()
                         if (objects.size() == 1) {
                             auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
                             auto itemPath = ItemPathForObject(quickItem);
-
                             auto newPath = shortPath(itemPath, quickItem);
+
                             m_Recording.append(QString("session.existsAndVisible('"));
-                            m_Recording.append(QString::fromUtf8(newPath.string().c_str()));
+                            m_Recording.append(QString::fromStdString(newPath.string()));
                             m_Recording.append(QString("')\nsession.wait(300)\n"));
                         }
                     }
@@ -248,14 +248,31 @@ QtScene::QtScene()
                         if (objects.size() == 1) {
                             auto quickItem = qobject_cast<QQuickItem*>(objects[0]);
                             auto itemPath = ItemPathForObject(quickItem);
-
                             auto newPath = shortPath(itemPath, quickItem);
+
                             m_Recording.append(QString("session.mouseClick('"));
-                            m_Recording.append(QString::fromUtf8(newPath.string().c_str()));
+                            m_Recording.append(QString::fromStdString(newPath.string()));
                             m_Recording.append(QString("')\nsession.wait(300)\n"));
                         }
                     }
                 });
+
+            QObject::connect(m_filter, &QtEventFilter::pressKey, m_filter, [this, quickWindow](QKeyEvent* event) {
+                if (m_isRecording == true) {
+                    auto object = quickWindow->focusObject();
+                    auto quickItem = qobject_cast<QQuickItem*>(object);
+                    auto itemPath = ItemPathForObject(object);
+                    auto itemPathString = itemPath.string();
+                    size_t found = itemPathString.find('/');
+                    auto rootPath = itemPathString.substr(0, found + 1);
+
+                    m_Recording.append(QString("session.inputText('"));
+                    m_Recording.append(QString::fromStdString(rootPath));
+                    m_Recording.append(QString("','"));
+                    m_Recording.append(QString(event->text()));
+                    m_Recording.append(QString("')\n"));
+                }
+            });
 
             QObject::connect(m_filter, &QtEventFilter::record, m_filter, [this, quickWindow]() {
                 if (m_isRecording == false) {
