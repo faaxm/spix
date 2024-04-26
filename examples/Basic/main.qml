@@ -23,34 +23,33 @@ Window {
         Button {
             objectName: "Button_1"
             text: "Press Me"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 1 right clicked")
-					else
-						resultsView.appendText("Button 1 clicked")
-				}
-			}
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.AllButtons
+
+                onClicked: function (mouse)
+                {
+                    if(mouse.button & Qt.RightButton)
+                        resultsView.appendText("Button 1 right clicked")
+                    else
+                        resultsView.appendText("Button 1 clicked")
+                }
+            }
         }
         Button {
             objectName: "Button_2"
             text: "Or Click Me"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 2 right clicked")
-					else
-						resultsView.appendText("Button 2 clicked")
-				}
-			}
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.AllButtons
+
+                onClicked: function (mouse) {
+                    if(mouse.button & Qt.RightButton)
+                        resultsView.appendText("Button 2 right clicked")
+                    else
+                        resultsView.appendText("Button 2 clicked")
+                }
+            }
         }
     }
 

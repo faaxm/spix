@@ -119,29 +119,13 @@ TEST(GTestExample, SearchType)
     EXPECT_EQ(result, expected_result);
 }
 
-TEST(GTestExample, SearchTypeAndTextCombined)
-{
-    // Clean Output
-    srv->setStringProperty("mainWindow/results", "text", "");
-    srv->wait(std::chrono::milliseconds(500));
-    // Search for Type in the center of a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/\"Or Click Me\""));
-    srv->wait(std::chrono::milliseconds(500));
-
-    auto result = srv->getStringProperty("mainWindow/results", "text");
-    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
-
-    EXPECT_EQ(result, expected_result);
-    srv->quit();
-}
-
 TEST(GTestExample, SearchWrongType)
 {
     // Clean Output
     srv->setStringProperty("mainWindow/results", "text", "");
     srv->wait(std::chrono::milliseconds(500));
     // Serach for Type Button in the end of a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/#Button_1")); //evil: its a name, not a type
+    srv->mouseClick(spix::ItemPath("mainWindow/#Button_1")); // evil: its a name, not a type
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
@@ -156,13 +140,29 @@ TEST(GTestExample, SearchByValue)
     srv->setStringProperty("mainWindow/results", "text", "");
     srv->wait(std::chrono::milliseconds(500));
     // Serach for Type Button in the end of a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/(width=99)")); //Button2 width
+    srv->mouseClick(spix::ItemPath("mainWindow/(width=99)")); // Button2 width
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
     auto expected_result = R"RSLT(Button 2 clicked)RSLT";
 
     EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeAndTextCombined)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for Type in the center of a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/\"Or Click Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+    srv->quit();
 }
 
 int main(int argc, char* argv[])

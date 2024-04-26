@@ -27,8 +27,7 @@ Window {
                 anchors.fill: parent
                 acceptedButtons:  Qt.AllButtons
 
-                onClicked:
-                {
+                onClicked: function (mouse) {
                     if(mouse.button & Qt.RightButton)
                         resultsView.appendText("Button 1 right clicked")
                     else if ((mouse.button == Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier))
@@ -52,8 +51,7 @@ Window {
                     anchors.fill: parent
                     acceptedButtons:  Qt.AllButtons
                     
-                    onClicked:
-                    {
+                    onClicked: function (mouse) {
                         if(mouse.button & Qt.RightButton)
                             resultsView.appendText("Button 2 right clicked")
                         else if ((mouse.modifiers & Qt.ControlModifier) && (mouse.modifiers &Qt.ShiftModifier))
