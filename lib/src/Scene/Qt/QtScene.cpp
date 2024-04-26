@@ -24,8 +24,10 @@ namespace {
 QString getNameForObject(QObject* object)
 {
     QString name;
-    if (spix::qt::TextPropertyByObject(object) != "") {
-        name = "\"" + spix::qt::TextPropertyByObject(object) + "\"";
+    if (spix::qt::PropertValueByObject(object, QString::fromStdString("text")) != "") {
+        name = "\"" + spix::qt::PropertValueByObject(object, QString::fromStdString("text")) + "\"";
+    } else if (spix::qt::PropertValueByObject(object, QString::fromStdString("source")) != "") {
+        name = "(source=" + spix::qt::PropertValueByObject(object, QString::fromStdString("source")) + ")";
     } else if (spix::qt::GetObjectName(object) != "") {
         name = spix::qt::GetObjectName(object);
     } else {
@@ -119,14 +121,15 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         }
 
     } else if (itemName.compare(0, 1, "\"") == 0) {
-        auto propertyName = itemName.substr(1);
-        QVariant propertyValue = root->property(propertyName.c_str());
-
+        // remove ""
         size_t found = itemName.find("\"");
         auto searchText = itemName.substr(found + 1, itemName.length() - 2);
-        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str(), QString::fromStdString(searchText), {});
+
+        subItem = spix::qt::FindChildItem<QQuickItem*>(
+            root, itemName.c_str(), QString::fromStdString("text"), QString::fromStdString(searchText), {});
 
     } else if (itemName.compare(0, 1, "#") == 0) {
+        // remove #
         size_t found = itemName.find("#");
         auto type = QString::fromStdString(itemName.substr(found + 1));
 
@@ -138,7 +141,17 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
                 return foundItem;
             }
         }
+    } else if (itemName.compare(0, 1, "(") == 0) {
+        // remove ()
+        size_t foundBracketSign = itemName.find('(');
+        auto searchText = itemName.substr(foundBracketSign + 1, itemName.length() - 2);
 
+        // Split in to property and value
+        size_t foundEqualSign = searchText.find('=');
+        auto property = QString::fromStdString(searchText.substr(0, foundEqualSign));
+        auto value = QString::fromStdString(searchText.substr(foundEqualSign + 1));
+
+        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str(), property, value, {});
     } else if (rootClassName == spix::qt::repeater_class_name) {
         QQuickItem* repeater = static_cast<QQuickItem*>(root);
         subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
