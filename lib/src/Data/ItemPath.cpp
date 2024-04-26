@@ -30,6 +30,14 @@ ItemPath::ItemPath(const std::string& path)
             component = '\"' + component + '\"';
             m_components.push_back(std::move(component));
         }
+
+        if (pathss.peek() == '(') {
+            getline(pathss, component, '(');
+            getline(pathss, component, ')');
+            component = '(' + component + ')';
+            m_components.push_back(std::move(component));
+        }
+
         getline(pathss, component, '/');
         if (component.length() > 0) {
             m_components.push_back(std::move(component));

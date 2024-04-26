@@ -64,21 +64,21 @@ QString GetObjectName(QObject* object)
     return object->objectName();
 }
 
-QString TextPropertyByObject(QObject* object)
+QString PropertValueByObject(QObject* object, QString propertyName)
 {
     if (object == nullptr) {
         return "";
     }
 
-    auto objectText = object->property("text");
+    auto property = object->property(propertyName.toStdString().c_str());
     auto objectVisible = object->property("visible");
 
-    if (objectText.isNull() || objectVisible.isNull()) {
+    if (property.isNull() || objectVisible.isNull()) {
         return "";
     }
 
-    if (objectText.isValid() && objectVisible.toBool()) {
-        return objectText.toString();
+    if (property.isValid() && objectVisible.toBool()) {
+        return property.toString();
     }
 
     return "";
@@ -95,8 +95,8 @@ QString TypeByObject(QObject* object)
     return typeName;
 }
 
-QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyText = {},
-    const std::optional<QString>& type = {})
+QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName = {},
+    const std::optional<QString>& propertyValue = {}, const std::optional<QString>& type = {})
 {
     if (object == nullptr) {
         return nullptr;
@@ -109,12 +109,12 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (propertyText.has_value()) {
-                if (TextPropertyByObject(child) == propertyText.value()) {
+            if (propertyName.has_value() && propertyValue.has_value()) {
+                if (PropertValueByObject(child, propertyName.value()) == propertyValue.value()) {
                     return child;
                 }
 
-                if (auto item = FindChildItem(child, name, propertyText, {})) {
+                if (auto item = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {})) {
                     return item;
                 }
             } else if (type.has_value()) {
@@ -122,7 +122,7 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
                     return child;
                 }
 
-                if (auto item = FindChildItem(child, name, {}, type)) {
+                if (auto item = FindChildItem(child, name, {}, {}, type)) {
                     return item;
                 }
 
@@ -139,12 +139,12 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
                 return child;
             }
 
-            if (propertyText.has_value()) {
-                if (auto item = FindChildItem(child, name, propertyText, {})) {
+            if (propertyValue.has_value() && propertyName.has_value()) {
+                if (auto item = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {})) {
                     return item;
                 }
             } else if (type.has_value()) {
-                if (auto item = FindChildItem(child, name, {}, type)) {
+                if (auto item = FindChildItem(child, name, {}, {}, type)) {
                     return item;
                 }
             } else {
