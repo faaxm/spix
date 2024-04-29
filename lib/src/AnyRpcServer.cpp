@@ -37,6 +37,22 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "mouseButton)",
         [this](std::string path, int mouseButton) { mouseClick(std::move(path), mouseButton); });
 
+    utils::AddFunctionToAnyRpc<void(std::string, int, int)>(methodManager, "mouseClickWithButtonAndWait",
+        "Click on the object (waiting for the object) at the given path with the given mouse button | "
+        "mouseClickWithButton(string path, int "
+        "mouseButton, int timeOut)",
+        [this](std::string path, int mouseButton, int timeOut) {
+            mouseClick(std::move(path), mouseButton, std::chrono::milliseconds(timeOut));
+        });
+
+    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "mouseClickWithWait",
+        "Click on the object (waiting for the object) at the given path with the given mouse button | "
+        "mouseClickWithButton(string path, int "
+        "mouseButton, int timeOut)",
+        [this](std::string path, int timeOut) {
+            mouseClick(std::move(path), MouseButtons::Left, std::chrono::milliseconds(timeOut));
+        });
+
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "mouseBeginDrag",
         "Begin a drag with the mouse | mouseBeginDrag(string path)",
         [this](std::string path) { mouseBeginDrag(std::move(path)); });
