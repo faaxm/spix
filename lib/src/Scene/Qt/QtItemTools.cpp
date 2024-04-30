@@ -95,29 +95,39 @@ QString TypeByObject(QObject* object)
     return typeName;
 }
 
-QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName = {},
-    const std::optional<QString>& propertyValue = {}, const std::optional<QString>& type = {})
+QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName,
+    const std::optional<QString>& propertyValue, const std::optional<QString>& type, int matchIndex)
 {
     if (object == nullptr) {
         return nullptr;
     }
 
+    bool hasProperty = propertyValue.has_value() && propertyName.has_value();
+    bool hasType = type.has_value();
+
     using Index = QObjectList::size_type;
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        auto match = 0;
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (propertyName.has_value() && propertyValue.has_value()) {
+
+            if (hasProperty) {
                 if (PropertValueByObject(child, propertyName.value()) == propertyValue.value()) {
-                    return child;
+                    match++;
+                    if (match == matchIndex) {
+                        return child;
+                    }
                 }
 
-                if (auto item = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {})) {
+                if (auto item
+                    = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {}, matchIndex)) {
                     return item;
                 }
-            } else if (type.has_value()) {
+            }
+            if (hasType) {
                 if (TypeByObject(child) == type.value()) {
                     return child;
                 }
@@ -133,17 +143,20 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
             }
         }
     } else {
+        auto match = 0;
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
             if (GetObjectName(child) == name) {
                 return child;
             }
 
-            if (propertyValue.has_value() && propertyName.has_value()) {
-                if (auto item = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {})) {
+            if (hasProperty) {
+                if (auto item
+                    = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {}, matchIndex)) {
                     return item;
                 }
-            } else if (type.has_value()) {
+            }
+            if (hasType) {
                 if (auto item = FindChildItem(child, name, {}, {}, type)) {
                     return item;
                 }
