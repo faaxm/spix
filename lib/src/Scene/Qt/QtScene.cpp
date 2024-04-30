@@ -142,8 +142,9 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         // remove ""
         size_t found = itemName.find("\"");
         auto searchText = itemName.substr(found + 1, itemName.length() - 2);
-        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str(), QString::fromStdString("text"),
-            QString::fromStdString(searchText), {}, std::stoi(number));
+
+        subItem = spix::qt::FindChildItemByProperty<QQuickItem*>(
+            root, QString::fromStdString("text"), QString::fromStdString(searchText), std::stoi(number));
 
         // Searching for class/typ
     } else if (itemName.compare(0, 1, "#") == 0) {
@@ -151,7 +152,7 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         size_t found = itemName.find("#");
         auto type = QString::fromStdString(itemName.substr(found + 1));
 
-        subItems = spix::qt::FindChildItems(root, type);
+        subItems = spix::qt::FindChildItemsByType(root, type);
 
         for (const auto item : subItems) {
             auto foundItem = getQQuickItemWithRoot(path.subPath(1), item);
@@ -177,12 +178,12 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         auto property = QString::fromStdString(searchText.substr(0, foundEqualSign));
         auto value = QString::fromStdString(searchText.substr(foundEqualSign + 1));
 
-        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str(), property, value, {}, std::stoi(number));
+        subItem = spix::qt::FindChildItemByProperty<QQuickItem*>(root, property, value, std::stoi(number));
     } else if (rootClassName == spix::qt::repeater_class_name) {
         QQuickItem* repeater = static_cast<QQuickItem*>(root);
         subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
     } else {
-        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
+        subItem = spix::qt::FindChildItemByName<QQuickItem*>(root, itemName.c_str());
     }
 
     if (path.length() == 1) {

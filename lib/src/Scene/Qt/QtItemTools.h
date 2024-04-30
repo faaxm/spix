@@ -36,16 +36,24 @@ QString TypeByObject(QObject* object);
  * encounters a `QQuickItem`, it no longer iterates over the object's
  * `children()`, but rather its `childItems()`.
  */
-QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName = {},
-    const std::optional<QString>& propertyValue = {}, const std::optional<QString>& type = {}, int matchIndex = 1);
-QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& type);
 
+QObject* FindChildItemByName(QObject* object, const QString& name, int matchIndex = 1);
 template <typename T>
-T FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName = {},
-    const std::optional<QString>& propertyValue = {}, const std::optional<QString>& type = {}, int matchIndex = 1)
+T FindChildItemByName(QObject* object, const QString& name, int matchIndex = 1)
 {
-    return qobject_cast<T>(FindChildItem(object, name, propertyName, propertyValue, type, matchIndex));
+    return qobject_cast<T>(FindChildItemByName(object, name, matchIndex));
 }
+
+QObject* FindChildItemByProperty(
+    QObject* object, const QString& propertyName, const QString& propertyValue, int matchIndex = 1);
+template <typename T>
+T FindChildItemByProperty(
+    QObject* object, const QString& propertyName, const QString& propertyValue, int matchIndex = 1)
+{
+    return qobject_cast<T>(FindChildItemByProperty(object, propertyName, propertyValue, matchIndex));
+}
+
+QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type);
 
 using QMLReturnVariant = std::variant<std::nullptr_t, bool, int, float, double, QString, QDateTime, QVariant>;
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& toInitialize);

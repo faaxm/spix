@@ -95,75 +95,37 @@ QString TypeByObject(QObject* object)
     return typeName;
 }
 
-QObject* FindChildItem(QObject* object, const QString& name, const std::optional<QString>& propertyName,
-    const std::optional<QString>& propertyValue, const std::optional<QString>& type, int matchIndex)
+QObject* FindChildItemByName(QObject* object, const QString& name, int matchIndex)
 {
     if (object == nullptr) {
         return nullptr;
     }
-
-    bool hasProperty = propertyValue.has_value() && propertyName.has_value();
-    bool hasType = type.has_value();
 
     using Index = QObjectList::size_type;
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         auto match = 0;
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
-            }
-
-            if (hasProperty) {
-                if (PropertValueByObject(child, propertyName.value()) == propertyValue.value()) {
-                    match++;
-                    if (match == matchIndex) {
-                        return child;
-                    }
-                }
-
-                if (auto item
-                    = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {}, matchIndex)) {
-                    return item;
-                }
-            }
-            if (hasType) {
-                if (TypeByObject(child) == type.value()) {
+            if ((GetObjectName(child) == name)) {
+                match++;
+                if (match == matchIndex)
                     return child;
-                }
-
-                if (auto item = FindChildItem(child, name, {}, {}, type)) {
-                    return item;
-                }
-
-            } else {
-                if (auto item = FindChildItem(child, name)) {
-                    return item;
-                }
+            }
+            if (auto item = FindChildItemByName(child, name, matchIndex)) {
+                return item;
             }
         }
     } else {
         auto match = 0;
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
+            if ((GetObjectName(child) == name)) {
+                match++;
+                if (match == matchIndex)
+                    return child;
             }
-
-            if (hasProperty) {
-                if (auto item
-                    = FindChildItem(child, name, propertyName.value(), propertyValue.value(), {}, matchIndex)) {
-                    return item;
-                }
-            }
-            if (hasType) {
-                if (auto item = FindChildItem(child, name, {}, {}, type)) {
-                    return item;
-                }
-            } else {
-                if (auto item = FindChildItem(child, name)) {
-                    return item;
-                }
+            if (auto item = FindChildItemByName(child, name)) {
+                return item;
             }
         }
     }
@@ -171,7 +133,46 @@ QObject* FindChildItem(QObject* object, const QString& name, const std::optional
     return nullptr;
 }
 
-QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& type = {})
+QObject* FindChildItemByProperty(
+    QObject* object, const QString& propertyName, const QString& propertyValue, int matchIndex)
+{
+
+    if (object == nullptr) {
+        return nullptr;
+    }
+
+    using Index = QObjectList::size_type;
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        auto match = 0;
+        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
+            auto child = qquickitem->childItems().at(i);
+
+            if (PropertValueByObject(child, propertyName) == propertyValue) {
+                match++;
+                if (match == matchIndex) {
+                    return child;
+                }
+            }
+
+            if (auto item = FindChildItemByProperty(child, propertyName, propertyValue, matchIndex)) {
+                return item;
+            }
+        }
+    } else {
+        auto match = 0;
+        for (Index i = 0; i < object->children().size(); ++i) {
+            auto child = object->children().at(i);
+
+            if (auto item = FindChildItemByProperty(child, propertyName, propertyValue, matchIndex)) {
+                return item;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type)
 {
     QVector<QObject*> result = {};
     if (object == nullptr) {
@@ -182,16 +183,16 @@ QVector<QObject*> FindChildItems(QObject* object, const std::optional<QString>& 
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
-            result = result + FindChildItems(child, type);
-            if (type.has_value() && TypeByObject(child) == type.value()) {
+            result = result + FindChildItemsByType(child, type);
+            if (TypeByObject(child) == type) {
                 result.push_back(child);
             }
         }
     } else {
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
-            result = result + FindChildItems(child, type);
-            if (type.has_value() && TypeByObject(child) == type.value()) {
+            result = result + FindChildItemsByType(child, type);
+            if (TypeByObject(child) == type) {
                 result.push_back(child);
             }
         }
