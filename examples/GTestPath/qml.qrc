@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ResultsView.qml</file>
+        <file>icon.png</file>
+    </qresource>
+</RCC>
