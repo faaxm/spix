@@ -87,6 +87,17 @@ TEST(GTestExample, ClickWithIndex)
 Button 2 clicked
 Button 3 clicked)RSLT";
     EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, TypeNumbers)
+{
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->mouseClick(spix::ItemPath("mainWindow/#Button#2"));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+    EXPECT_EQ(result, expected_result);
     srv->quit();
 }
 
