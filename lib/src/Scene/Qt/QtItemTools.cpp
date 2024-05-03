@@ -172,28 +172,35 @@ QObject* FindChildItemByProperty(
     return nullptr;
 }
 
-QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type)
+QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type, int matchIndex)
 {
     QVector<QObject*> result = {};
     if (object == nullptr) {
         return {};
     }
 
+    auto match = 0;
     using Index = QObjectList::size_type;
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
-            result = result + FindChildItemsByType(child, type);
+            result = result + FindChildItemsByType(child, type, matchIndex);
             if (TypeByObject(child) == type) {
-                result.push_back(child);
+                match++;
+                if (match == matchIndex) {
+                    result.push_back(child);
+                }
             }
         }
     } else {
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
-            result = result + FindChildItemsByType(child, type);
+            result = result + FindChildItemsByType(child, type, matchIndex);
             if (TypeByObject(child) == type) {
-                result.push_back(child);
+                match++;
+                if (match == matchIndex) {
+                    result.push_back(child);
+                }
             }
         }
     }

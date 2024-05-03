@@ -53,7 +53,7 @@ T FindChildItemByProperty(
     return qobject_cast<T>(FindChildItemByProperty(object, propertyName, propertyValue, matchIndex));
 }
 
-QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type);
+QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type, int matchIndex);
 
 using QMLReturnVariant = std::variant<std::nullptr_t, bool, int, float, double, QString, QDateTime, QVariant>;
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& toInitialize);

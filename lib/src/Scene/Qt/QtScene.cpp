@@ -174,9 +174,16 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     // Searching for class/typ
     else if (itemName.compare(0, 1, "#") == 0) {
         size_t found = itemName.find("#");
-        auto type = QString::fromStdString(itemName.substr(found + 1));
+        auto type = itemName.substr(found + 1);
 
-        subItems = spix::qt::FindChildItemsByType(root, type);
+        int index = 1;
+        findIndex(type, index);
+
+        subItems = spix::qt::FindChildItemsByType(root, QString::fromStdString(type), index);
+
+        if (path.subPath(1).string() == "" && subItems.size() > 0) {
+            return static_cast<QQuickItem*>(subItems[1]);
+        }
 
         for (const auto item : subItems) {
             auto foundItem = getQQuickItemWithRoot(path.subPath(1), item);
