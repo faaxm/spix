@@ -48,6 +48,7 @@ jobs:
         run: |
           build/examples/GTest/SpixGTestExample -platform minimal
           build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest -platform minimal
+          build/examples/GTestPath/SpixGTestPath -platform minimal
 
       - name: "Test GTest Examples (win)"
         if: ${{ contains(matrix.base.os, 'windows') }}
