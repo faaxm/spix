@@ -24,6 +24,46 @@ ItemPath::ItemPath(const std::string& path)
 
     while (pathss) {
         std::string component;
+        if (pathss.peek() == '\"') {
+            getline(pathss, component, '\"');
+            getline(pathss, component, '\"');
+
+            if (pathss.peek() == '#') {
+                std::string number = "";
+                getline(pathss, number, '#');
+
+                char nextChar;
+                while (std::isdigit(pathss.peek())) {
+                    pathss >> nextChar;
+                    number += nextChar;
+                }
+                component = '\"' + component + '\"' + '#' + number;
+            } else {
+                component = '\"' + component + '\"';
+            }
+            m_components.push_back(std::move(component));
+        }
+
+        if (pathss.peek() == '(') {
+            getline(pathss, component, '(');
+            getline(pathss, component, ')');
+
+            if (pathss.peek() == '#') {
+                std::string number = "";
+                getline(pathss, number, '#');
+
+                char nextChar;
+                while (std::isdigit(pathss.peek())) {
+                    pathss >> nextChar;
+                    number += nextChar;
+                }
+                component = '(' + component + ')' + '#' + number;
+            } else {
+                component = '(' + component + ')';
+            }
+            m_components.push_back(std::move(component));
+        }
+
         getline(pathss, component, '/');
         if (component.length() > 0) {
             m_components.push_back(std::move(component));

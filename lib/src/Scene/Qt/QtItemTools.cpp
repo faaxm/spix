@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QQmlContext>
 #include <QQuickItem>
+#include <QRegularExpression>
+#include <optional>
 #include <stdexcept>
 
 namespace spix {
@@ -62,7 +64,38 @@ QString GetObjectName(QObject* object)
     return object->objectName();
 }
 
-QObject* FindChildItem(QObject* object, const QString& name)
+QString PropertValueByObject(QObject* object, QString propertyName)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    auto property = object->property(propertyName.toStdString().c_str());
+    auto objectVisible = object->property("visible");
+
+    if (property.isNull() || objectVisible.isNull()) {
+        return "";
+    }
+
+    if (property.isValid() && objectVisible.toBool()) {
+        return property.toString();
+    }
+
+    return "";
+}
+
+QString TypeByObject(QObject* object)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    auto typeName = QString(object->metaObject()->className());
+    typeName.replace(QRegularExpression("QQuick|_QML.*"), "");
+    return typeName;
+}
+
+QObject* FindChildItemByName(QObject* object, const QString& name, int matchIndex)
 {
     if (object == nullptr) {
         return nullptr;
@@ -70,28 +103,108 @@ QObject* FindChildItem(QObject* object, const QString& name)
 
     using Index = QObjectList::size_type;
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        auto match = 0;
         for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
             auto child = qquickitem->childItems().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
+            if ((GetObjectName(child) == name)) {
+                match++;
+                if (match == matchIndex)
+                    return child;
             }
-            if (auto item = FindChildItem(child, name)) {
+            if (auto item = FindChildItemByName(child, name, matchIndex)) {
                 return item;
             }
         }
     } else {
+        auto match = 0;
         for (Index i = 0; i < object->children().size(); ++i) {
             auto child = object->children().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
+            if ((GetObjectName(child) == name)) {
+                match++;
+                if (match == matchIndex)
+                    return child;
             }
-            if (auto item = FindChildItem(child, name)) {
+            if (auto item = FindChildItemByName(child, name)) {
                 return item;
             }
         }
     }
 
     return nullptr;
+}
+
+QObject* FindChildItemByProperty(
+    QObject* object, const QString& propertyName, const QString& propertyValue, int matchIndex)
+{
+
+    if (object == nullptr) {
+        return nullptr;
+    }
+
+    using Index = QObjectList::size_type;
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        auto match = 0;
+        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
+            auto child = qquickitem->childItems().at(i);
+
+            if (PropertValueByObject(child, propertyName) == propertyValue) {
+                match++;
+                if (match == matchIndex) {
+                    return child;
+                }
+            }
+
+            if (auto item = FindChildItemByProperty(child, propertyName, propertyValue, matchIndex)) {
+                return item;
+            }
+        }
+    } else {
+        auto match = 0;
+        for (Index i = 0; i < object->children().size(); ++i) {
+            auto child = object->children().at(i);
+
+            if (auto item = FindChildItemByProperty(child, propertyName, propertyValue, matchIndex)) {
+                return item;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+QVector<QObject*> FindChildItemsByType(QObject* object, const QString& type, int matchIndex)
+{
+    QVector<QObject*> result = {};
+    if (object == nullptr) {
+        return {};
+    }
+
+    auto match = 0;
+    using Index = QObjectList::size_type;
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
+            auto child = qquickitem->childItems().at(i);
+            result = result + FindChildItemsByType(child, type, matchIndex);
+            if (TypeByObject(child) == type) {
+                match++;
+                if (match == matchIndex) {
+                    result.push_back(child);
+                }
+            }
+        }
+    } else {
+        for (Index i = 0; i < object->children().size(); ++i) {
+            auto child = object->children().at(i);
+            result = result + FindChildItemsByType(child, type, matchIndex);
+            if (TypeByObject(child) == type) {
+                match++;
+                if (match == matchIndex) {
+                    result.push_back(child);
+                }
+            }
+        }
+    }
+    return result;
 }
 
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& retVar)
