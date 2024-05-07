@@ -11,17 +11,15 @@ jobs:
           # Qt v5.15.2
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF'},
           {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-5.15.2 macos', os: macos-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF'},
+          {name: 'qt-5.15.2 macos', os: macos-13, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF'},
           # Qt v6.2.3
           {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF'},
           {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          
-          # Qt6 on GitHub Actions MacOS is currently bugged: https://bugreports.qt.io/browse/QTIFW-1592
-          # {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF'},
+          {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF'},
         ]
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
@@ -42,9 +40,9 @@ jobs:
       
       - name: "Build"
         run: cmake --build build --config ${{ matrix.base.build_type }}
-      
-      - name: "Test GTest Examples (*nix)"
-        if: ${{ !contains(matrix.base.os, 'windows') }}
+
+      - name: "Test GTest Examples (Linux)"
+        if: ${{ contains(matrix.base.os, 'ubuntu') }}
         run: |
           build/examples/GTest/SpixGTestExample -platform minimal
           build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest -platform minimal
@@ -54,3 +52,9 @@ jobs:
         run: |
           .\build\examples\GTest\${{ matrix.base.build_type }}\SpixGTestExample.exe -platform minimal
           .\build\examples\RepeaterLoader\${{ matrix.base.build_type }}\SpixRepeaterLoaderExampleGTest.exe -platform minimal
+
+      - name: "Test GTest Examples (mac)"
+        if: ${{ contains(matrix.base.os, 'mac') }}
+        run: |
+          build/examples/GTest/SpixGTestExample
+          build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest
