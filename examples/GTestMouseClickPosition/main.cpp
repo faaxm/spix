@@ -74,7 +74,7 @@ Button 4 clicked)RSLT";
     EXPECT_EQ(result, expected_result);
 }
 
-TEST(GTestExample, ToMuchProportion)
+TEST(GTestExample, TooMuchProportion)
 {
     // This Test click 200% under the Button 1 => under the Button 1 is Button 3  which will trigger.
     const auto upperLeft = spix::Point(0.25, 2);
