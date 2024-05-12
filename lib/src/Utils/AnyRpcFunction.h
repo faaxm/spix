@@ -70,6 +70,15 @@ int unpackAnyRpcParam(anyrpc::Value& value)
 }
 
 template <>
+double unpackAnyRpcParam(anyrpc::Value& value)
+{
+    if (!value.IsNumber()) {
+        throw anyrpc::AnyRpcException(anyrpc::AnyRpcErrorInvalidParams, "Invalid parameters. Expected double.");
+    }
+    return value.GetDouble();
+}
+
+template <>
 unsigned unpackAnyRpcParam(anyrpc::Value& value)
 {
     if (!value.IsUint()) {

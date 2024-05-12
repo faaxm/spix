@@ -70,6 +70,18 @@ void TestServer::mouseClick(ItemPath path)
     m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left);
 }
 
+void TestServer::mouseClick(ItemPath path, Point proportion)
+{
+    auto pathWithProportion = ItemPosition(path.string(), proportion);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(pathWithProportion, spix::MouseButtons::Left);
+}
+
+void TestServer::mouseClick(ItemPath path, Point proportion, Point offset)
+{
+    auto pathWithOffset = ItemPosition(path.string(), proportion, offset);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(pathWithOffset, spix::MouseButtons::Left);
+}
+
 void TestServer::mouseClick(ItemPath path, MouseButton mouseButton)
 {
     m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton);
