@@ -4,21 +4,21 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
-#include "ScreenshotRemote.h"
+#include "ScreenshotBase64.h"
 
 #include <Scene/Scene.h>
 namespace spix {
 namespace cmd {
 
-ScreenshotRemote::ScreenshotRemote(ItemPath targetItemPath, std::promise<std::string> promise)
+ScreenshotAsBase64::ScreenshotAsBase64(ItemPath targetItemPath, std::promise<std::string> promise)
 : m_itemPath {std::move(targetItemPath)}
 , m_promise(std::move(promise))
 {
 }
 
-void ScreenshotRemote::execute(CommandEnvironment& env)
+void ScreenshotAsBase64::execute(CommandEnvironment& env)
 {
-    auto value = env.scene().takeScreenshotRemote(m_itemPath);
+    auto value = env.scene().takeScreenshotAsBase64(m_itemPath);
     m_promise.set_value(value);
 }
 

@@ -8,9 +8,9 @@
 namespace spix {
 namespace cmd {
 
-class ScreenshotRemote : public Command {
+class ScreenshotAsBase64 : public Command {
 public:
-    ScreenshotRemote(ItemPath targetItemPath, std::promise<std::string> promise);
+    ScreenshotAsBase64(ItemPath targetItemPath, std::promise<std::string> promise);
 
     void execute(CommandEnvironment& env) override;
 

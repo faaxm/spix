@@ -141,7 +141,7 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
     image.save(QString::fromStdString(filePath));
 }
 
-std::string QtScene::takeScreenshotRemote(const ItemPath& targetItem)
+std::string QtScene::takeScreenshotAsBase64(const ItemPath& targetItem)
 {
     auto item = getQQuickItemAtPath(targetItem);
     if (!item) {

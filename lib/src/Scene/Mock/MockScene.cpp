@@ -28,7 +28,7 @@ void MockScene::takeScreenshot(const ItemPath&, const std::string&)
 {
 }
 
-std::string MockScene::takeScreenshotRemote(const ItemPath&)
+std::string MockScene::takeScreenshotAsBase64(const ItemPath&)
 {
     return "Base64 String";
 }
