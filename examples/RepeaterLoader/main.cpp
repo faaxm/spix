@@ -20,7 +20,7 @@ protected:
             std::cout << "Error: Item should not be visible at launch." << std::endl;
         }
 
-        mouseClick("mainWindow/ItemButtons/Item_0");
+        mouseClick("mainWindow/ItemButtons/Item_0/mouseArea");
         wait(std::chrono::milliseconds(500));
 
         if (!existsAndVisible("mainWindow/ItemDisplayLoader/textItem")) {
@@ -29,7 +29,7 @@ protected:
 
         // 'ItemButtons' is not required in the path,
         // as 'gridItem_0' is unique within 'mainWindow'
-        mouseClick("mainWindow/Item_1");
+        mouseClick("mainWindow/Item_1/mouseArea");
         wait(std::chrono::milliseconds(500));
 
         auto result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
@@ -37,11 +37,11 @@ protected:
             std::cout << "Error: Wrong item displayed." << std::endl;
         }
 
-        mouseClick("mainWindow/ItemButtons/Item_2");
+        mouseClick("mainWindow/ItemButtons/Item_2/mouseArea");
         wait(std::chrono::milliseconds(500));
-        mouseClick("mainWindow/ItemButtons/Item_0");
+        mouseClick("mainWindow/ItemButtons/Item_0/mouseArea");
         wait(std::chrono::milliseconds(500));
-        mouseClick("mainWindow/ItemButtons/Item_3");
+        mouseClick("mainWindow/ItemButtons/Item_3/mouseArea");
         wait(std::chrono::milliseconds(100));
 
         result = getStringProperty("mainWindow/ItemDisplayLoader/textItem", "text");
