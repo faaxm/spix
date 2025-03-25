@@ -20,6 +20,10 @@
 #include <QDragMoveEvent>
 #include <QMimeData>
 
+// comment this to use mouse events on window level
+// if uncommented, the mouse events are triggered on the given item
+// #define WINDOW_MODE
+
 namespace spix {
 
 namespace {
@@ -82,11 +86,15 @@ void sendQtKeyEvent(Item* item, bool press, int keyCode, KeyModifier mod)
     if (!qtitem)
         return;
 
-    auto window = qtitem->qquickitem()->window();
-
     auto qtmod = getQtKeyboardModifiers(mod);
     auto keyEvent = new QKeyEvent(press ? QEvent::KeyPress : QEvent::KeyRelease, keyCode, qtmod);
+
+#ifdef WINDOW_MODE
+    auto window = qtitem->qquickitem()->window();
     QGuiApplication::postEvent(window, keyEvent);
+#else
+    QGuiApplication::postEvent(qtitem->qquickitem(), keyEvent);
+#endif
 }
 
 } // namespace
@@ -98,13 +106,22 @@ void QtEvents::mouseDown(Item* item, Point loc, MouseButton button)
     if (!window)
         return;
 
+    auto qtitem = dynamic_cast<QtItem*>(item);
+    if (!qtitem)
+        return;
+
     m_pressedMouseButtons |= button;
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
 
     QMouseEvent* event
         = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
+
+#ifdef WINDOW_MODE
     QGuiApplication::postEvent(window, event);
+#else
+    QGuiApplication::postEvent(qtitem->qquickitem(), event);
+#endif
 }
 
 void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
@@ -112,6 +129,10 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
     QPointF windowLoc;
     auto window = getWindowAndPositionForItem(item, loc, windowLoc);
     if (!window)
+        return;
+
+    auto qtitem = dynamic_cast<QtItem*>(item);
+    if (!qtitem)
         return;
 
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
@@ -128,7 +149,12 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button)
 
     QMouseEvent* event
         = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, Qt::NoModifier);
+
+#ifdef WINDOW_MODE
     QGuiApplication::postEvent(window, event);
+#else
+    QGuiApplication::postEvent(qtitem->qquickitem(), event);
+#endif
 }
 
 void QtEvents::mouseMove(Item* item, Point loc)
@@ -138,19 +164,28 @@ void QtEvents::mouseMove(Item* item, Point loc)
     if (!window)
         return;
 
+    auto qtitem = dynamic_cast<QtItem*>(item);
+    if (!qtitem)
+        return;
+
     Qt::MouseButton activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() -= 1;
     QMouseEvent* mouseMoveEvent
         = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
-    QGuiApplication::postEvent(window, mouseMoveEvent);
+    QGuiApplication::postEvent(qtitem->qquickitem(), mouseMoveEvent);
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     windowLoc.rx() += 1;
     mouseMoveEvent
         = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
+
+#ifdef WINDOW_MODE
     QGuiApplication::postEvent(window, mouseMoveEvent);
+#else
+    QGuiApplication::postEvent(qtitem->qquickitem(), mouseMoveEvent);
+#endif
 }
 
 void QtEvents::stringInput(Item* item, const std::string& text)
