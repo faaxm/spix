@@ -7,15 +7,17 @@
 #pragma once
 
 #include "Command.h"
+#include <Spix/Data/ItemPath.h>
 
 #include <chrono>
+#include <future>
 
 namespace spix {
 namespace cmd {
 
-class Wait : public Command {
+class WaitForPath : public Command {
 public:
-    Wait(std::chrono::milliseconds waitTime);
+    WaitForPath(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise);
 
     void execute(CommandEnvironment&) override;
     bool canExecuteNow(CommandEnvironment&) override;
@@ -23,7 +25,10 @@ public:
 private:
     bool m_timerInitialized = false;
     std::chrono::steady_clock::time_point m_startTime;
-    std::chrono::milliseconds m_waitTime;
+    std::chrono::milliseconds m_maxWaitTime;
+    ItemPath m_path;
+    std::promise<bool> m_promise;
+    bool m_itemFound = false;
 };
 
 } // namespace cmd

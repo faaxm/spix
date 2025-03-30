@@ -9,7 +9,7 @@
 namespace spix {
 namespace cmd {
 
-bool Command::canExecuteNow()
+bool Command::canExecuteNow(CommandEnvironment&)
 {
     return true;
 }

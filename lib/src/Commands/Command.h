@@ -18,7 +18,7 @@ public:
     virtual ~Command() = default;
 
     virtual void execute(CommandEnvironment& env) = 0;
-    virtual bool canExecuteNow();
+    virtual bool canExecuteNow(CommandEnvironment&);
 };
 
 } // namespace cmd
