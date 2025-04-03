@@ -48,6 +48,8 @@ public:
     void wait(std::chrono::milliseconds waitTime);
     void mouseClick(ItemPath path);
     void mouseClick(ItemPath path, MouseButton mouseButton);
+    void mouseClick(ItemPath path, Point proportion);
+    void mouseClick(ItemPath path, Point proportion, Point offset);
     void mouseBeginDrag(ItemPath path);
     void mouseEndDrag(ItemPath path);
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);
@@ -64,6 +66,7 @@ public:
     std::vector<std::string> getErrors();
 
     void takeScreenshot(ItemPath targetItem, std::string filePath);
+    std::string takeScreenshotAsBase64(ItemPath targetItem);
     void quit();
 
 protected:
