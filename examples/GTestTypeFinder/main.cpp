@@ -49,77 +49,104 @@ protected:
     }
 };
 
-TEST(GTestExample, BasicUITest)
+TEST(GTestExample, SearchTypeCentre)
 {
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
-    srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"), spix::MouseButtons::Right);
-    srv->wait(std::chrono::milliseconds(500));
-
-    auto result = srv->getStringProperty("mainWindow/results", "text");
-
-    auto expected_result = R"RSLT(Button 1 clicked
-Button 2 clicked
-Button 2 clicked
-Button 1 clicked
-Button 2 clicked
-Button 1 clicked
-Button 1 right clicked)RSLT";
-
-    EXPECT_EQ(result, expected_result);
-}
-
-TEST(GTestExample, SearchText)
-{
-    // Clean Output
-    srv->setStringProperty("mainWindow/results", "text", "");
-    srv->wait(std::chrono::milliseconds(500));
-    // Look for a Text "Press Me"
-    srv->mouseClick(spix::ItemPath("mainWindow/\"Press Me\""));
-    srv->wait(std::chrono::milliseconds(500));
-
-    auto result = srv->getStringProperty("mainWindow/results", "text");
-    auto expected_result = R"RSLT(Button 1 clicked)RSLT";
-
-    EXPECT_EQ(result, expected_result);
-}
-
-TEST(GTestExample, SearchType)
-{
-    // Clean Output
-    srv->setStringProperty("mainWindow/results", "text", "");
-    srv->wait(std::chrono::milliseconds(500));
-    // Serach for Type Button in the end of a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/#Button"));
-    srv->wait(std::chrono::milliseconds(500));
-
-    auto result = srv->getStringProperty("mainWindow/results", "text");
-    auto expected_result = R"RSLT(Button 1 clicked)RSLT";
-
-    EXPECT_EQ(result, expected_result);
-}
-
-TEST(GTestExample, SearchTypeAndTextCombined)
-{
-    // Clean Output
-    srv->setStringProperty("mainWindow/results", "text", "");
-    srv->wait(std::chrono::milliseconds(500));
-    // Search for Type in the center of a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/\"Or Click Me\""));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle/#Rectangle/\"Click Me\""));
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
     auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeCentreShortened)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle/\"Click Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchWrongText)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "No Click");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle\"Not on the Screen\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(No Click)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeInTwoReacts)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle/\"Click Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 2 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeInTwoReactsWithWrongButton)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "No Click");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle/\"Click You\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(No Click)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeCentreFirstButton)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/\"Click Me\""));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Button 1 clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeToManyRectangles)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "No Click");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle/#Rectangle/#Rectangle"));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(No Click)RSLT";
 
     EXPECT_EQ(result, expected_result);
     srv->quit();
