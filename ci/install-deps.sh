@@ -9,10 +9,10 @@ mkdir deps && cd deps
 git clone --recursive https://github.com/sgieseking/anyrpc.git
 cd anyrpc && mkdir build && cd build
 if [[ $RUNNER_OS == "Windows" ]]; then
-    cmake -G"Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DANYRPC_LIB_BUILD_SHARED=${SHARED_LIBS} ..
+    cmake -G"Visual Studio 17 2022" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DANYRPC_LIB_BUILD_SHARED=${SHARED_LIBS} ..
     cmake --build . --target install --config $CI_BUILD_TYPE
 else
-    cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DANYRPC_LIB_BUILD_SHARED=${SHARED_LIBS} ..
+    cmake -G"Unix Makefiles" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DANYRPC_LIB_BUILD_SHARED=${SHARED_LIBS} ..
     sudo cmake --build . --target install --config $CI_BUILD_TYPE
 fi
 # leave anyrpc
