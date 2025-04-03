@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Exit on error
+set -e
+
 # compile & install
 mkdir deps && cd deps
 # -> anyrpc
