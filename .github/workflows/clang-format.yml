@@ -13,7 +13,7 @@ jobs:
           extensions: 'h,cpp'
           clangFormatVersion: 11
           style: file
-  
+
   pre-commit:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,10 @@ jobs:
         if: steps.pre-commit.outcome != 'success'
         run: |
           echo "::error::Pre-commit checks found some formatting issues!"
-          echo "::error::You can fix them by running: pre-commit run --all-files"
+          echo "::error::You can fix them by running these commands:"
+          echo "::error::    pip install pre-commit"
+          echo "::error::    pre-commit install"
+          echo "::error::    pre-commit run --all-files"
           echo "::error::Alternatively, you can review the changes in the job output above and apply them manually."
           echo "::error::After fixing, commit the changes and push again."
           exit 1
