@@ -7,7 +7,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <Spix/AnyRpcServer.h>
-#include <Spix/QtQmlBot.h>
+#include <SpixQtScene/QtQmlBot.h>
 
 #include <iostream>
 

@@ -17,7 +17,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <Spix/Events/Identifiers.h>
-#include <Spix/QtQmlBot.h>
+#include <SpixQtScene/QtQmlBot.h>
 
 #include <atomic>
 #include <gtest/gtest.h>

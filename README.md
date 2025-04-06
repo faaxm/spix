@@ -144,7 +144,7 @@ s.mouseClick("root/Button_2")
 resultText = s.getStringProperty("root/results", "text")
 ```
 
-You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](lib/src/AnyRpcServer.cpp).
+You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](lib_core/src/AnyRpcServer.cpp).
 ```python
 print(s.system.listMethods())
 # ['command', 'enterKey', 'existsAndVisible', 'getBoundingBox', 'getErrors', 'getStringProperty', 'inputText', 'invokeMethod', 'mouseBeginDrag', 'mouseClick', 'mouseDropUrls', 'mouseEndDrag', 'quit', 'setStringProperty', 'system.listMethods', 'system.methodHelp', 'takeScreenshot', 'wait']
