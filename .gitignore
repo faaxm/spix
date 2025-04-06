@@ -7,3 +7,5 @@
 
 build
 dep-libs
+deps
+deps-install
