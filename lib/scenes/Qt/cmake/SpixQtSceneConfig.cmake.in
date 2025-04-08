@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt@SPIX_QT_MAJOR@ COMPONENTS Core Gui Quick REQUIRED) # Match dependencies
+find_dependency(Spix REQUIRED) # Dependency on Spix core
+
+if(NOT TARGET Spix::SpixQtScene)
+    include("${CMAKE_CURRENT_LIST_DIR}/SpixQtSceneTargets.cmake")
+endif()
+
+check_required_components(SpixQtScene)

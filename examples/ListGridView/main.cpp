@@ -6,7 +6,7 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <Spix/QtQmlBot.h>
+#include <SpixQtScene/QtQmlBot.h>
 
 #include <iostream>
 

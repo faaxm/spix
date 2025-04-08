@@ -6,9 +6,9 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <SpixQtScene/QtQmlBot.h>
 
 #include <Spix/Events/Identifiers.h>
-#include <Spix/QtQmlBot.h>
 
 #include <iostream>
 
