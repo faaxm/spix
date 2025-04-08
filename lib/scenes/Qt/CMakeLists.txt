@@ -55,8 +55,6 @@ set(SOURCES
 # Qt MOC Files
 # We need to process headers with Q_OBJECT
 set(MOC_HEADERS
-    # src/QtEvents.h # Does not contain Q_OBJECT
-    # include/SpixQtScene/QtScene.h # Does not contain Q_OBJECT
     include/SpixQtScene/QtQmlBot.h
     src/Utils/QtEventRecorder.h
 )
