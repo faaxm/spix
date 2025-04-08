@@ -26,14 +26,14 @@ TEST(QtItemToolsTest, NullToQVariant)
 TEST(QtItemToolsTest, BoolToQVariant)
 {
     auto qvar = spix::qt::VariantToQVariant(Variant(true));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::Bool);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::Bool);
     EXPECT_TRUE(qvar.toBool());
 }
 
 TEST(QtItemToolsTest, NumberToQVariant)
 {
     auto qvar = spix::qt::VariantToQVariant(Variant(-137LL));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::LongLong);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::LongLong);
     EXPECT_EQ(qvar.toLongLong(), -137);
 }
 
@@ -41,28 +41,28 @@ TEST(QtItemToolsTest, LongNumberToQVariant)
 {
     auto number = std::numeric_limits<long long>::max();
     auto qvar = spix::qt::VariantToQVariant(Variant(number));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::LongLong);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::LongLong);
     EXPECT_EQ(qvar.toLongLong(), number);
 }
 
 TEST(QtItemToolsTest, FloatNumberToQVariant)
 {
     auto qvar = spix::qt::VariantToQVariant(Variant(2.1));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::Double);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::Double);
     EXPECT_EQ(qvar.toDouble(), 2.1);
 }
 
 TEST(QtItemToolsTest, StringToQVariant)
 {
     auto qvar = spix::qt::VariantToQVariant(Variant(std::string("hello strings!")));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QString);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QString);
     EXPECT_EQ(qvar.toString(), "hello strings!");
 }
 
 TEST(QtItemToolsTest, UnicodeToQVariant)
 {
     auto qvar = spix::qt::VariantToQVariant(Variant(std::string(u8"☀☁☂☃☄★☆☇")));
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QString);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QString);
     EXPECT_EQ(qvar.toString(), u8"☀☁☂☃☄★☆☇");
 }
 
@@ -70,7 +70,7 @@ TEST(QtItemToolsTest, DateToQVariant)
 {
     auto var = Variant(std::chrono::system_clock::from_time_t(1651775070));
     auto qvar = spix::qt::VariantToQVariant(var);
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QDateTime);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QDateTime);
     EXPECT_EQ(qvar.toDateTime(), QDateTime::fromSecsSinceEpoch(1651775070));
 }
 
@@ -80,14 +80,14 @@ TEST(QtItemToolsTest, ListToQVariant)
     auto var = Variant(list);
     auto qvar = spix::qt::VariantToQVariant(var);
 
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QVariantList);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QVariantList);
     auto qlist = qvar.toList();
     EXPECT_EQ(qlist.size(), 3);
-    EXPECT_EQ(qlist[0].type(), QMetaType::Type::Bool);
+    EXPECT_EQ(qlist[0].userType(), QMetaType::Type::Bool);
     EXPECT_TRUE(qlist[0].toBool());
-    EXPECT_EQ(qlist[1].type(), QMetaType::Type::LongLong);
+    EXPECT_EQ(qlist[1].userType(), QMetaType::Type::LongLong);
     EXPECT_EQ(qlist[1].toLongLong(), 137);
-    EXPECT_EQ(qlist[2].type(), QMetaType::Type::QString);
+    EXPECT_EQ(qlist[2].userType(), QMetaType::Type::QString);
     EXPECT_EQ(qlist[2].toString(), "hello strings!");
 }
 
@@ -98,14 +98,14 @@ TEST(QtItemToolsTest, MapToQVariant)
     auto var = Variant(map);
     auto qvar = spix::qt::VariantToQVariant(var);
 
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QVariantMap);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QVariantMap);
     auto qmap = qvar.toMap();
     EXPECT_EQ(qmap.size(), 3);
-    EXPECT_EQ(qmap["key0"].type(), QMetaType::Type::Bool);
+    EXPECT_EQ(qmap["key0"].userType(), QMetaType::Type::Bool);
     EXPECT_TRUE(qmap["key0"].toBool());
-    EXPECT_EQ(qmap["key1"].type(), QMetaType::Type::LongLong);
+    EXPECT_EQ(qmap["key1"].userType(), QMetaType::Type::LongLong);
     EXPECT_EQ(qmap["key1"].toLongLong(), 137);
-    EXPECT_EQ(qmap["key2"].type(), QMetaType::Type::QString);
+    EXPECT_EQ(qmap["key2"].userType(), QMetaType::Type::QString);
     EXPECT_EQ(qmap["key2"].toString(), "hello strings!");
 }
 
@@ -116,18 +116,18 @@ TEST(QtItemToolsTest, MapOfListToQVariant)
     auto var = Variant(map);
     auto qvar = spix::qt::VariantToQVariant(var);
 
-    EXPECT_EQ(qvar.type(), QMetaType::Type::QVariantMap);
+    EXPECT_EQ(qvar.userType(), QMetaType::Type::QVariantMap);
     auto qmap = qvar.toMap();
     EXPECT_EQ(qmap.size(), 1);
     auto qinner = qmap["key0"];
-    EXPECT_EQ(qinner.type(), QMetaType::Type::QVariantList);
+    EXPECT_EQ(qinner.userType(), QMetaType::Type::QVariantList);
     auto qinnerlist = qinner.toList();
     EXPECT_EQ(qinnerlist.size(), 3);
-    EXPECT_EQ(qinnerlist[0].type(), QMetaType::Type::Bool);
+    EXPECT_EQ(qinnerlist[0].userType(), QMetaType::Type::Bool);
     EXPECT_TRUE(qinnerlist[0].toBool());
-    EXPECT_EQ(qinnerlist[1].type(), QMetaType::Type::LongLong);
+    EXPECT_EQ(qinnerlist[1].userType(), QMetaType::Type::LongLong);
     EXPECT_EQ(qinnerlist[1].toLongLong(), 137);
-    EXPECT_EQ(qinnerlist[2].type(), QMetaType::Type::QString);
+    EXPECT_EQ(qinnerlist[2].userType(), QMetaType::Type::QString);
     EXPECT_EQ(qinnerlist[2].toString(), "hello strings!");
 }
 
@@ -208,7 +208,7 @@ TEST_F(QtItemToolsTestWithQMLEngine, TestFixture)
     QQuickItem* element = this->GetQQuickItemWithMethod("function test() { return 147; }");
     QVariant ret;
     EXPECT_TRUE(QMetaObject::invokeMethod(element, "test", Q_RETURN_ARG(QVariant, ret)));
-    EXPECT_EQ(ret.type(), QMetaType::Type::Int);
+    EXPECT_EQ(ret.userType(), QMetaType::Type::Int);
     EXPECT_EQ(ret.toInt(), 147);
 }
 

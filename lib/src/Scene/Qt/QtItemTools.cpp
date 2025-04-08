@@ -205,7 +205,7 @@ Variant QVariantToVariant(const QVariant& var)
         return QVariantToVariant(jsval.toVariant());
     }
 
-    if (var.canConvert(QMetaType::Type::QVariantList)) {
+    if (var.canConvert(QMetaType(QMetaType::QVariantList))) {
         const QVariantList& list = var.toList();
         Variant::ListType ret;
         for (const QVariant& elem : list) {
@@ -215,7 +215,7 @@ Variant QVariantToVariant(const QVariant& var)
         return Variant(ret);
     }
 
-    if (var.canConvert(QMetaType::Type::QVariantMap)) {
+    if (var.canConvert(QMetaType(QMetaType::QVariantMap))) {
         const QVariantMap& map = var.toMap();
         Variant::MapType ret;
         for (auto ptr = map.constBegin(); ptr != map.constEnd(); ptr++) {
@@ -225,7 +225,7 @@ Variant QVariantToVariant(const QVariant& var)
         return Variant(ret);
     }
 
-    if (var.canConvert(QMetaType::Type::QString)) {
+    if (var.canConvert(QMetaType(QMetaType::QString))) {
         return Variant(var.toString().toStdString());
     }
 
@@ -264,7 +264,7 @@ bool CanConvertArgTypes(const QMetaMethod& metaMethod, const std::vector<QVarian
         return false;
     for (size_t i = 0; i < metaMethod.parameterCount(); i++) {
         int targetType = metaMethod.parameterType(i);
-        if (targetType != QMetaType::Type::QVariant && !varargs[i].canConvert(targetType))
+        if (targetType != QMetaType::Type::QVariant && !varargs[i].canConvert(QMetaType(targetType)))
             return false;
     }
     return true;
@@ -292,7 +292,7 @@ std::vector<QGenericArgument> ConvertAndCreateQArgumentsForMethod(
         if (i < varargs.size()) {
             int targetType = metaMethod.parameterType(i);
             if (targetType != QMetaType::Type::QVariant) {
-                varargs[i].convert(targetType);
+                varargs[i].convert(QMetaType(targetType));
                 qtArgs.push_back(QGenericArgument(varargs[i].typeName(), varargs[i].data()));
             } else {
                 qtArgs.push_back(QArgument<QVariant>("QVariant", varargs[i]));

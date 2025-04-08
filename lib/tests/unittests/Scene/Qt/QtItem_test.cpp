@@ -31,7 +31,7 @@ TEST_F(QtItemTestWithQMLEngine, TestFixture)
     EXPECT_TRUE(QMetaObject::invokeMethod(obj, "test", Q_ARG(int, 3)));
     EXPECT_EQ(spy->count(), 1);
     EXPECT_EQ((*spy)[0].count(), 1);
-    EXPECT_EQ((*spy)[0][0].type(), QMetaType::Int);
+    EXPECT_EQ((*spy)[0][0].userType(), QMetaType::Int);
     EXPECT_EQ((*spy)[0][0].toInt(), 3);
 }
 
