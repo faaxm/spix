@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.24)
 project(Spix LANGUAGES CXX)
 
 option(SPIX_BUILD_EXAMPLES "Build Spix examples." ON)
@@ -11,6 +11,9 @@ set(CMAKE_CXX_STANDARD 17)
 # Hide symbols unless explicitly flagged with SPIX_EXPORT
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
+# Treat warnings as errors
+set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 
 add_subdirectory(lib)
 
