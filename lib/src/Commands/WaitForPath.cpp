@@ -5,7 +5,6 @@
  ****/
 
 #include "WaitForPath.h"
-#include <QDebug>
 #include <Scene/Scene.h>
 
 namespace spix {
