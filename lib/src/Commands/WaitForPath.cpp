@@ -32,7 +32,6 @@ bool WaitForPath::canExecuteNow(CommandEnvironment& env)
     }
 
     auto item = env.scene().itemAtPath(m_path);
-    qDebug() << "wait for path";
     if (item) {
         m_itemFound = item->visible();
         return true;
