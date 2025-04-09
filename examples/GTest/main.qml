@@ -36,21 +36,26 @@ Window {
 				}
 			}
         }
-        Button {
-            objectName: "Button_2"
-            text: "Or Click Me"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 2 right clicked")
-					else
-						resultsView.appendText("Button 2 clicked")
-				}
-			}
+        Rectangle {
+            width: 100
+            height: 100
+            color: "red"
+            Button {
+                objectName: "Button_2"
+                text: "Or Click Me"
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons:  Qt.AllButtons
+                    
+                    onClicked:
+                    {
+                        if(mouse.button & Qt.RightButton)
+                            resultsView.appendText("Button 2 right clicked")
+                        else
+                            resultsView.appendText("Button 2 clicked")
+                    }
+                }
+            }
         }
     }
 
