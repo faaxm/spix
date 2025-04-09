@@ -45,7 +45,7 @@ void CommandExecuter::processCommands(Scene& scene)
     while (!m_commandQueue.empty()) {
         auto& queuedCmd = m_commandQueue.front();
 
-        if (!queuedCmd->canExecuteNow())
+        if (!queuedCmd->canExecuteNow(env))
             break;
 
         // We can execute the command now.
