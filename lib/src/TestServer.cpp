@@ -22,6 +22,7 @@
 #include <Commands/InvokeMethod.h>
 #include <Commands/Quit.h>
 #include <Commands/Screenshot.h>
+#include <Commands/ScreenshotBase64.h>
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
@@ -67,6 +68,18 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 void TestServer::mouseClick(ItemPath path)
 {
     m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left, spix::KeyModifiers::None);
+}
+
+void TestServer::mouseClick(ItemPath path, Point proportion)
+{
+    auto pathWithProportion = ItemPosition(path.string(), proportion);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(pathWithProportion, spix::MouseButtons::Left);
+}
+
+void TestServer::mouseClick(ItemPath path, Point proportion, Point offset)
+{
+    auto pathWithOffset = ItemPosition(path.string(), proportion, offset);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(pathWithOffset, spix::MouseButtons::Left);
 }
 
 void TestServer::mouseClick(ItemPath path, MouseButton mouseButton, KeyModifier keyModifier)
@@ -163,6 +176,16 @@ std::vector<std::string> TestServer::getErrors()
 void TestServer::takeScreenshot(ItemPath targetItem, std::string filePath)
 {
     m_cmdExec->enqueueCommand<cmd::Screenshot>(targetItem, std::move(filePath));
+}
+
+std::string TestServer::takeScreenshotAsBase64(ItemPath targetItem)
+{
+    std::promise<std::string> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::ScreenshotAsBase64>(targetItem, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
 }
 
 void TestServer::quit()

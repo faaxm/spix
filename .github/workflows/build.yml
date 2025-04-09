@@ -15,7 +15,7 @@ jobs:
           # Qt v5.15.2
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
           {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-5.15.2 macos', os: macos-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
+          {name: 'qt-5.15.2 macos', os: macos-13, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON'},
           # Qt v6.2.3
           {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON'},
           {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
@@ -36,7 +36,7 @@ jobs:
         ]
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

@@ -39,6 +39,24 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
             mouseClick(std::move(path), mouseButton, keyModifier);
         });
 
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithOffset",
+        "Click on the object at the given path with the given offset"
+        "(absolute pixel) | mouseClickWithOffset(string path, float "
+        "offsetX, float offsetY)",
+        [this](std::string path, double offsetX, double offsetY) {
+            auto proportion = Point(0, 0);
+            auto offset = Point(offsetX, offsetY);
+            mouseClick(std::move(path), proportion, offset);
+        });
+
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithProportion",
+        "Click on the object at the given path with the given proportion (In percent)"
+        "| mouseClickWithProportion(string path, float proportionX, float proportionY)",
+        [this](std::string path, double proportionX, double proportionY) {
+            auto proportion = Point(proportionX, proportionY);
+            mouseClick(std::move(path), proportion);
+        });
+
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "mouseBeginDrag",
         "Begin a drag with the mouse | mouseBeginDrag(string path)",
         [this](std::string path) { mouseBeginDrag(std::move(path)); });
@@ -101,10 +119,14 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
             return takeScreenshot(std::move(targetItem), std::move(filePath));
         });
 
+    utils::AddFunctionToAnyRpc<std::string(std::string)>(methodManager, "takeScreenshotAsBase64",
+        "Take a screenshot of the object and send as base64 string | takeScreenshotAsBase64(string pathToTargetedItem)",
+        [this](std::string targetItem) { return takeScreenshotAsBase64(std::move(targetItem)); });
+
     utils::AddFunctionToAnyRpc<void()>(methodManager, "quit", "Close the app | quit()", [this] { quit(); });
 
     utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command",
-        "Executes a generic command | command(string command, string payload)",
+        "Executes a generic/custom command | command(string command, string payload)",
         [this](std::string command, std::string payload) { genericCommand(command, payload); });
 
     m_pimpl->server->BindAndListen(anyrpcPort);
