@@ -47,7 +47,7 @@ public:
     // Commands
     void wait(std::chrono::milliseconds waitTime);
     void mouseClick(ItemPath path);
-    
+
     void mouseClick(ItemPath path, Point proportion);
     void mouseClick(ItemPath path, Point proportion, Point offset);
     void mouseClick(ItemPath path, MouseButton mouseButton, KeyModifier keyModifier = spix::KeyModifiers::None);
