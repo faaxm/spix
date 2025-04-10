@@ -28,7 +28,7 @@ void DragEnd::execute(CommandEnvironment& env)
     auto size = item->size();
     Point midPoint(size.width / 2.0, size.height / 2.0);
     env.scene().events().mouseMove(item.get(), midPoint);
-    env.scene().events().mouseUp(item.get(), midPoint, MouseButtons::Left);
+    env.scene().events().mouseUp(item.get(), midPoint, MouseButtons::Left, KeyModifiers::None);
 }
 
 } // namespace cmd

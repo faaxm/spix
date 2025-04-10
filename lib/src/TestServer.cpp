@@ -68,7 +68,7 @@ void TestServer::wait(std::chrono::milliseconds waitTime)
 
 void TestServer::mouseClick(ItemPath path)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, spix::MouseButtons::Left, spix::KeyModifiers::None);
 }
 
 void TestServer::mouseClick(ItemPath path, Point proportion)
@@ -83,9 +83,9 @@ void TestServer::mouseClick(ItemPath path, Point proportion, Point offset)
     m_cmdExec->enqueueCommand<cmd::ClickOnItem>(pathWithOffset, spix::MouseButtons::Left);
 }
 
-void TestServer::mouseClick(ItemPath path, MouseButton mouseButton)
+void TestServer::mouseClick(ItemPath path, MouseButton mouseButton, KeyModifier keyModifier)
 {
-    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton);
+    m_cmdExec->enqueueCommand<cmd::ClickOnItem>(path, mouseButton, keyModifier);
 }
 
 void TestServer::mouseBeginDrag(ItemPath path)

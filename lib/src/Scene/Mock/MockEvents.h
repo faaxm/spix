@@ -17,8 +17,8 @@ namespace spix {
 
 class SPIX_EXPORT MockEvents : public Events {
 public:
-    void mouseDown(Item* item, Point loc, MouseButton button) override;
-    void mouseUp(Item* item, Point loc, MouseButton button) override;
+    void mouseDown(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
+    void mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
     void mouseMove(Item* item, Point loc) override;
     void stringInput(Item* item, const std::string& text) override;
     void keyPress(Item* item, int keyCode, KeyModifier mod) override;
