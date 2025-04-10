@@ -47,7 +47,11 @@ public:
     // Commands
     void wait(std::chrono::milliseconds waitTime);
     void mouseClick(ItemPath path);
-    void mouseClick(ItemPath path, MouseButton mouseButton);
+
+    void mouseClick(ItemPath path, Point proportion);
+    void mouseClick(ItemPath path, Point proportion, Point offset);
+    void mouseClick(ItemPath path, MouseButton mouseButton, KeyModifier keyModifier = spix::KeyModifiers::None);
+
     void mouseBeginDrag(ItemPath path);
     void mouseEndDrag(ItemPath path);
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);
@@ -62,8 +66,10 @@ public:
     Rect getBoundingBox(ItemPath path);
     bool existsAndVisible(ItemPath path);
     std::vector<std::string> getErrors();
+    bool waitForPath(ItemPath path, std::chrono::milliseconds maxWaitTime);
 
     void takeScreenshot(ItemPath targetItem, std::string filePath);
+    std::string takeScreenshotAsBase64(ItemPath targetItem);
     void quit();
 
 protected:

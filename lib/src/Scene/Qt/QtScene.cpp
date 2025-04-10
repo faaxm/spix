@@ -307,6 +307,34 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
     image.save(QString::fromStdString(filePath));
 }
 
+std::string QtScene::takeScreenshotAsBase64(const ItemPath& targetItem)
+{
+    auto item = getQQuickItemAtPath(targetItem);
+    if (!item) {
+        return "";
+    }
+
+    // take screenshot of the full window
+    auto windowImage = item->window()->grabWindow();
+
+    // get the rect of the item in window space in pixels, account for the device pixel ratio
+    QRectF imageCropRectItemSpace {0, 0, item->width(), item->height()};
+    auto imageCropRectF = item->mapRectToScene(imageCropRectItemSpace);
+    QRect imageCropRect(imageCropRectF.x() * windowImage.devicePixelRatio(),
+        imageCropRectF.y() * windowImage.devicePixelRatio(), imageCropRectF.width() * windowImage.devicePixelRatio(),
+        imageCropRectF.height() * windowImage.devicePixelRatio());
+
+    // crop the window image to the item rect
+    auto image = windowImage.copy(imageCropRect);
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+    buffer.close();
+
+    return byteArray.toBase64().toStdString();
+}
+
 bool QtScene::itemHasContents(QQuickItem* item)
 {
     return item->flags().testFlag(QQuickItem::ItemHasContents);

@@ -60,10 +60,14 @@ set(SOURCES
     src/Commands/Quit.h
     src/Commands/Screenshot.cpp
     src/Commands/Screenshot.h
+    src/Commands/ScreenshotBase64.cpp
+    src/Commands/ScreenshotBase64.h
     src/Commands/SetProperty.cpp
     src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
+    src/Commands/WaitForPath.cpp
+    src/Commands/WaitForPath.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h

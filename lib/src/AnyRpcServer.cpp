@@ -32,10 +32,30 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Click on the object at the given path | mouseClick(string path)",
         [this](std::string path) { mouseClick(std::move(path)); });
 
-    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "mouseClickWithButton",
-        "Click on the object at the given path with the given mouse button | mouseClickWithButton(string path, int "
-        "mouseButton)",
-        [this](std::string path, int mouseButton) { mouseClick(std::move(path), mouseButton); });
+    utils::AddFunctionToAnyRpc<void(std::string, int, int)>(methodManager, "mouseClickWithButton",
+        "Click on the object at the given path with the given mouse button and Control Keys | "
+        "mouseClickWithButton(string path, int mouseButton)",
+        [this](std::string path, int mouseButton, int keyModifier = KeyModifiers::None) {
+            mouseClick(std::move(path), mouseButton, keyModifier);
+        });
+
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithOffset",
+        "Click on the object at the given path with the given offset"
+        "(absolute pixel) | mouseClickWithOffset(string path, float "
+        "offsetX, float offsetY)",
+        [this](std::string path, double offsetX, double offsetY) {
+            auto proportion = Point(0, 0);
+            auto offset = Point(offsetX, offsetY);
+            mouseClick(std::move(path), proportion, offset);
+        });
+
+    utils::AddFunctionToAnyRpc<void(std::string, double, double)>(methodManager, "mouseClickWithProportion",
+        "Click on the object at the given path with the given proportion (In percent)"
+        "| mouseClickWithProportion(string path, float proportionX, float proportionY)",
+        [this](std::string path, double proportionX, double proportionY) {
+            auto proportion = Point(proportionX, proportionY);
+            mouseClick(std::move(path), proportion);
+        });
 
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "mouseBeginDrag",
         "Begin a drag with the mouse | mouseBeginDrag(string path)",
@@ -88,6 +108,11 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Returns true if the given object exists | existsAndVisible(string path) : bool exists_and_visible",
         [this](std::string path) { return existsAndVisible(std::move(path)); });
 
+    utils::AddFunctionToAnyRpc<bool(std::string, int)>(methodManager, "waitForPath",
+        "Returns true if the given object exists and the time is not expired | waitForPath(string path, int "
+        "millisecondsToWait) : bool exists_and_visible",
+        [this](std::string path, int ms) { return waitForPath(std::move(path), std::chrono::milliseconds(ms)); });
+
     utils::AddFunctionToAnyRpc<std::vector<std::string>()>(methodManager, "getErrors",
         "Returns internal errors that occurred during test execution | getErrors() : (strings) [error1, ...]",
         [this]() { return getErrors(); });
@@ -99,10 +124,14 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
             return takeScreenshot(std::move(targetItem), std::move(filePath));
         });
 
+    utils::AddFunctionToAnyRpc<std::string(std::string)>(methodManager, "takeScreenshotAsBase64",
+        "Take a screenshot of the object and send as base64 string | takeScreenshotAsBase64(string pathToTargetedItem)",
+        [this](std::string targetItem) { return takeScreenshotAsBase64(std::move(targetItem)); });
+
     utils::AddFunctionToAnyRpc<void()>(methodManager, "quit", "Close the app | quit()", [this] { quit(); });
 
     utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command",
-        "Executes a generic command | command(string command, string payload)",
+        "Executes a generic/custom command | command(string command, string payload)",
         [this](std::string command, std::string payload) { genericCommand(command, payload); });
 
     m_pimpl->server->BindAndListen(anyrpcPort);

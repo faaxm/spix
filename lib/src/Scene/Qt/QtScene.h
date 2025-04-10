@@ -36,6 +36,7 @@ public:
 
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
+    std::string takeScreenshotAsBase64(const ItemPath& targetItem);
     ObjectIds recursiveItemsAt(QQuickItem* parent, const QPointF& pos, int& bestCandidate, bool parentIsGoodCandidate);
     QRectF combinedChildrenRect(QQuickItem* object) const;
 
