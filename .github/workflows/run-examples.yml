@@ -1,5 +1,9 @@
 name: Run Examples
-on: [push, pull_request]
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
 
 jobs:
   build:
@@ -22,7 +26,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        # uses: jurplel/install-qt-action@v4 (the original, but older)
+        uses: jdpurcell/install-qt-action@v5 # the fork
+        env:
+          # special option to trust some mirrors while download.qt.io is down
+          # and while one of the mirrors has SSL issues.
+          # This is safe enough as we don't release any binaries from here and don't
+          # have any secrets to protect. We only need qt to run tests and examples.
+          AQT_CONFIG: ${{ github.workspace }}/ci/aqt-settings.ini
         with:
           version: ${{ join(matrix.base.qt_version, '.') }}
           cache: true
