@@ -185,4 +185,3 @@ For example, the Qt implementation of these interfaces includes:
 - `QtEvents`: Generates Qt mouse and keyboard events to simulate user interaction
 
 A key challenge when implementing support for a new framework is handling item lookup and event routing correctly, as different UI frameworks have different object hierarchies, event systems, and property mechanisms.
-
