@@ -65,6 +65,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "End a drag with the mouse | mouseEndDrag(string path)",
         [this](std::string path) { mouseEndDrag(std::move(path)); });
 
+    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "mouseClickAndHold",
+        "Click and hold on the object at the given path | mouseClick(string path, int holdTime)",
+        [this](std::string path, int ms) { mouseClickAndHold(std::move(path), std::chrono::milliseconds(ms)); });
+
     utils::AddFunctionToAnyRpc<void(std::string, std::vector<std::string>)>(methodManager, "mouseDropUrls",
         "Drop Urls with mouse | mouseDropUrls(string path, [string url1, ...])",
         [this](std::string path, std::vector<std::string> urls) { mouseDropUrls(std::move(path), urls); });
