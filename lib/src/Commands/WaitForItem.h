@@ -15,9 +15,9 @@
 namespace spix {
 namespace cmd {
 
-class WaitForPath : public Command {
+class WaitForItem : public Command {
 public:
-    WaitForPath(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise);
+    WaitForItem(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise);
 
     void execute(CommandEnvironment&) override;
     bool canExecuteNow(CommandEnvironment&) override;
