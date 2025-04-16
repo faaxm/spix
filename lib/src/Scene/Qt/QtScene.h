@@ -10,7 +10,6 @@
 #include <Scene/Qt/QtEvents.h>
 #include <Scene/Scene.h>
 
-#include <map>
 #include <string>
 
 class QQuickWindow;
@@ -29,7 +28,7 @@ public:
 
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
-    std::string takeScreenshotAsBase64(const ItemPath& targetItem);
+    std::string takeScreenshotAsBase64(const ItemPath& targetItem) override;
 
 private:
     QtEvents m_events;
