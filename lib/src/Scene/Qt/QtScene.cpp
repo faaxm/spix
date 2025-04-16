@@ -19,6 +19,22 @@
 
 namespace {
 
+QString getNameForObject(QObject* object)
+{
+    QString name;
+    if (spix::qt::PropertValueByObject(object, QString::fromStdString("text")) != "") {
+        name = "\"" + spix::qt::PropertValueByObject(object, QString::fromStdString("text")) + "\"";
+    } else if (spix::qt::PropertValueByObject(object, QString::fromStdString("source")) != "") {
+        name = "(source=" + spix::qt::PropertValueByObject(object, QString::fromStdString("source")) + ")";
+    } else if (spix::qt::GetObjectName(object) != "") {
+        name = spix::qt::GetObjectName(object);
+    } else {
+        name = "#" + spix::qt::TypeByObject(object);
+    }
+
+    return name;
+}
+
 QQuickWindow* getQQuickWindowWithName(const std::string& name)
 {
     QString qtName = QString::fromStdString(name);
@@ -48,6 +64,7 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     auto rootClassName = root->metaObject()->className();
     auto itemName = path.rootComponent();
     QQuickItem* subItem = nullptr;
+    QVector<QObject*> subItems = {};
 
     if (itemName.compare(0, 1, ".") == 0) {
         auto propertyName = itemName.substr(1);
@@ -55,13 +72,49 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         if (propertyValue.isValid()) {
             subItem = propertyValue.value<QQuickItem*>();
         }
-    } else {
-        if (rootClassName == spix::qt::repeater_class_name) {
-            QQuickItem* repeater = static_cast<QQuickItem*>(root);
-            subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
+
+    } else if (itemName.compare(0, 1, "\"") == 0) {
+        // remove ""
+        size_t found = itemName.find("\"");
+        auto searchText = itemName.substr(found + 1, itemName.length() - 2);
+
+        subItem = spix::qt::FindChildItem<QQuickItem*>(
+            root, itemName.c_str(), QString::fromStdString("text"), QString::fromStdString(searchText), {});
+
+    } else if (itemName.compare(0, 1, "#") == 0) {
+        // remove #
+        size_t found = itemName.find("#");
+        auto type = QString::fromStdString(itemName.substr(found + 1));
+
+        if (path.length() > 1) {
+            subItems = spix::qt::FindChildItems(root, type);
+
+            for (const auto item : subItems) {
+                auto foundItem = getQQuickItemWithRoot(path.subPath(1), item);
+                if (foundItem != nullptr) {
+                    return foundItem;
+                }
+            }
         } else {
-            subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
+            subItem = spix::qt::FindChildItem<QQuickItem*>(root, {}, {}, {}, type);
+            return subItem;
         }
+    } else if (itemName.compare(0, 1, "(") == 0) {
+        // remove ()
+        size_t foundBracketSign = itemName.find('(');
+        auto searchText = itemName.substr(foundBracketSign + 1, itemName.length() - 2);
+
+        // Split in to property and value
+        size_t foundEqualSign = searchText.find('=');
+        auto property = QString::fromStdString(searchText.substr(0, foundEqualSign));
+        auto value = QString::fromStdString(searchText.substr(foundEqualSign + 1));
+
+        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str(), property, value, {});
+    } else if (rootClassName == spix::qt::repeater_class_name) {
+        QQuickItem* repeater = static_cast<QQuickItem*>(root);
+        subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
+    } else {
+        subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
     }
 
     if (path.length() == 1) {
