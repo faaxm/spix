@@ -4,25 +4,25 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
-#include "WaitForPath.h"
+#include "WaitForItem.h"
 #include <Scene/Scene.h>
 
 namespace spix {
 namespace cmd {
 
-WaitForPath::WaitForPath(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise)
+WaitForItem::WaitForItem(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise)
 : m_path(std::move(path))
 , m_promise(std::move(promise))
 , m_maxWaitTime(std::move(maxWaitTime))
 {
 }
 
-void WaitForPath::execute(CommandEnvironment& env)
+void WaitForItem::execute(CommandEnvironment& env)
 {
     m_promise.set_value(m_itemFound);
 }
 
-bool WaitForPath::canExecuteNow(CommandEnvironment& env)
+bool WaitForItem::canExecuteNow(CommandEnvironment& env)
 {
     if (!m_timerInitialized) {
         m_timerInitialized = true;

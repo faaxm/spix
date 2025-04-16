@@ -108,10 +108,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Returns true if the given object exists | existsAndVisible(string path) : bool exists_and_visible",
         [this](std::string path) { return existsAndVisible(std::move(path)); });
 
-    utils::AddFunctionToAnyRpc<bool(std::string, int)>(methodManager, "waitForPath",
-        "Returns true if the given object exists and the time is not expired | waitForPath(string path, int "
+    utils::AddFunctionToAnyRpc<bool(std::string, int)>(methodManager, "waitForItem",
+        "Returns true if the given object exists and the time is not expired | waitForItem(string path, int "
         "millisecondsToWait) : bool exists_and_visible",
-        [this](std::string path, int ms) { return waitForPath(std::move(path), std::chrono::milliseconds(ms)); });
+        [this](std::string path, int ms) { return waitForItem(std::move(path), std::chrono::milliseconds(ms)); });
 
     utils::AddFunctionToAnyRpc<std::vector<std::string>()>(methodManager, "getErrors",
         "Returns internal errors that occurred during test execution | getErrors() : (strings) [error1, ...]",
