@@ -104,6 +104,7 @@ set(SOURCES
     src/Utils/AnyRpcFunction.h
     src/Utils/DebugDump.cpp
     src/Utils/DebugDump.h
+    src/Utils/PathParser.cpp
     src/Utils/QtEventRecorder.cpp
     src/Utils/QtEventRecorder.h
 )

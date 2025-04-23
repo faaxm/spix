@@ -28,6 +28,7 @@ set(TEST_SOURCES
 
     unittests/Utils/AnyRpcFunction_test.cpp
     unittests/Utils/AnyRpcUtils_test.cpp
+    unittests/Utils/PathParser_test.cpp
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${TEST_SOURCES})

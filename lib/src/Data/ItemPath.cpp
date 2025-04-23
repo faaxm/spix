@@ -5,9 +5,9 @@
  ****/
 
 #include <Spix/Data/ItemPath.h>
+#include <Utils/PathParser.h>
 
 #include <iterator>
-#include <sstream>
 
 namespace spix {
 
@@ -19,16 +19,8 @@ ItemPath::ItemPath(const char* path)
 }
 
 ItemPath::ItemPath(const std::string& path)
+: m_components(utils::ParsePathString(path))
 {
-    std::stringstream pathss(path);
-
-    while (pathss) {
-        std::string component;
-        getline(pathss, component, '/');
-        if (component.length() > 0) {
-            m_components.push_back(std::move(component));
-        }
-    }
 }
 
 ItemPath::ItemPath(std::vector<std::string> components)
@@ -48,16 +40,7 @@ std::string ItemPath::rootComponent() const
 
 std::string ItemPath::string() const
 {
-    std::string path;
-
-    for (auto& component : m_components) {
-        if (!path.empty()) {
-            path += "/";
-        }
-        path += component;
-    }
-
-    return path;
+    return utils::FormatPathString(m_components);
 }
 
 ItemPath ItemPath::subPath(size_t offset) const
