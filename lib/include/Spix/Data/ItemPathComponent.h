@@ -6,10 +6,9 @@
 
 #pragma once
 
-#include <Spix/spix_export.h>
-
 #include <string>
 #include <variant>
+#include <Spix/spix_export.h>
 
 namespace spix {
 namespace path {
@@ -61,4 +60,4 @@ private:
 };
 
 } // namespace path
-} // namespace spix
+} // namespace spix 

@@ -65,4 +65,4 @@ const Selector& Component::selector() const
 }
 
 } // namespace path
-} // namespace spix
+} // namespace spix 
