@@ -22,20 +22,20 @@ TEST(ItemPathComponentTest, Construction)
     EXPECT_EQ(propertyComp.string(), ".testProperty");
     EXPECT_TRUE(std::holds_alternative<spix::path::PropertySelector>(propertyComp.selector()));
     EXPECT_EQ(std::get<spix::path::PropertySelector>(propertyComp.selector()).name(), "testProperty");
-    
+
     // Test empty component
     spix::path::Component emptyComp("");
     EXPECT_EQ(emptyComp.string(), "");
     EXPECT_TRUE(std::holds_alternative<spix::path::NameSelector>(emptyComp.selector()));
     EXPECT_EQ(std::get<spix::path::NameSelector>(emptyComp.selector()).name(), "");
-    
+
     // Test construction from name selector
     spix::path::NameSelector nameSelector("selectorName");
     spix::path::Component fromNameSelector(nameSelector);
     EXPECT_EQ(fromNameSelector.string(), "selectorName");
     EXPECT_TRUE(std::holds_alternative<spix::path::NameSelector>(fromNameSelector.selector()));
     EXPECT_EQ(std::get<spix::path::NameSelector>(fromNameSelector.selector()).name(), "selectorName");
-    
+
     // Test construction from property selector
     spix::path::PropertySelector propSelector("propertyName");
     spix::path::Component fromPropSelector(propSelector);
@@ -49,8 +49,8 @@ TEST(ItemPathComponentTest, Selectors)
     // Test ItemPathNameSelector
     spix::path::NameSelector nameSelector("name");
     EXPECT_EQ(nameSelector.name(), "name");
-    
+
     // Test ItemPathPropertySelector
     spix::path::PropertySelector propertySelector("property");
     EXPECT_EQ(propertySelector.name(), "property");
-} 
+}
