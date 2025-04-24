@@ -35,10 +35,7 @@ TEST(ItemPathTest, InitWithPathString)
 TEST(ItemPathTest, InitWithComponents)
 {
     std::vector<spix::path::Component> in_components {
-        spix::path::Component("windowname"), 
-        spix::path::Component("item"), 
-        spix::path::Component("subitem")
-    };
+        spix::path::Component("windowname"), spix::path::Component("item"), spix::path::Component("subitem")};
     spix::ItemPath path(in_components);
     auto out_components = path.components();
 
@@ -72,7 +69,7 @@ TEST(ItemPathTest, RootComponent)
 {
     spix::ItemPath path {"windowname/item/subitem"};
     const auto& root = path.rootComponent();
-    
+
     EXPECT_EQ(root.string(), "windowname");
 }
 
@@ -81,17 +78,17 @@ TEST(ItemPathTest, PropertyComponentInPath)
     // Test path with property selectors
     spix::ItemPath path {"window/item/.property/subitem"};
     auto components = path.components();
-    
+
     EXPECT_EQ(components.size(), 4);
     EXPECT_EQ(components.at(0).string(), "window");
     EXPECT_EQ(components.at(1).string(), "item");
     EXPECT_EQ(components.at(2).string(), ".property");
     EXPECT_EQ(components.at(3).string(), "subitem");
-    
+
     // Verify property component has correct selector type
     auto& selector = components.at(2).selector();
     EXPECT_TRUE(std::holds_alternative<spix::path::PropertySelector>(selector));
-    
+
     // Check string representation of path with property
     EXPECT_EQ(path.string(), "window/item/.property/subitem");
 }

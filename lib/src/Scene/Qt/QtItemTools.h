@@ -29,12 +29,12 @@ QString GetObjectName(QObject* object);
 
 /**
  * @brief Iterates over all children of a QObject, with special handling for QQuickItems and Repeaters
- * 
+ *
  * This function handles the different ways children are accessed in Qt:
  * - For QQuickItems, it uses childItems() instead of children()
  * - For QQuickRepeaters, it iterates through its generated items
  * - For regular QObjects, it uses the children() list
- * 
+ *
  * @param object The parent object whose children to iterate over
  * @param callback A function to call for each child, should return true to continue iteration or false to stop
  */

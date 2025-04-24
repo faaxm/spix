@@ -51,12 +51,12 @@ void ForEachChild(QObject* object, const std::function<bool(QObject*)>& callback
     if (!object) {
         return;
     }
-    
+
     // Special handling for QQuickRepeater objects
     auto rootClassName = object->metaObject()->className();
     if (rootClassName == repeater_class_name) {
         QQuickItem* repeaterItem = static_cast<QQuickItem*>(object);
-        
+
         // Iterate through repeater's generated items
         int index = 0;
         QQuickItem* child = nullptr;
@@ -66,7 +66,7 @@ void ForEachChild(QObject* object, const std::function<bool(QObject*)>& callback
             }
         }
     }
-    
+
     // Handle QQuickItems and their childItems()
     if (auto quickItem = qobject_cast<QQuickItem*>(object)) {
         for (auto* childItem : quickItem->childItems()) {
