@@ -36,6 +36,36 @@ QQuickWindow* getQQuickWindowWithName(const std::string& name)
     return foundWindow;
 }
 
+QQuickItem* getQQuickItemWithSelector(const spix::ItemPath& path, QObject* root, const spix::path::PropertySelector& selector)
+{
+    const auto& propertyName = selector.name();
+    QVariant propertyValue = root->property(propertyName.c_str());
+    if (propertyValue.isValid()) {
+        return propertyValue.value<QQuickItem*>();
+    }
+    return nullptr;
+}
+
+QQuickItem* getQQuickItemWithSelector(const spix::ItemPath& path, QObject* root, const spix::path::NameSelector& selector)
+{
+    const auto& itemName = selector.name();
+    auto rootClassName = root->metaObject()->className();
+    
+    if (rootClassName == spix::qt::repeater_class_name) {
+        QQuickItem* repeater = static_cast<QQuickItem*>(root);
+        return spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
+    } else {
+        return spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
+    }
+}
+
+template<typename T>
+QQuickItem* getQQuickItemWithSelector(const spix::ItemPath&, QObject*, const T&)
+{
+    // Fallback for any unknown selector types
+    return nullptr;
+}
+
 QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
 {
     if (path.length() == 0) {
@@ -45,23 +75,18 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         return nullptr;
     }
 
-    auto rootClassName = root->metaObject()->className();
-    auto itemName = path.rootComponent();
+    const auto& itemComponent = path.rootComponent();
+    const auto& itemSelector = itemComponent.selector();
     QQuickItem* subItem = nullptr;
 
-    if (itemName.compare(0, 1, ".") == 0) {
-        auto propertyName = itemName.substr(1);
-        QVariant propertyValue = root->property(propertyName.c_str());
-        if (propertyValue.isValid()) {
-            subItem = propertyValue.value<QQuickItem*>();
-        }
-    } else {
-        if (rootClassName == spix::qt::repeater_class_name) {
-            QQuickItem* repeater = static_cast<QQuickItem*>(root);
-            subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
-        } else {
-            subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
-        }
+    auto visitor = [&](const auto& selector) {
+        return getQQuickItemWithSelector(path, root, selector);
+    };
+    
+    subItem = std::visit(visitor, itemSelector);
+
+    if (!subItem) {
+        return nullptr;
     }
 
     if (path.length() == 1) {
@@ -71,10 +96,23 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     return getQQuickItemWithRoot(path.subPath(1), subItem);
 }
 
+QQuickWindow* getQQuickWindowAtPathRoot(const spix::ItemPath& path)
+{
+    const auto& windowPathComponent = path.rootComponent();
+    const auto& windowSelector = windowPathComponent.selector();
+    if (!std::holds_alternative<spix::path::NameSelector>(windowSelector)) {
+        return nullptr;
+    }
+
+    const auto& windowName = std::get<spix::path::NameSelector>(windowSelector).name();
+    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
+    
+    return itemWindow;
+}
+
 QQuickItem* getQQuickItemAtPath(const spix::ItemPath& path)
 {
-    auto windowName = path.rootComponent();
-    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
+    QQuickWindow* itemWindow = getQQuickWindowAtPathRoot(path);
     QQuickItem* item = nullptr;
 
     if (!itemWindow) {
@@ -96,8 +134,7 @@ namespace spix {
 
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
-    auto windowName = path.rootComponent();
-    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
+    QQuickWindow* itemWindow = getQQuickWindowAtPathRoot(path);
 
     if (!itemWindow || !itemWindow->contentItem()) {
         return {};

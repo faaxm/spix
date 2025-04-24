@@ -78,6 +78,7 @@ set(SOURCES
 
     src/Data/Geometry.cpp
     src/Data/ItemPath.cpp
+    src/Data/ItemPathComponent.cpp
     src/Data/ItemPosition.cpp
     src/Data/PasteboardContent.cpp
 
