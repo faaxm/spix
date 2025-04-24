@@ -92,3 +92,22 @@ TEST(ItemPathTest, PropertyComponentInPath)
     // Check string representation of path with property
     EXPECT_EQ(path.string(), "window/item/.property/subitem");
 }
+
+TEST(ItemPathTest, TypeComponentInPath)
+{
+    // Test path with type selectors
+    spix::ItemPath path {"window/#Button/subitem"};
+    auto components = path.components();
+
+    EXPECT_EQ(components.size(), 3);
+    EXPECT_EQ(components.at(0).string(), "window");
+    EXPECT_EQ(components.at(1).string(), "#Button");
+    EXPECT_EQ(components.at(2).string(), "subitem");
+
+    // Verify type component has correct selector type
+    auto& selector = components.at(1).selector();
+    EXPECT_TRUE(std::holds_alternative<spix::path::TypeSelector>(selector));
+
+    // Check string representation of path with type
+    EXPECT_EQ(path.string(), "window/#Button/subitem");
+}

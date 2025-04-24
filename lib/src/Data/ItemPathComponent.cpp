@@ -32,6 +32,17 @@ const std::string& PropertySelector::name() const
     return m_name;
 }
 
+// TypeSelector implementation
+TypeSelector::TypeSelector(std::string type)
+: m_type(std::move(type))
+{
+}
+
+const std::string& TypeSelector::type() const
+{
+    return m_type;
+}
+
 // Component implementation
 Component::Component(const std::string& rawValue)
 {
@@ -39,7 +50,13 @@ Component::Component(const std::string& rawValue)
     if (!rawValue.empty() && rawValue[0] == '.') {
         std::string propertyName = rawValue.substr(1); // Remove the leading '.'
         m_selector = PropertySelector(propertyName);
-    } else {
+    }
+    // If the raw value starts with '#', create a type selector
+    else if (!rawValue.empty() && rawValue[0] == '#') {
+        std::string typeName = rawValue.substr(1); // Remove the leading '#'
+        m_selector = TypeSelector(typeName);
+    }
+    else {
         m_selector = NameSelector(rawValue);
     }
 }
@@ -55,6 +72,8 @@ std::string Component::string() const
         return std::get<NameSelector>(m_selector).name();
     } else if (std::holds_alternative<PropertySelector>(m_selector)) {
         return "." + std::get<PropertySelector>(m_selector).name();
+    } else if (std::holds_alternative<TypeSelector>(m_selector)) {
+        return "#" + std::get<TypeSelector>(m_selector).type();
     }
     return "";
 }

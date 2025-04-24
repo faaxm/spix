@@ -42,7 +42,21 @@ private:
     std::string m_name;
 };
 
-using Selector = std::variant<NameSelector, PropertySelector>;
+/**
+ * @brief Selector for item path by type
+ */
+class SPIX_EXPORT TypeSelector {
+public:
+    TypeSelector() = default;
+    explicit TypeSelector(std::string type);
+
+    const std::string& type() const;
+
+private:
+    std::string m_type;
+};
+
+using Selector = std::variant<NameSelector, PropertySelector, TypeSelector>;
 
 /**
  * @brief A component of an item path

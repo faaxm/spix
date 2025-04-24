@@ -23,6 +23,12 @@ TEST(ItemPathComponentTest, Construction)
     EXPECT_TRUE(std::holds_alternative<spix::path::PropertySelector>(propertyComp.selector()));
     EXPECT_EQ(std::get<spix::path::PropertySelector>(propertyComp.selector()).name(), "testProperty");
 
+    // Test type component
+    spix::path::Component typeComp("#Button");
+    EXPECT_EQ(typeComp.string(), "#Button");
+    EXPECT_TRUE(std::holds_alternative<spix::path::TypeSelector>(typeComp.selector()));
+    EXPECT_EQ(std::get<spix::path::TypeSelector>(typeComp.selector()).type(), "Button");
+
     // Test empty component
     spix::path::Component emptyComp("");
     EXPECT_EQ(emptyComp.string(), "");
@@ -42,6 +48,13 @@ TEST(ItemPathComponentTest, Construction)
     EXPECT_EQ(fromPropSelector.string(), ".propertyName");
     EXPECT_TRUE(std::holds_alternative<spix::path::PropertySelector>(fromPropSelector.selector()));
     EXPECT_EQ(std::get<spix::path::PropertySelector>(fromPropSelector.selector()).name(), "propertyName");
+
+    // Test construction from type selector
+    spix::path::TypeSelector typeSelector("Button");
+    spix::path::Component fromTypeSelector(typeSelector);
+    EXPECT_EQ(fromTypeSelector.string(), "#Button");
+    EXPECT_TRUE(std::holds_alternative<spix::path::TypeSelector>(fromTypeSelector.selector()));
+    EXPECT_EQ(std::get<spix::path::TypeSelector>(fromTypeSelector.selector()).type(), "Button");
 }
 
 TEST(ItemPathComponentTest, Selectors)
@@ -53,4 +66,8 @@ TEST(ItemPathComponentTest, Selectors)
     // Test ItemPathPropertySelector
     spix::path::PropertySelector propertySelector("property");
     EXPECT_EQ(propertySelector.name(), "property");
+
+    // Test ItemPathTypeSelector
+    spix::path::TypeSelector typeSelector("Button");
+    EXPECT_EQ(typeSelector.type(), "Button");
 }
