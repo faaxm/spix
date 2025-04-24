@@ -28,22 +28,6 @@ QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index)
     return nullptr;
 }
 
-QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
-{
-    int itemIndex = 0;
-    QQuickItem* item = nullptr;
-    do {
-        item = RepeaterChildAtIndex(repeater, itemIndex);
-        if (item && GetObjectName(item) == name) {
-            break;
-        }
-
-        ++itemIndex;
-    } while (item);
-
-    return item;
-}
-
 QString GetObjectName(QObject* object)
 {
     if (object == nullptr) {
@@ -62,36 +46,43 @@ QString GetObjectName(QObject* object)
     return object->objectName();
 }
 
-QObject* FindChildItem(QObject* object, const QString& name)
+void ForEachChild(QObject* object, const std::function<bool(QObject*)>& callback)
 {
-    if (object == nullptr) {
-        return nullptr;
+    if (!object) {
+        return;
     }
-
-    using Index = QObjectList::size_type;
-    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
-        for (Index i = 0; i < qquickitem->childItems().size(); ++i) {
-            auto child = qquickitem->childItems().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
-            }
-            if (auto item = FindChildItem(child, name)) {
-                return item;
-            }
-        }
-    } else {
-        for (Index i = 0; i < object->children().size(); ++i) {
-            auto child = object->children().at(i);
-            if (GetObjectName(child) == name) {
-                return child;
-            }
-            if (auto item = FindChildItem(child, name)) {
-                return item;
+    
+    // Special handling for QQuickRepeater objects
+    auto rootClassName = object->metaObject()->className();
+    if (rootClassName == repeater_class_name) {
+        QQuickItem* repeaterItem = static_cast<QQuickItem*>(object);
+        
+        // Iterate through repeater's generated items
+        int index = 0;
+        QQuickItem* child = nullptr;
+        while ((child = RepeaterChildAtIndex(repeaterItem, index++)) != nullptr) {
+            if (!callback(child)) {
+                return; // Stop iteration if callback returns false
             }
         }
     }
-
-    return nullptr;
+    
+    // Handle QQuickItems and their childItems()
+    if (auto quickItem = qobject_cast<QQuickItem*>(object)) {
+        for (auto* childItem : quickItem->childItems()) {
+            if (!callback(childItem)) {
+                return; // Stop iteration if callback returns false
+            }
+        }
+    }
+    // Handle regular QObjects and their children()
+    else {
+        for (auto* child : object->children()) {
+            if (!callback(child)) {
+                return; // Stop iteration if callback returns false
+            }
+        }
+    }
 }
 
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& retVar)
