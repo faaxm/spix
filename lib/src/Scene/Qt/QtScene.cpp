@@ -18,7 +18,6 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 
-
 namespace spix {
 
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
