@@ -142,7 +142,7 @@ TEST(GTestExample, SearchTypeRectangles)
     srv->setStringProperty("mainWindow/results", "text", "");
     srv->wait(std::chrono::milliseconds(500));
     // Search for mutible Types in a Path
-    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle"));
+    srv->mouseClick(spix::ItemPath("mainWindow/ParentRect/#Rectangle"));
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");

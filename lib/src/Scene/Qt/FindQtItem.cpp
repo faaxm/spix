@@ -52,10 +52,28 @@ QObject* MatchesSpecificSelector(QObject* item, const spix::path::TypeSelector& 
     if (!item) {
         return nullptr;
     }
-    
+
     const auto& typeName = specific_selector.type();
     if (spix::qt::TypeStringForObject(item) == QString::fromStdString(typeName)) {
         return item;
+    }
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::ValueSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+
+    // Check if the "text" property exists and matches the specified value
+    QVariant textProperty = item->property("text");
+    if (textProperty.isValid() && textProperty.canConvert<QString>()) {
+        QString textValue = textProperty.toString();
+        if (textValue == QString::fromStdString(specific_selector.value())) {
+            return item;
+        }
     }
     return nullptr;
 }

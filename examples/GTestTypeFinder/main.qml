@@ -98,8 +98,24 @@ Window {
                             }
                         }
                     }
+                }
+            }
+
+            Rectangle {
+                objectName: "ParentRect"
+                width: 150
+                height: 150
+                x: 200
+                color: "pink"
+                
+                Rectangle {
+                    property string test_id: "blue_rect"
+                    width: 100
+                    height: 100
+                    color: "blue"
                     MouseArea {
-                        anchors.fill: parent                        
+                        anchors.fill: parent
+                        
                         onClicked: resultsView.appendText("Rect clicked")
                     }
                 }

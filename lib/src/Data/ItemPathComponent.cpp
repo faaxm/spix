@@ -43,6 +43,17 @@ const std::string& TypeSelector::type() const
     return m_type;
 }
 
+// ValueSelector implementation
+ValueSelector::ValueSelector(std::string value)
+: m_value(std::move(value))
+{
+}
+
+const std::string& ValueSelector::value() const
+{
+    return m_value;
+}
+
 // Component implementation
 Component::Component(const std::string& rawValue)
 {
@@ -56,7 +67,11 @@ Component::Component(const std::string& rawValue)
         std::string typeName = rawValue.substr(1); // Remove the leading '#'
         m_selector = TypeSelector(typeName);
     }
-    else {
+    // If the raw value starts with '"' and ends with '"', create a value selector
+    else if (rawValue.size() >= 2 && rawValue[0] == '"' && rawValue[rawValue.size() - 1] == '"') {
+        std::string value = rawValue.substr(1, rawValue.size() - 2); // Remove the quotes
+        m_selector = ValueSelector(value);
+    } else {
         m_selector = NameSelector(rawValue);
     }
 }
@@ -74,6 +89,8 @@ std::string Component::string() const
         return "." + std::get<PropertySelector>(m_selector).name();
     } else if (std::holds_alternative<TypeSelector>(m_selector)) {
         return "#" + std::get<TypeSelector>(m_selector).type();
+    } else if (std::holds_alternative<ValueSelector>(m_selector)) {
+        return "\"" + std::get<ValueSelector>(m_selector).value() + "\"";
     }
     return "";
 }
