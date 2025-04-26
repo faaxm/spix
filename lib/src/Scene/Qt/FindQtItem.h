@@ -7,7 +7,6 @@
 #pragma once
 
 #include <Spix/Data/ItemPath.h>
-
 #include <QQuickItem>
 #include <QQuickWindow>
 
@@ -22,4 +21,4 @@ namespace qt {
 QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path);
 
 } // namespace qt
-} // namespace spix
+} // namespace spix 
