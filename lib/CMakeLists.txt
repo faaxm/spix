@@ -90,6 +90,8 @@ set(SOURCES
     src/Scene/Mock/MockScene.h
     src/Scene/Mock/MockItem.cpp
     src/Scene/Mock/MockItem.h
+    src/Scene/Qt/FindQtItem.cpp
+    src/Scene/Qt/FindQtItem.h
     src/Scene/Qt/QtEvents.cpp
     src/Scene/Qt/QtEvents.h
     src/Scene/Qt/QtItem.cpp
