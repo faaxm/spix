@@ -56,7 +56,8 @@ const std::string& ValueSelector::value() const
 
 // PropertyValueSelector implementation
 PropertyValueSelector::PropertyValueSelector(std::string propertyName, std::string propertyValue)
-: m_propertyName(std::move(propertyName)), m_propertyValue(std::move(propertyValue))
+: m_propertyName(std::move(propertyName))
+, m_propertyValue(std::move(propertyValue))
 {
 }
 
@@ -91,7 +92,7 @@ Component::Component(const std::string& rawValue)
     // If the raw value starts with '(' and ends with ')', create a property value selector
     else if (rawValue.size() >= 2 && rawValue[0] == '(' && rawValue[rawValue.size() - 1] == ')') {
         std::string content = rawValue.substr(1, rawValue.size() - 2); // Remove the parentheses
-        
+
         // Find the equals sign separating property name and value
         size_t equalsPos = content.find('=');
         if (equalsPos != std::string::npos) {
