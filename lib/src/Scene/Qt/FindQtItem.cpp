@@ -8,39 +8,48 @@
 #include <Scene/Qt/QtItemTools.h>
 
 #include <QGuiApplication>
-#include <QQuickWindow>
 #include <QQuickItem>
+#include <QQuickWindow>
 
 namespace {
+
+template <typename SelectorType>
+QObject* MatchesSpecificSelector(QObject* item, const SelectorType& specific_selector)
+{
+    // Default implementation for unknown selector types
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::NameSelector& specific_selector)
+{
+    const auto& itemName = specific_selector.name();
+    if (spix::qt::GetObjectName(item) == QString::fromStdString(itemName)) {
+        return item;
+    }
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::PropertySelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+    const auto& propertyName = specific_selector.name();
+    QVariant propertyValue = item->property(propertyName.c_str());
+
+    if (!propertyValue.isValid()) {
+        return nullptr;
+    }
+
+    return propertyValue.value<QObject*>();
+}
 
 QObject* MatchesSelector(QObject* item, const spix::path::Selector& selector)
 {
     return std::visit(
-        [item](const auto& specific_selector) -> QObject* {
-            using SelectorType = std::decay_t<decltype(specific_selector)>;
-
-            if constexpr (std::is_same_v<SelectorType, spix::path::NameSelector>) {
-                const auto& itemName = specific_selector.name();
-                if (spix::qt::GetObjectName(item) == QString::fromStdString(itemName)) {
-                    return item;
-                }
-                return nullptr;
-            } else if constexpr (std::is_same_v<SelectorType, spix::path::PropertySelector>) {
-                if (!item) {
-                    return nullptr;
-                }
-                const auto& propertyName = specific_selector.name();
-                QVariant propertyValue = item->property(propertyName.c_str());
-                
-                if (!propertyValue.isValid()) {
-                    return nullptr;
-                }
-                
-                return propertyValue.value<QObject*>();
-            } else {
-                return nullptr; // Unknown selector type
-            }
-        },
+        [item](const auto& specific_selector) -> QObject* { return MatchesSpecificSelector(item, specific_selector); },
         selector);
 }
 
@@ -71,17 +80,19 @@ QQuickItem* FindMatchingItem(
     if (matchedObject) {
         // Increment matched count as we found a match
         matchedCount++;
-        
+
         // If we've matched all components, return this item if it's a QQuickItem
         if (matchedCount == pathComponents.size()) {
             return qobject_cast<QQuickItem*>(matchedObject);
         }
-        
+
         // Continue searching in the matched object's hierarchy
-        // if it is different from the current node or if the next component is a property selector,
-        // as a property selector might reference a property of the current node
+        // - if it is different from the current node or
+        // - if the next component is a property selector, as a property selector might reference a property of the
+        //   current node
         const auto& nextComponent = pathComponents[matchedCount];
-        if (matchedObject != currentNode || std::holds_alternative<spix::path::PropertySelector>(nextComponent.selector())) {
+        if (matchedObject != currentNode
+            || std::holds_alternative<spix::path::PropertySelector>(nextComponent.selector())) {
             return FindMatchingItem(pathComponents, matchedObject, matchedCount);
         }
     }
@@ -89,7 +100,7 @@ QQuickItem* FindMatchingItem(
     // Continue DFS through children
     QQuickItem* result = nullptr;
 
-    // Use ForEachChild to iterate through all children, with special handling for repeaters
+    // Use ForEachChild to iterate through all children
     spix::qt::ForEachChild(currentNode, [&](QObject* child) -> bool {
         if ((result = FindMatchingItem(pathComponents, child, matchedCount))) {
             return false; // Stop iteration if we found a match
@@ -160,4 +171,4 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
 }
 
 } // namespace qt
-} // namespace spix 
+} // namespace spix
