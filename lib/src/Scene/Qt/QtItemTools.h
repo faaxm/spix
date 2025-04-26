@@ -28,6 +28,16 @@ QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index);
 QString GetObjectName(QObject* object);
 
 /**
+ * @brief Returns the simplified type name of a QObject
+ * 
+ * Removes QQuick prefix and _QML suffix from the class name
+ * 
+ * @param object The QObject to get the type from
+ * @return The simplified type name
+ */
+QString TypeStringForObject(QObject* object);
+
+/**
  * @brief Iterates over all children of a QObject, with special handling for QQuickItems and Repeaters
  *
  * This function handles the different ways children are accessed in Qt:

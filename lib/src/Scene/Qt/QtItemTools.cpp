@@ -9,6 +9,7 @@
 #include <QDateTime>
 #include <QQmlContext>
 #include <QQuickItem>
+#include <QRegularExpression>
 #include <stdexcept>
 
 namespace spix {
@@ -44,6 +45,17 @@ QString GetObjectName(QObject* object)
     }
 
     return object->objectName();
+}
+
+QString TypeStringForObject(QObject* object)
+{
+    if (object == nullptr) {
+        return "";
+    }
+
+    auto typeName = QString(object->metaObject()->className());
+    typeName.replace(QRegularExpression("QQuick|_QML.*"), "");
+    return typeName;
 }
 
 void ForEachChild(QObject* object, const std::function<bool(QObject*)>& callback)

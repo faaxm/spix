@@ -91,7 +91,7 @@ TEST(GTestExample, SearchWrongText)
     EXPECT_EQ(result, expected_result);
 }
 
-TEST(GTestExample, SearchTypeInTwoReacts)
+TEST(GTestExample, SearchTypeInTwoRects)
 {
     // Clean Output
     srv->setStringProperty("mainWindow/results", "text", "");
@@ -106,7 +106,7 @@ TEST(GTestExample, SearchTypeInTwoReacts)
     EXPECT_EQ(result, expected_result);
 }
 
-TEST(GTestExample, SearchTypeInTwoReactsWithWrongButton)
+TEST(GTestExample, SearchTypeInTwoRectsWithWrongButton)
 {
     // Clean Output
     srv->setStringProperty("mainWindow/results", "text", "No Click");
@@ -136,7 +136,22 @@ TEST(GTestExample, SearchTypeCentreFirstButton)
     EXPECT_EQ(result, expected_result);
 }
 
-TEST(GTestExample, SearchTypeToManyRectangles)
+TEST(GTestExample, SearchTypeRectangles)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/#Rectangle/#Rectangle"));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = R"RSLT(Rect clicked)RSLT";
+
+    EXPECT_EQ(result, expected_result);
+}
+
+TEST(GTestExample, SearchTypeTooManyRectangles)
 {
     // Clean Output
     srv->setStringProperty("mainWindow/results", "text", "No Click");

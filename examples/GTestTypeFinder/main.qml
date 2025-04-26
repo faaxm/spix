@@ -98,6 +98,10 @@ Window {
                             }
                         }
                     }
+                    MouseArea {
+                        anchors.fill: parent                        
+                        onClicked: resultsView.appendText("Rect clicked")
+                    }
                 }
             }
         }

@@ -46,6 +46,20 @@ QObject* MatchesSpecificSelector(QObject* item, const spix::path::PropertySelect
     return propertyValue.value<QObject*>();
 }
 
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::TypeSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+    
+    const auto& typeName = specific_selector.type();
+    if (spix::qt::TypeStringForObject(item) == QString::fromStdString(typeName)) {
+        return item;
+    }
+    return nullptr;
+}
+
 QObject* MatchesSelector(QObject* item, const spix::path::Selector& selector)
 {
     return std::visit(
