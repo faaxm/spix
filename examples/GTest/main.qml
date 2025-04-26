@@ -22,6 +22,7 @@ Window {
 
         Button {
             objectName: "Button_1"
+            id: button1
             text: "Press Me"
 			MouseArea {
 				anchors.fill: parent
@@ -73,5 +74,12 @@ Window {
             right: parent.right
             bottom: parent.bottom
         }
+    }
+
+    Item {
+        id: propItem
+        objectName: "propItem"
+        property var propertyWithTarget: button1
+        property var propertyWithParent: button1.parent
     }
 }

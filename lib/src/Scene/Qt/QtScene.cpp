@@ -46,14 +46,36 @@ bool MatchesSelector(QObject* item, const spix::path::Selector& selector)
                 const auto& itemName = specific_selector.name();
                 return spix::qt::GetObjectName(item) == QString::fromStdString(itemName);
             } else if constexpr (std::is_same_v<SelectorType, spix::path::PropertySelector>) {
-                const auto& propertyName = specific_selector.name();
-                QVariant propertyValue = item->property(propertyName.c_str());
-                return propertyValue.isValid();
+                // Not handled here, handled in FindMatchingItem
+                return false;
             } else {
                 return false; // Unknown selector type
             }
         },
         selector);
+}
+
+/**
+ * Gets a property value from an item if the selector is a property selector.
+ *
+ * @param item The item to get the property from
+ * @param selector The selector that might be a property selector
+ * @return QObject* The object referenced by the property or nullptr if not a property selector or invalid
+ */
+QObject* GetPropertyValue(QObject* item, const spix::path::Selector& selector)
+{
+    if (!item || !std::holds_alternative<spix::path::PropertySelector>(selector)) {
+        return nullptr;
+    }
+
+    const auto& propertyName = std::get<spix::path::PropertySelector>(selector).name();
+    QVariant propertyValue = item->property(propertyName.c_str());
+
+    if (!propertyValue.isValid()) {
+        return nullptr;
+    }
+
+    return propertyValue.value<QObject*>();
 }
 
 /**
@@ -70,17 +92,44 @@ QQuickItem* FindMatchingItem(
     if (!currentNode) {
         return nullptr;
     }
+    if (matchedCount >= pathComponents.size()) {
+        return nullptr;
+    }
 
     // If we have a potential match, check if this node matches the next component
-    if (matchedCount < pathComponents.size()) {
-        const auto& nextComponent = pathComponents[matchedCount];
-        if (MatchesSelector(currentNode, nextComponent.selector())) {
+    const auto& component = pathComponents[matchedCount];
+    const auto& selector = component.selector();
+
+    // First check if this is a property selector
+    if (std::holds_alternative<spix::path::PropertySelector>(selector)) {
+        // Get the object referenced by this property
+        QObject* propertyObj = GetPropertyValue(currentNode, selector);
+        if (propertyObj) {
+            // Move to the next component and continue search from the property object
             matchedCount++;
 
             // If we've matched all components, return this item if it's a QQuickItem
             if (matchedCount == pathComponents.size()) {
-                return qobject_cast<QQuickItem*>(currentNode);
+                return qobject_cast<QQuickItem*>(propertyObj);
             }
+
+            // Otherwise continue searching in the property object's hierarchy
+            return FindMatchingItem(pathComponents, propertyObj, matchedCount);
+        }
+        // If property value is not valid, continue with normal DFS
+    } else if (MatchesSelector(currentNode, selector)) {
+        matchedCount++;
+
+        // If we've matched all components, return this item if it's a QQuickItem
+        if (matchedCount == pathComponents.size()) {
+            return qobject_cast<QQuickItem*>(currentNode);
+        }
+
+        // If the next component is a property selector, continue searching from the current node
+        // as it might reference a property of the current node
+        const auto& nextComponent = pathComponents[matchedCount];
+        if (std::holds_alternative<spix::path::PropertySelector>(nextComponent.selector())) {
+            return FindMatchingItem(pathComponents, currentNode, matchedCount);
         }
     }
 
