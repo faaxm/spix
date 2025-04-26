@@ -54,6 +54,22 @@ const std::string& ValueSelector::value() const
     return m_value;
 }
 
+// PropertyValueSelector implementation
+PropertyValueSelector::PropertyValueSelector(std::string propertyName, std::string propertyValue)
+: m_propertyName(std::move(propertyName)), m_propertyValue(std::move(propertyValue))
+{
+}
+
+const std::string& PropertyValueSelector::propertyName() const
+{
+    return m_propertyName;
+}
+
+const std::string& PropertyValueSelector::propertyValue() const
+{
+    return m_propertyValue;
+}
+
 // Component implementation
 Component::Component(const std::string& rawValue)
 {
@@ -71,6 +87,21 @@ Component::Component(const std::string& rawValue)
     else if (rawValue.size() >= 2 && rawValue[0] == '"' && rawValue[rawValue.size() - 1] == '"') {
         std::string value = rawValue.substr(1, rawValue.size() - 2); // Remove the quotes
         m_selector = ValueSelector(value);
+    }
+    // If the raw value starts with '(' and ends with ')', create a property value selector
+    else if (rawValue.size() >= 2 && rawValue[0] == '(' && rawValue[rawValue.size() - 1] == ')') {
+        std::string content = rawValue.substr(1, rawValue.size() - 2); // Remove the parentheses
+        
+        // Find the equals sign separating property name and value
+        size_t equalsPos = content.find('=');
+        if (equalsPos != std::string::npos) {
+            std::string propName = content.substr(0, equalsPos);
+            std::string propValue = content.substr(equalsPos + 1);
+            m_selector = PropertyValueSelector(propName, propValue);
+        } else {
+            // If no equals sign found, fall back to name selector
+            m_selector = NameSelector(rawValue);
+        }
     } else {
         m_selector = NameSelector(rawValue);
     }
@@ -91,6 +122,9 @@ std::string Component::string() const
         return "#" + std::get<TypeSelector>(m_selector).type();
     } else if (std::holds_alternative<ValueSelector>(m_selector)) {
         return "\"" + std::get<ValueSelector>(m_selector).value() + "\"";
+    } else if (std::holds_alternative<PropertyValueSelector>(m_selector)) {
+        const auto& propValSelector = std::get<PropertyValueSelector>(m_selector);
+        return "(" + propValSelector.propertyName() + "=" + propValSelector.propertyValue() + ")";
     }
     return "";
 }

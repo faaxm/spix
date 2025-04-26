@@ -6,6 +6,7 @@
 
 #include "FindQtItem.h"
 #include <Scene/Qt/QtItemTools.h>
+#include <Spix/Data/ItemPathComponent.h>
 
 #include <QGuiApplication>
 #include <QQuickItem>
@@ -72,6 +73,28 @@ QObject* MatchesSpecificSelector(QObject* item, const spix::path::ValueSelector&
     if (textProperty.isValid() && textProperty.canConvert<QString>()) {
         QString textValue = textProperty.toString();
         if (textValue == QString::fromStdString(specific_selector.value())) {
+            return item;
+        }
+    }
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::PropertyValueSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+
+    // Get the property name and expected value
+    const auto& propertyName = specific_selector.propertyName();
+    const auto& expectedValue = specific_selector.propertyValue();
+
+    // Check if the property exists
+    QVariant propertyValue = item->property(propertyName.c_str());
+    if (propertyValue.isValid() && propertyValue.canConvert<QString>()) {
+        QString actualValue = propertyValue.toString();
+        if (actualValue == QString::fromStdString(expectedValue)) {
             return item;
         }
     }

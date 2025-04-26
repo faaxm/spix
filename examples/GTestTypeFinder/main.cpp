@@ -151,6 +151,21 @@ TEST(GTestExample, SearchTypeRectangles)
     EXPECT_EQ(result, expected_result);
 }
 
+TEST(GTestExample, SearchPropertyValue)
+{
+    // Clean Output
+    srv->setStringProperty("mainWindow/results", "text", "");
+    srv->wait(std::chrono::milliseconds(500));
+    // Search for mutible Types in a Path
+    srv->mouseClick(spix::ItemPath("mainWindow/(test_id=button 2)"));
+    srv->wait(std::chrono::milliseconds(500));
+
+    auto result = srv->getStringProperty("mainWindow/results", "text");
+    auto expected_result = "Button 2 clicked";
+
+    EXPECT_EQ(result, expected_result);
+}
+
 TEST(GTestExample, SearchTypeTooManyRectangles)
 {
     // Clean Output
