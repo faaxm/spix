@@ -13,6 +13,8 @@
 #include <QQuickItem>
 #include <QVariant>
 
+#include <functional>
+
 class QString;
 
 namespace spix {
@@ -22,24 +24,21 @@ extern const QString repeater_class_name;
 extern const char* item_at_method_name;
 
 QQuickItem* RepeaterChildAtIndex(QQuickItem* repeater, int index);
-QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name);
 
 QString GetObjectName(QObject* object);
 
 /**
- * @brief Find a child object with the given name.
+ * @brief Iterates over all children of a QObject, with special handling for QQuickItems and Repeaters
  *
- * This works similar to `QObject::findChild`. However, once it
- * encounters a `QQuickItem`, it no longer iterates over the object's
- * `children()`, but rather its `childItems()`.
+ * This function handles the different ways children are accessed in Qt:
+ * - For QQuickItems, it uses childItems() instead of children()
+ * - For QQuickRepeaters, it iterates through its generated items
+ * - For regular QObjects, it uses the children() list
+ *
+ * @param object The parent object whose children to iterate over
+ * @param callback A function to call for each child, should return true to continue iteration or false to stop
  */
-QObject* FindChildItem(QObject* object, const QString& name);
-
-template <typename T>
-T FindChildItem(QObject* object, const QString& name)
-{
-    return qobject_cast<T>(FindChildItem(object, name));
-}
+void ForEachChild(QObject* object, const std::function<bool(QObject*)>& callback);
 
 using QMLReturnVariant = std::variant<std::nullptr_t, bool, int, float, double, QString, QDateTime, QVariant>;
 QGenericReturnArgument GetReturnArgForQMetaType(int type, QMLReturnVariant& toInitialize);

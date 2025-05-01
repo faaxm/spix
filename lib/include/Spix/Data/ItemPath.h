@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include <Spix/Data/ItemPathComponent.h>
 #include <Spix/spix_export.h>
 
 namespace spix {
@@ -33,18 +34,18 @@ public:
     ItemPath();
     ItemPath(const char* path);
     ItemPath(const std::string& path);
-    ItemPath(std::vector<std::string> components);
+    ItemPath(std::vector<path::Component> components);
 
-    const std::vector<std::string>& components() const;
+    const std::vector<path::Component>& components() const;
     size_t length() const { return m_components.size(); };
-    std::string rootComponent() const;
+    const path::Component& rootComponent() const;
 
     std::string string() const;
 
     ItemPath subPath(size_t offset) const;
 
 private:
-    std::vector<std::string> m_components;
+    std::vector<path::Component> m_components;
 };
 
 } // namespace spix

@@ -19,28 +19,35 @@ ItemPath::ItemPath(const char* path)
 }
 
 ItemPath::ItemPath(const std::string& path)
-: m_components(utils::ParsePathString(path))
 {
+    auto stringComponents = utils::ParsePathString(path);
+    for (const auto& component : stringComponents) {
+        m_components.emplace_back(path::Component(component));
+    }
 }
 
-ItemPath::ItemPath(std::vector<std::string> components)
+ItemPath::ItemPath(std::vector<path::Component> components)
 : m_components(std::move(components))
 {
 }
 
-const std::vector<std::string>& ItemPath::components() const
+const std::vector<path::Component>& ItemPath::components() const
 {
     return m_components;
 }
 
-std::string ItemPath::rootComponent() const
+const path::Component& ItemPath::rootComponent() const
 {
     return m_components.at(0);
 }
 
 std::string ItemPath::string() const
 {
-    return utils::FormatPathString(m_components);
+    std::vector<std::string> stringComponents;
+    for (const auto& component : m_components) {
+        stringComponents.emplace_back(component.string());
+    }
+    return utils::FormatPathString(stringComponents);
 }
 
 ItemPath ItemPath::subPath(size_t offset) const
@@ -49,7 +56,7 @@ ItemPath ItemPath::subPath(size_t offset) const
         return ItemPath();
     }
 
-    std::vector<std::string> sub_components;
+    std::vector<path::Component> sub_components;
     std::copy(m_components.begin() + offset, m_components.end(), std::back_inserter(sub_components));
     return ItemPath(std::move(sub_components));
 }
