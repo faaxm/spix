@@ -6,6 +6,7 @@
 
 #include "FindQtItem.h"
 #include <Scene/Qt/QtItemTools.h>
+#include <Spix/Data/ItemPathComponent.h>
 
 #include <QGuiApplication>
 #include <QQuickItem>
@@ -44,6 +45,60 @@ QObject* MatchesSpecificSelector(QObject* item, const spix::path::PropertySelect
     }
 
     return propertyValue.value<QObject*>();
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::TypeSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+
+    const auto& typeName = specific_selector.type();
+    if (spix::qt::TypeStringForObject(item) == QString::fromStdString(typeName)) {
+        return item;
+    }
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::ValueSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+
+    // Check if the "text" property exists and matches the specified value
+    QVariant textProperty = item->property("text");
+    if (textProperty.isValid() && textProperty.canConvert<QString>()) {
+        QString textValue = textProperty.toString();
+        if (textValue == QString::fromStdString(specific_selector.value())) {
+            return item;
+        }
+    }
+    return nullptr;
+}
+
+template <>
+QObject* MatchesSpecificSelector(QObject* item, const spix::path::PropertyValueSelector& specific_selector)
+{
+    if (!item) {
+        return nullptr;
+    }
+
+    // Get the property name and expected value
+    const auto& propertyName = specific_selector.propertyName();
+    const auto& expectedValue = specific_selector.propertyValue();
+
+    // Check if the property exists
+    QVariant propertyValue = item->property(propertyName.c_str());
+    if (propertyValue.isValid() && propertyValue.canConvert<QString>()) {
+        QString actualValue = propertyValue.toString();
+        if (actualValue == QString::fromStdString(expectedValue)) {
+            return item;
+        }
+    }
+    return nullptr;
 }
 
 QObject* MatchesSelector(QObject* item, const spix::path::Selector& selector)
