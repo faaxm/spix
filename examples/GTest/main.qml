@@ -27,7 +27,7 @@ Window {
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
-				
+
 				onClicked:
 				{
 					if(mouse.button & Qt.RightButton)
@@ -47,7 +47,7 @@ Window {
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
-				
+
 				onClicked:
 				{
 					if(mouse.button & Qt.RightButton)

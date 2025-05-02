@@ -37,4 +37,4 @@ When Spix needs to locate an item based on an `ItemPath` (e.g., in `spix::qt::Ge
 
 For each component in the path, the search algorithm attempts to find a matching child (or related item, in the case of property selectors) based on the component's selector type. The use of `std::variant` for selectors facilitates this matching process. A common pattern, as seen in `FindQtItem.cpp`, involves using `std::visit` on the `Component::selector()` variant. `std::visit` allows dispatching to the correct matching logic based on the actual selector type held by the variant at runtime, without requiring complex conditional chains.
 
-This design allows for easy extension: adding a new selector type involves defining a new selector class, adding it to the `Selector` variant, and implementing the corresponding matching logic within the visitor function used with `std::visit`. 
+This design allows for easy extension: adding a new selector type involves defining a new selector class, adding it to the `Selector` variant, and implementing the corresponding matching logic within the visitor function used with `std::visit`.

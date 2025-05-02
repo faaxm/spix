@@ -48,7 +48,7 @@ jobs:
         run: |
           mkdir build
           cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.base.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=${{ matrix.base.tests }} -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.base.cmake_flags }} -DBUILD_SHARED_LIBS=${{ matrix.base.shared_libs }} -DSPIX_QT_MAJOR=${{ matrix.base.qt_version[0] }} .
-      
+
       - name: "Build"
         run: cmake --build build --config ${{ matrix.base.build_type }}
 
