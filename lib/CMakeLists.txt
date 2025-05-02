@@ -101,7 +101,7 @@ set(SOURCES
     src/Scene/Qt/QtScene.cpp
     src/Scene/Qt/QtScene.h
     src/Scene/Scene.h
-    
+
     src/Utils/AnyRpcUtils.cpp
     src/Utils/AnyRpcUtils.h
     src/Utils/AnyRpcFunction.h

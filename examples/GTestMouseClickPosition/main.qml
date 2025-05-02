@@ -11,7 +11,7 @@ Window {
     title: qsTr("Spix Example")
     color: "#111111"
 
-        
+
     GridLayout {
         objectName: "Grid_1"
         rowSpacing: 20
@@ -32,7 +32,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons:  Qt.AllButtons
-                
+
                 onClicked:
                 {
                         resultsView.appendText("Button 1 clicked")
@@ -47,7 +47,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons:  Qt.AllButtons
-                
+
                 onClicked:
                 {
                         resultsView.appendText("Button 2 clicked")
@@ -62,7 +62,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons:  Qt.AllButtons
-                
+
                 onClicked:
                 {
                         resultsView.appendText("Button 3 clicked")
@@ -77,7 +77,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons:  Qt.AllButtons
-                
+
                 onClicked:
                 {
                         resultsView.appendText("Button 4 clicked")

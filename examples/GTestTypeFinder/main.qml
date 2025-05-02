@@ -34,7 +34,7 @@ Window {
                 anchors {
                     bottom: parent.bottom
                 }
-                    
+
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons:  Qt.AllButtons
@@ -56,7 +56,7 @@ Window {
                 anchors {
                     bottom: parent.bottom
                 }
-                
+
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons:  Qt.AllButtons
@@ -75,7 +75,7 @@ Window {
                 width: 150
                 height: 150
                 color: "green"
-                
+
                 Rectangle {
                     property string test_id: "blue_rect"
                     width: 100
@@ -88,7 +88,7 @@ Window {
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons:  Qt.AllButtons
-                            
+
                             onClicked:
                             {
                                 if(mouse.button & Qt.RightButton)
@@ -107,7 +107,7 @@ Window {
                 height: 150
                 x: 200
                 color: "pink"
-                
+
                 Rectangle {
                     property string test_id: "blue_rect"
                     width: 100
@@ -115,7 +115,7 @@ Window {
                     color: "blue"
                     MouseArea {
                         anchors.fill: parent
-                        
+
                         onClicked: resultsView.appendText("Rect clicked")
                     }
                 }
