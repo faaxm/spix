@@ -30,6 +30,8 @@ set(SOURCES
     src/QtQmlBot.cpp
     src/TestServer.cpp
 
+    src/Commands/ClickAndHoldOnItem.cpp
+    src/Commands/ClickAndHoldOnItem.h
     src/Commands/ClickOnItem.cpp
     src/Commands/ClickOnItem.h
     src/Commands/Command.cpp
