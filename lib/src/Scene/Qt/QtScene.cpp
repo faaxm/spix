@@ -39,8 +39,8 @@ spix::ItemPath ItemPathForObject(QObject* obj){
             for(const auto child : siblings) {
                 sameNameNumber += (token == spix::qt::GetObjectName(child));
             }
-        }else if(currentQuickItem != nullptr && currentQuickItem->parentItem()) {
-            auto siblings = currentQuickItem->parent()->children();
+        }else if(currentQuickItem != nullptr && currentQuickItem->parentItem() != nullptr) {
+            auto siblings = currentQuickItem->parentItem()->children();
             for(const auto child : siblings) {
                 sameNameNumber += (token == spix::qt::GetObjectName(child));
             }
