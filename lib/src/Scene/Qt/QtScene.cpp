@@ -24,12 +24,26 @@
 
 namespace {
 
+QString GetObjectFinalName(QObject* obj){
+    auto token = spix::qt::GetObjectName(obj);
+
+    auto var = obj->property("text");
+    if(var.isValid()){
+        token = var.toString();
+        if(token.startsWith("List")){
+            token = spix::qt::GetObjectName(obj);
+        }
+    }
+
+    return token;
+}
+
 spix::ItemPath ItemPathForObject(QObject* obj){
     auto currentItem = obj;
     QString path = "";
 
     while(currentItem != nullptr) {
-        auto token = spix::qt::GetObjectName(currentItem);
+        auto token = GetObjectFinalName(currentItem);
         int sameNameNumber = 0;
 
         const auto currentQuickItem = qobject_cast<QQuickItem*>(currentItem);
@@ -37,12 +51,12 @@ spix::ItemPath ItemPathForObject(QObject* obj){
         if(currentItem->parent() != nullptr){
             auto siblings = currentItem->parent()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == spix::qt::GetObjectName(child));
+                sameNameNumber += (token == GetObjectFinalName(child));
             }
         }else if(currentQuickItem != nullptr && currentQuickItem->parentItem() != nullptr) {
             auto siblings = currentQuickItem->parentItem()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == spix::qt::GetObjectName(child));
+                sameNameNumber += (token == GetObjectFinalName(child));
             }
         }
         if((currentItem->parent() == nullptr)
@@ -107,9 +121,17 @@ QtScene::~QtScene(){
 }
 
 spix::ItemPath QtScene::shortPath(ItemPath oldPath, QQuickItem* oldItem){
-    // TODO make the path not have a million layers in it to be more readable
+    spix::ItemPath newPath;
 
-    return oldPath;
+    auto components = oldPath.components();
+    for(auto part = components.begin(); part != std::prev(components.end()); part++){
+        auto next = part + 1;
+        if(part->string() == next->string()) continue;
+        newPath = spix::ItemPath(newPath.string() + "/" + part->string());
+    }
+    newPath = spix::ItemPath(newPath.string() + "/" + std::prev(components.end())->string());
+
+    return newPath;
 }
 
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
