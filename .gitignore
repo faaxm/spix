@@ -9,3 +9,6 @@ build
 dep-libs
 deps
 deps-install
+
+.cache
+compile_commands.json
