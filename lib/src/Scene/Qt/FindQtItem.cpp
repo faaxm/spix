@@ -166,6 +166,8 @@ QQuickItem* FindMatchingItem(
     return result; // Will return nullptr if no match was found
 }
 
+} // namespace
+
 /**
  * Find a QQuickWindow by its name
  * @param name The name of the window to find
@@ -188,12 +190,10 @@ QQuickWindow* GetQQuickWindowWithName(const std::string& name)
     return foundWindow;
 }
 
-} // namespace
-
 namespace spix {
 namespace qt {
 
-QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
+QQuickWindow* GetQQuickWindowAtPath(const spix::ItemPath& path)
 {
     if (path.length() == 0) {
         return nullptr;
@@ -209,6 +209,21 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
 
     const auto& windowName = std::get<spix::path::NameSelector>(windowSelector).name();
     QQuickWindow* window = GetQQuickWindowWithName(windowName);
+
+    if (!window) {
+        return nullptr;
+    }
+
+    return window;
+}
+
+QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
+{
+    if (path.length() == 0) {
+        return nullptr;
+    }
+
+    QQuickWindow* window = GetQQuickWindowAtPath(path);
 
     if (!window) {
         return nullptr;
