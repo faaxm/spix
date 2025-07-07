@@ -20,20 +20,27 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <algorithm>
+#include <qglobal.h>
 
 
 namespace {
 
-QString GetObjectFinalName(QObject* obj){
+QString GetObjectFinalName(QObject* obj, bool top){
     auto token = spix::qt::GetObjectName(obj);
 
+
     auto var = obj->property("text");
-    if(var.isValid()){
-        token = var.toString();
-        if(token.startsWith("List")){
-            token = spix::qt::GetObjectName(obj);
-        }
+    if(!var.isValid()){
+        return token;
     }
+    // adds quotes around the text
+    auto text = "\"" + var.toString() + "\"";
+    if(top) return text;
+
+    // for certain types we want to return the text
+    // not adding in now, but can add in later
+    // if(token.contains("Button")) return text;
+    // else if(token.contains("Label")) return text;
 
     return token;
 }
@@ -42,8 +49,10 @@ spix::ItemPath ItemPathForObject(QObject* obj){
     auto currentItem = obj;
     QString path = "";
 
+    bool top = true;
     while(currentItem != nullptr) {
-        auto token = GetObjectFinalName(currentItem);
+        auto token = GetObjectFinalName(currentItem, top);
+        top = false; // makes sure the first item has its name printed
         int sameNameNumber = 0;
 
         const auto currentQuickItem = qobject_cast<QQuickItem*>(currentItem);
@@ -51,12 +60,12 @@ spix::ItemPath ItemPathForObject(QObject* obj){
         if(currentItem->parent() != nullptr){
             auto siblings = currentItem->parent()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == GetObjectFinalName(child));
+                sameNameNumber += (token == GetObjectFinalName(child, top));
             }
         }else if(currentQuickItem != nullptr && currentQuickItem->parentItem() != nullptr) {
             auto siblings = currentQuickItem->parentItem()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == GetObjectFinalName(child));
+                sameNameNumber += (token == GetObjectFinalName(child, top));
             }
         }
         if((currentItem->parent() == nullptr)
@@ -109,7 +118,10 @@ QtScene::QtScene() {
                     auto itemPath = ItemPathForObject(quickItem);
 
                     auto newPath = shortPath(itemPath, quickItem);
-                    qDebug() << "Path: " << QString::fromUtf8(newPath.string().c_str());
+                    // prints the path and surrounds it with quotes
+                    qDebug().setAutoInsertSpaces(false);
+                    auto pathString = "\'" + newPath.string() + "\'";
+                    qDebug() << "Path: " << pathString.c_str();
                 }
             });
         }
