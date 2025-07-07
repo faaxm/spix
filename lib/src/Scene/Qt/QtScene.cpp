@@ -24,10 +24,11 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
     // Find item within the given path. This can be a QQuickWindow if
     // the path has only one element or a QQuickItem
-    auto item = path.length() == 1 ? std::make_unique<QtItem>(qt::GetQQuickWindowAtPath(path))
+    auto window = qt::GetQQuickWindowAtPath(path);
+    auto item = path.length() == 1 ? std::make_unique<QtItem>(window)
                                    : std::make_unique<QtItem>(qt::GetQQuickItemAtPath(path));
 
-    if (item->qquickitem() == nullptr) {
+    if (window == nullptr || item->qquickitem() == nullptr) {
         return {};
     }
 
