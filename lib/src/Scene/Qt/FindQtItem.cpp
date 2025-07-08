@@ -14,6 +14,8 @@
 
 namespace {
 
+const QString dialog_class_name_part = QString("Dialog");
+
 template <typename SelectorType>
 QObject* MatchesSpecificSelector(QObject* item, const SelectorType& specific_selector)
 {
@@ -237,7 +239,20 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
     // Start DFS from window's contentItem to find the item
     // Skip the window component (index 0) and start matching from the first child component
     auto components = path.components();
-    return FindMatchingItem(components, window->contentItem(), 1);
+    auto result = FindMatchingItem(components, window->contentItem(), 1);
+    if (result == nullptr) {
+        // No match. Lookup dialogs, they are children of the main window and not the contentItem
+        for (auto child : window->children()) {
+            if (spix::qt::TypeStringForObject(child).contains(dialog_class_name_part)) {
+                result = FindMatchingItem(components, child, 1);
+                if (result) {
+                    break;
+                }
+            }
+        }
+    }
+
+    return result;
 }
 
 } // namespace qt
