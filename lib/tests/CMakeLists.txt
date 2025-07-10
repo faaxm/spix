@@ -26,6 +26,7 @@ set(TEST_SOURCES
     unittests/Scene/Qt/QtItem_test.cpp
     unittests/Scene/Qt/QtItemTools_test.cpp
     unittests/Scene/Qt/QtTestUtils.h
+    unittests/Scene/Qt/PickClick_test.cpp
 
     unittests/Utils/AnyRpcFunction_test.cpp
     unittests/Utils/AnyRpcUtils_test.cpp

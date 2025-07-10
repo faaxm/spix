@@ -141,6 +141,7 @@ target_link_libraries(Spix
         Qt${SPIX_QT_MAJOR}::Core
         Qt${SPIX_QT_MAJOR}::Gui
         Qt${SPIX_QT_MAJOR}::Quick
+        KDUtils
     PRIVATE
         AnyRPC::anyrpc
 )
