@@ -49,10 +49,8 @@ spix::ItemPath ItemPathForObject(QObject* obj){
     auto currentItem = obj;
     QString path = "";
 
-    bool top = true;
     while(currentItem != nullptr) {
-        auto token = GetObjectFinalName(currentItem, top);
-        top = false; // makes sure the first item has its name printed
+        auto token = spix::qt::GetObjectName(currentItem);
         int sameNameNumber = 0;
 
         const auto currentQuickItem = qobject_cast<QQuickItem*>(currentItem);
@@ -60,12 +58,12 @@ spix::ItemPath ItemPathForObject(QObject* obj){
         if(currentItem->parent() != nullptr){
             auto siblings = currentItem->parent()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == GetObjectFinalName(child, top));
+                sameNameNumber += (token == spix::qt::GetObjectName(child));
             }
         }else if(currentQuickItem != nullptr && currentQuickItem->parentItem() != nullptr) {
             auto siblings = currentQuickItem->parentItem()->children();
             for(const auto child : siblings) {
-                sameNameNumber += (token == GetObjectFinalName(child, top));
+                sameNameNumber += (token == spix::qt::GetObjectName(child));
             }
         }
         if((currentItem->parent() == nullptr)
@@ -136,12 +134,36 @@ spix::ItemPath QtScene::shortPath(ItemPath oldPath, QQuickItem* oldItem){
     spix::ItemPath newPath;
 
     auto components = oldPath.components();
-    for(auto part = components.begin(); part != std::prev(components.end()); part++){
-        auto next = part + 1;
-        if(part->string() == next->string()) continue;
-        newPath = spix::ItemPath(newPath.string() + "/" + part->string());
+
+    // add the first
+    if(components.size() > 1){
+        newPath = spix::ItemPath(components.at(0).string());
+    } else {
+        return oldPath;
     }
-    newPath = spix::ItemPath(newPath.string() + "/" + std::prev(components.end())->string());
+
+    for(auto p = components.begin() + 1; p != components.end() - 1; p++){
+        // iterate through the middle of the components
+        auto next = p + 1;
+
+        // item
+        auto path = spix::ItemPath(newPath.string() + "/" + p->string() + "/" + next->string());
+        auto shortPath = spix::ItemPath(newPath.string() + "/" + next->string());
+
+        auto item = qt::GetQQuickItemAtPath(path);
+        auto shortItem = qt::GetQQuickItemAtPath(shortPath);
+
+        
+        if(shortItem == nullptr || item != shortItem){
+            // need to add this item to path
+            newPath = spix::ItemPath(newPath.string() + "/" + p->string());
+        }
+        // otherwise continue without this item
+    }
+
+    // add the last item
+    auto name = GetObjectFinalName(oldItem, true);
+    newPath = spix::ItemPath(newPath.string() + "/" + name.toStdString());
 
     return newPath;
 }
