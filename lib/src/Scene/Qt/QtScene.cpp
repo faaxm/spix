@@ -28,14 +28,15 @@ namespace {
 QString GetObjectFinalName(QObject* obj, bool top){
     auto token = spix::qt::GetObjectName(obj);
 
-
-    auto var = obj->property("text");
-    if(!var.isValid()){
-        return token;
+    if(obj->inherits("QQuickText")){
+        auto var = obj->property("text");
+        if(!var.isValid()){
+            return token;
+        }
+        // adds quotes around the text
+        auto text = "\"" + var.toString() + "\"";
+        if(top) return text;
     }
-    // adds quotes around the text
-    auto text = "\"" + var.toString() + "\"";
-    if(top) return text;
 
     // for certain types we want to return the text
     // not adding in now, but can add in later
