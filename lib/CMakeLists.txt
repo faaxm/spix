@@ -94,6 +94,8 @@ set(SOURCES
     src/Scene/Qt/FindQtItem.h
     src/Scene/Qt/QtEvents.cpp
     src/Scene/Qt/QtEvents.h
+    src/Scene/Qt/QtEventFilter.cpp
+    src/Scene/Qt/QtEventFilter.h
     src/Scene/Qt/QtItem.cpp
     src/Scene/Qt/QtItem.h
     src/Scene/Qt/QtItemTools.cpp
@@ -118,7 +120,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 #
 # Qt MOC Files
 #
-cmake_language(CALL "qt${SPIX_QT_MAJOR}_wrap_cpp" MOC_FILES "include/Spix/QtQmlBot.h")
+cmake_language(CALL "qt${SPIX_QT_MAJOR}_wrap_cpp" MOC_FILES "include/Spix/QtQmlBot.h" "src/Scene/Qt/QtEventFilter.h")
 
 
 #
