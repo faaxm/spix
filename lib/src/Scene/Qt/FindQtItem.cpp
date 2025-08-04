@@ -240,16 +240,9 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
     // Skip the window component (index 0) and start matching from the first child component
     auto components = path.components();
     auto result = FindMatchingItem(components, window->contentItem(), 1);
-    if (result == nullptr) {
-        // No match. Lookup dialogs, they are children of the main window and not the contentItem
-        for (auto child : window->children()) {
-            if (spix::qt::TypeStringForObject(child).contains(dialog_class_name_part)) {
-                result = FindMatchingItem(components, child, 1);
-                if (result) {
-                    break;
-                }
-            }
-        }
+    if (!result) {
+        // go through window's children() rather than its contentItem(). This includes Dialogs.
+        result = FindMatchingItem(components, window, 1);
     }
 
     return result;
