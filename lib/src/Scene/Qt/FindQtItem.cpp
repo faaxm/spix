@@ -14,8 +14,6 @@
 
 namespace {
 
-const QString dialog_class_name_part = QString("Dialog");
-
 template <typename SelectorType>
 QObject* MatchesSpecificSelector(QObject* item, const SelectorType& specific_selector)
 {
@@ -168,8 +166,6 @@ QQuickItem* FindMatchingItem(
     return result; // Will return nullptr if no match was found
 }
 
-} // namespace
-
 /**
  * Find a QQuickWindow by its name
  * @param name The name of the window to find
@@ -191,6 +187,8 @@ QQuickWindow* GetQQuickWindowWithName(const std::string& name)
 
     return foundWindow;
 }
+
+} // namespace
 
 namespace spix {
 namespace qt {
