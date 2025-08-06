@@ -22,7 +22,15 @@ namespace spix {
 
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
-    // Find item within window
+    auto window = qt::GetQQuickWindowAtPath(path);
+
+    if (!window || !window->contentItem()) {
+        return {};
+    }
+    if (path.length() == 1) {
+        return std::make_unique<QtItem>(window);
+    }
+
     auto item = qt::GetQQuickItemAtPath(path);
 
     if (!item) {

@@ -193,7 +193,7 @@ QQuickWindow* GetQQuickWindowWithName(const std::string& name)
 namespace spix {
 namespace qt {
 
-QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
+QQuickWindow* GetQQuickWindowAtPath(const spix::ItemPath& path)
 {
     if (path.length() == 0) {
         return nullptr;
@@ -214,6 +214,21 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
         return nullptr;
     }
 
+    return window;
+}
+
+QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
+{
+    if (path.length() == 0) {
+        return nullptr;
+    }
+
+    QQuickWindow* window = GetQQuickWindowAtPath(path);
+
+    if (!window) {
+        return nullptr;
+    }
+
     // If path only has window component, return window's contentItem
     if (path.length() == 1) {
         return window->contentItem();
@@ -222,7 +237,13 @@ QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path)
     // Start DFS from window's contentItem to find the item
     // Skip the window component (index 0) and start matching from the first child component
     auto components = path.components();
-    return FindMatchingItem(components, window->contentItem(), 1);
+    auto result = FindMatchingItem(components, window->contentItem(), 1);
+    if (!result) {
+        // go through window's children() rather than its contentItem(). This includes Dialogs.
+        result = FindMatchingItem(components, window, 1);
+    }
+
+    return result;
 }
 
 } // namespace qt

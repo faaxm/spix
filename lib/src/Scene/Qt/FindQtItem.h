@@ -21,5 +21,14 @@ namespace qt {
  */
 QQuickItem* GetQQuickItemAtPath(const spix::ItemPath& path);
 
+/**
+ * Find a QQuickWindow at the specified item path. Only the root element
+ * is used for the lookup.
+ *
+ * @param path The item path to search for
+ * @return The QQuickWindow if found, nullptr otherwise
+ */
+QQuickWindow* GetQQuickWindowAtPath(const spix::ItemPath& path);
+
 } // namespace qt
 } // namespace spix
