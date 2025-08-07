@@ -22,7 +22,7 @@ set(CORE_TEST_SOURCES
 add_executable(SpixCoreTests ${CORE_TEST_SOURCES})
 target_link_libraries(SpixCoreTests
     PRIVATE
-        spix::core
+        Spix::Core
         GTest::gtest
         GTest::gmock
 )

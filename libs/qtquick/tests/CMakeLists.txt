@@ -14,7 +14,7 @@ set(QTQUICK_TEST_SOURCES
 add_executable(SpixQtQuickTests ${QTQUICK_TEST_SOURCES})
 target_link_libraries(SpixQtQuickTests
     PRIVATE
-        spix::qtquick
+        Spix::QtQuick
         Qt${SPIX_QT_MAJOR}::Test
         GTest::gtest
         GTest::gmock

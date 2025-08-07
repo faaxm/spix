@@ -63,7 +63,7 @@ target_include_directories(SpixQtQuick
 )
 target_link_libraries(SpixQtQuick
     PUBLIC
-        spix::core
+        Spix::Core
         Qt${SPIX_QT_MAJOR}::Core
         Qt${SPIX_QT_MAJOR}::Gui
         Qt${SPIX_QT_MAJOR}::Quick
@@ -102,7 +102,7 @@ install(
     EXPORT SpixQtQuickTargets
     FILE SpixQtQuickTargets.cmake
     DESTINATION ${SPIX_QTQUICK_CMAKE_CONFIG_DIR}
-    NAMESPACE spix::
+    NAMESPACE Spix::
 )
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixQtQuickConfig.cmake"
@@ -112,8 +112,8 @@ install(
 export(
     EXPORT SpixQtQuickTargets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/SpixQtQuickTargets.cmake"
-    NAMESPACE spix::
+    NAMESPACE Spix::
 )
 
 # Alias for consistency
-add_library(spix::qtquick ALIAS SpixQtQuick)
+add_library(Spix::QtQuick ALIAS SpixQtQuick)

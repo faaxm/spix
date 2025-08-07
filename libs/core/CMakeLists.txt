@@ -138,7 +138,7 @@ install(
     EXPORT SpixCoreTargets
     FILE SpixCoreTargets.cmake
     DESTINATION ${SPIX_CORE_CMAKE_CONFIG_DIR}
-    NAMESPACE spix::
+    NAMESPACE Spix::
 )
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixCoreConfig.cmake"
@@ -148,8 +148,8 @@ install(
 export(
     EXPORT SpixCoreTargets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/SpixCoreTargets.cmake"
-    NAMESPACE spix::
+    NAMESPACE Spix::
 )
 
 # Alias for consistency
-add_library(spix::core ALIAS SpixCore)
+add_library(Spix::Core ALIAS SpixCore)
