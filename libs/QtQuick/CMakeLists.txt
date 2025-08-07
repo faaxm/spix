@@ -93,7 +93,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Spix/spix_qtquick_export.h DESTINATION
 set(SPIX_QTQUICK_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_DATADIR}/SpixQtQuick/cmake")
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/../qtquick/cmake/SpixQtQuickConfig.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../QtQuick/cmake/SpixQtQuickConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/SpixQtQuickConfig.cmake"
     INSTALL_DESTINATION "${SPIX_QTQUICK_CMAKE_CONFIG_DIR}"
 )

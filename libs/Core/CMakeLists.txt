@@ -129,7 +129,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Spix/spix_core_export.h DESTINATION ${
 set(SPIX_CORE_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_DATADIR}/SpixCore/cmake")
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/../core/cmake/SpixCoreConfig.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../Core/cmake/SpixCoreConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/SpixCoreConfig.cmake"
     INSTALL_DESTINATION "${SPIX_CORE_CMAKE_CONFIG_DIR}"
 )

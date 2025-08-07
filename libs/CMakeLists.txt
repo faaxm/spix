@@ -1,4 +1,4 @@
 # Main libs CMakeLists.txt for modular Spix libraries
 
-add_subdirectory(core)
-add_subdirectory(qtquick)
+add_subdirectory(Core)
+add_subdirectory(QtQuick)

@@ -20,6 +20,6 @@ endif()
 
 if(SPIX_BUILD_TESTS)
     enable_testing()
-    add_subdirectory(libs/core/tests)
-    add_subdirectory(libs/qtquick/tests)
+    add_subdirectory(libs/Core/tests)
+    add_subdirectory(libs/QtQuick/tests)
 endif()
