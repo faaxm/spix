@@ -7,8 +7,8 @@
 #pragma once
 
 #include <Spix/Commands/Command.h>
-#include <Spix/Scene/Events.h>
 #include <Spix/Data/ItemPath.h>
+#include <Spix/Scene/Events.h>
 
 namespace spix {
 namespace cmd {

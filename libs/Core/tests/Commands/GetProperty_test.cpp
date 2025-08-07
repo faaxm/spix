@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
 #include <Commands/GetProperty.h>
 #include <Scene/Mock/MockScene.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
 
 TEST(GetPropertyTest, GetStringProperty)
 {

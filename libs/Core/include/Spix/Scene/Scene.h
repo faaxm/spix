@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <Spix/Scene/Events.h>
-#include <Spix/Scene/Item.h>
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
+#include <Spix/Scene/Events.h>
+#include <Spix/Scene/Item.h>
 
 #include <memory>
 #include <string>

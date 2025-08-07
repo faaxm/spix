@@ -4,8 +4,8 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
 #include <Spix/CommandExecuter/CommandEnvironment.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
 
 #include <cassert>
 

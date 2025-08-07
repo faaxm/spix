@@ -6,10 +6,10 @@
 
 #include <gtest/gtest.h>
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
 #include <Commands/CustomCmd.h>
 #include <Commands/DropFromExt.h>
 #include <Scene/Mock/MockScene.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
 
 TEST(DropFromExtTest, ErrorOnMissingItem)
 {

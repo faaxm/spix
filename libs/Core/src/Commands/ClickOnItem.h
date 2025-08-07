@@ -9,8 +9,8 @@
 #include <Spix/spix_core_export.h>
 
 #include <Spix/Commands/Command.h>
-#include <Spix/Scene/Events.h>
 #include <Spix/Data/ItemPosition.h>
+#include <Spix/Scene/Events.h>
 
 namespace spix {
 namespace cmd {

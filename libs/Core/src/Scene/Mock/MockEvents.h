@@ -8,8 +8,8 @@
 
 #include <Spix/spix_core_export.h>
 
-#include <Spix/Scene/Events.h>
 #include <Scene/Mock/MockItem.h>
+#include <Spix/Scene/Events.h>
 
 #include <functional>
 

@@ -6,10 +6,10 @@
 
 #include <Spix/QtQmlBot.h>
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
-#include <Spix/TestServer.h>
 #include <QtDebug>
 #include <QtScene.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
+#include <Spix/TestServer.h>
 
 namespace spix {
 

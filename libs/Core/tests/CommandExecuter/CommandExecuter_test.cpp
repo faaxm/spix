@@ -6,10 +6,10 @@
 
 #include <gtest/gtest.h>
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
-#include <Spix/Commands/Command.h>
 #include <Commands/CustomCmd.h>
 #include <Scene/Mock/MockScene.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
+#include <Spix/Commands/Command.h>
 
 TEST(CommandExecuterTest, Plain)
 {

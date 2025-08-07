@@ -6,11 +6,11 @@
 
 #include <gtest/gtest.h>
 
-#include <Spix/CommandExecuter/CommandExecuter.h>
 #include <Commands/ClickOnItem.h>
 #include <Commands/CustomCmd.h>
-#include <Spix/Scene/Events.h>
 #include <Scene/Mock/MockScene.h>
+#include <Spix/CommandExecuter/CommandExecuter.h>
+#include <Spix/Scene/Events.h>
 
 TEST(ClickOnItemTest, ErrorOnMissingItem)
 {

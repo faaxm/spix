@@ -7,9 +7,9 @@
 #pragma once
 
 #include <QByteArray>
+#include <QtEvents.h>
 #include <Spix/Data/ItemPath.h>
 #include <Spix/Scene/Scene.h>
-#include <QtEvents.h>
 
 #include <string>
 
