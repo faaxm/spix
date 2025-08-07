@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
-add_subdirectory(lib)
+add_subdirectory(libs)
 
 if(SPIX_BUILD_EXAMPLES)
     add_subdirectory(examples)
@@ -20,5 +20,6 @@ endif()
 
 if(SPIX_BUILD_TESTS)
     enable_testing()
-    add_subdirectory(lib/tests)
+    add_subdirectory(libs/core/tests)
+    add_subdirectory(libs/qtquick/tests)
 endif()

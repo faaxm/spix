@@ -21,4 +21,4 @@ find_package(Spix CONFIG REQUIRED)
 
 add_executable(SpixStandaloneExample "main.cpp" "qml.qrc")
 target_compile_definitions(SpixStandaloneExample PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(SpixStandaloneExample PRIVATE Threads::Threads Qt${SPIX_QT_MAJOR}::Core Qt${SPIX_QT_MAJOR}::Quick Spix::Spix)
+target_link_libraries(SpixStandaloneExample PRIVATE Threads::Threads Qt${SPIX_QT_MAJOR}::Core Qt${SPIX_QT_MAJOR}::Quick spix::qtquick)

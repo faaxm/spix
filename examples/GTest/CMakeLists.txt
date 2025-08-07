@@ -11,4 +11,4 @@ find_package(GTest REQUIRED)
 
 add_executable(SpixGTestExample "main.cpp" "qml.qrc")
 target_compile_definitions(SpixGTestExample PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(SpixGTestExample PRIVATE Qt${SPIX_QT_MAJOR}::Core Qt${SPIX_QT_MAJOR}::Quick GTest::GTest Spix)
+target_link_libraries(SpixGTestExample PRIVATE Qt${SPIX_QT_MAJOR}::Core Qt${SPIX_QT_MAJOR}::Quick GTest::GTest spix::qtquick)
