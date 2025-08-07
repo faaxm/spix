@@ -9,7 +9,7 @@
 #include <Spix/CommandExecuter/CommandExecuter.h>
 #include <Spix/TestServer.h>
 #include <QtDebug>
-#include <Scene/Qt/QtScene.h>
+#include <QtScene.h>
 
 namespace spix {
 

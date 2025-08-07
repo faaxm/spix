@@ -9,7 +9,7 @@
 #include "QtTestUtils.h"
 #include <gtest/gtest.h>
 
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItemTools.h>
 
 using Variant = spix::Variant;
 using QMLReturnVariant = spix::qt::QMLReturnVariant;

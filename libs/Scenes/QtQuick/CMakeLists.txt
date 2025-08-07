@@ -25,16 +25,16 @@ set(SOURCES
     ${HEADERS_PUB}
     src/QtQmlBot.cpp
 
-    src/Scene/Qt/FindQtItem.cpp
-    src/Scene/Qt/FindQtItem.h
-    src/Scene/Qt/QtEvents.cpp
-    src/Scene/Qt/QtEvents.h
-    src/Scene/Qt/QtItem.cpp
-    src/Scene/Qt/QtItem.h
-    src/Scene/Qt/QtItemTools.cpp
-    src/Scene/Qt/QtItemTools.h
-    src/Scene/Qt/QtScene.cpp
-    src/Scene/Qt/QtScene.h
+    src/FindQtItem.cpp
+    src/FindQtItem.h
+    src/QtEvents.cpp
+    src/QtEvents.h
+    src/QtItem.cpp
+    src/QtItem.h
+    src/QtItemTools.cpp
+    src/QtItemTools.h
+    src/QtScene.cpp
+    src/QtScene.h
 
     src/Utils/QtEventRecorder.cpp
     src/Utils/QtEventRecorder.h
@@ -93,7 +93,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Spix/spix_qtquick_export.h DESTINATION
 set(SPIX_QTQUICK_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_DATADIR}/SpixQtQuick/cmake")
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/../QtQuick/cmake/SpixQtQuickConfig.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/SpixQtQuickConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/SpixQtQuickConfig.cmake"
     INSTALL_DESTINATION "${SPIX_QTQUICK_CMAKE_CONFIG_DIR}"
 )

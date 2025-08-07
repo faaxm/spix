@@ -10,7 +10,7 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItemTools.h>
 
 namespace spix {
 

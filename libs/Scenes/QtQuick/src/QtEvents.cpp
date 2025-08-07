@@ -6,8 +6,8 @@
 
 #include "QtEvents.h"
 
-#include <Scene/Qt/QtItem.h>
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItem.h>
+#include <QtItemTools.h>
 
 #include <Spix/Data/PasteboardContent.h>
 

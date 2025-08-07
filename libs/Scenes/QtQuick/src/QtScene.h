@@ -9,7 +9,7 @@
 #include <QByteArray>
 #include <Spix/Data/ItemPath.h>
 #include <Spix/Scene/Scene.h>
-#include <Scene/Qt/QtEvents.h>
+#include <QtEvents.h>
 
 #include <string>
 

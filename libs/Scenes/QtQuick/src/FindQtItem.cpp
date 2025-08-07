@@ -5,7 +5,7 @@
  ****/
 
 #include "FindQtItem.h"
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItemTools.h>
 #include <Spix/Data/ItemPathComponent.h>
 
 #include <QGuiApplication>

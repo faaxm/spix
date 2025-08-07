@@ -8,8 +8,8 @@
 
 #include <gtest/gtest.h>
 
-#include <Scene/Qt/QtItem.h>
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItem.h>
+#include <QtItemTools.h>
 
 #include "QtTestUtils.h"
 

@@ -7,8 +7,8 @@
 #include "QtScene.h"
 #include "FindQtItem.h"
 
-#include <Scene/Qt/QtItem.h>
-#include <Scene/Qt/QtItemTools.h>
+#include <QtItem.h>
+#include <QtItemTools.h>
 #include <Spix/Data/ItemPath.h>
 
 #include <QBuffer>
