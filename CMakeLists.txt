@@ -23,3 +23,20 @@ if(SPIX_BUILD_TESTS)
     add_subdirectory(libs/Core/tests)
     add_subdirectory(libs/Scenes/QtQuick/tests)
 endif()
+
+#
+# Install main Spix config
+#
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/SpixConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/Spix/cmake"
+)
+
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/Spix/cmake"
+)
