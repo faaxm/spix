@@ -3,14 +3,14 @@
 #
 # Supports both traditional usage and modern component-based usage:
 #   find_package(Spix)                         # Finds both Core and QtQuick
-#   find_package(Spix COMPONENTS Core)         # Finds only Core library  
+#   find_package(Spix COMPONENTS Core)         # Finds only Core library
 #   find_package(Spix COMPONENTS QtQuick)      # Finds only QtQuick library
 #   find_package(Spix COMPONENTS Core QtQuick) # Explicit both
 #
 
 @PACKAGE_INIT@
 
-# Include guard
+# Include guard - return if any component already loaded
 if(TARGET Spix::Core OR TARGET Spix::QtQuick)
     return()
 endif()
@@ -32,42 +32,15 @@ foreach(comp ${Spix_FIND_COMPONENTS})
     endif()
 endforeach()
 
-# Ensure common dependencies are found before loading components
-include(CMakeFindDependencyMacro)
-find_dependency(Threads)
-find_dependency(AnyRPC)
-
-# Find each requested component and track detailed status
-set(Spix_MISSING_COMPONENTS)
+# Find each requested component using data-driven approach
 foreach(comp ${Spix_FIND_COMPONENTS})
     set(package_name "Spix${comp}")
-    
-    # Try to load the component config
-    find_package(${package_name} QUIET
+    find_package(${package_name} REQUIRED
         PATHS "${CMAKE_CURRENT_LIST_DIR}/../../${package_name}/cmake"
         NO_DEFAULT_PATH
     )
-    
-    # Check if the component was actually loaded (targets exist)
-    if(${package_name}_FOUND)
-        if(comp STREQUAL "Core" AND TARGET Spix::Core)
-            set(Spix_${comp}_FOUND TRUE)
-        elseif(comp STREQUAL "QtQuick" AND TARGET Spix::QtQuick)
-            set(Spix_${comp}_FOUND TRUE)
-        else()
-            set(Spix_${comp}_FOUND FALSE)
-            list(APPEND Spix_MISSING_COMPONENTS "${comp}")
-        endif()
-    else()
-        set(Spix_${comp}_FOUND FALSE)
-        list(APPEND Spix_MISSING_COMPONENTS "${comp}")
-    endif()
+    set(Spix_${comp}_FOUND ${${package_name}_FOUND})
 endforeach()
-
-# Provide detailed error message before calling check_required_components
-if(Spix_MISSING_COMPONENTS)
-    set(Spix_NOT_FOUND_MESSAGE "Failed to find Spix components: ${Spix_MISSING_COMPONENTS}. Check that dependencies are installed and CMAKE_PREFIX_PATH includes the installation directory.")
-endif()
 
 # Let check_required_components handle all validation and error handling
 check_required_components(Spix)
