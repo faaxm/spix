@@ -6,9 +6,9 @@ find_package(Qt${SPIX_QT_MAJOR} COMPONENTS Test REQUIRED)
 
 set(QTQUICK_TEST_SOURCES
     unittests_main.cpp
-    Qt/QtItemTools_test.cpp
-    Qt/QtItem_test.cpp
-    Qt/QtTestUtils.h
+    QtItemTools_test.cpp
+    QtItem_test.cpp
+    QtTestUtils.h
 )
 
 add_executable(SpixQtQuickTests ${QTQUICK_TEST_SOURCES})
