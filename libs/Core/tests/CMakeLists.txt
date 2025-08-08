@@ -2,6 +2,7 @@
 # Spix Core Tests
 #
 find_package(GTest REQUIRED)
+find_package(AnyRPC REQUIRED)
 
 set(CORE_TEST_SOURCES
     unittests_main.cpp
@@ -25,6 +26,7 @@ target_link_libraries(SpixCoreTests
         Spix::Core
         GTest::gtest
         GTest::gmock
+        AnyRPC::anyrpc
 )
 
 target_include_directories(SpixCoreTests
