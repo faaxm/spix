@@ -1,0 +1,16 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(SpixCore)
+
+set(SPIX_QT_MAJOR "@SPIX_QT_MAJOR@")
+find_dependency(Qt${SPIX_QT_MAJOR} COMPONENTS Core Gui Quick)
+
+include("${CMAKE_CURRENT_LIST_DIR}/SpixQtQuickTargets.cmake")
+
+# Create the expected alias target
+if(TARGET Spix::SpixQtQuick AND NOT TARGET Spix::QtQuick)
+    add_library(Spix::QtQuick ALIAS Spix::SpixQtQuick)
+endif()
+
+check_required_components(SpixQtQuick)

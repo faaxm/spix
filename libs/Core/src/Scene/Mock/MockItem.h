@@ -1,0 +1,36 @@
+/***
+ * Copyright (C) Falko Axmann. All rights reserved.
+ * Licensed under the MIT license.
+ * See LICENSE.txt file in the project root for full license information.
+ ****/
+
+#pragma once
+
+#include <Spix/spix_core_export.h>
+
+#include <Spix/Scene/Item.h>
+
+namespace spix {
+
+class SPIXCORE_EXPORT MockItem : public Item {
+public:
+    MockItem(Size size);
+
+    // Item interface
+    Size size() const override;
+    Point position() const override;
+    Rect bounds() const override;
+    std::string stringProperty(const std::string& name) const override;
+    void setStringProperty(const std::string& name, const std::string& value) override;
+    bool invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret) override;
+    bool visible() const override;
+
+    // MockItem specials
+    std::map<std::string, std::string>& stringProperties();
+
+private:
+    Size m_size;
+    std::map<std::string, std::string> m_stringProperties;
+};
+
+} // namespace spix

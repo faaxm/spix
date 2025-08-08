@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
-add_subdirectory(lib)
+add_subdirectory(libs)
 
 if(SPIX_BUILD_EXAMPLES)
     add_subdirectory(examples)
@@ -20,5 +20,23 @@ endif()
 
 if(SPIX_BUILD_TESTS)
     enable_testing()
-    add_subdirectory(lib/tests)
+    add_subdirectory(libs/Core/tests)
+    add_subdirectory(libs/Scenes/QtQuick/tests)
 endif()
+
+#
+# Install main Spix config
+#
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/SpixConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/Spix/cmake"
+)
+
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/SpixConfig.cmake"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/Spix/cmake"
+)
