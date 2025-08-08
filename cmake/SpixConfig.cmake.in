@@ -42,5 +42,10 @@ foreach(comp ${Spix_FIND_COMPONENTS})
     set(Spix_${comp}_FOUND ${${package_name}_FOUND})
 endforeach()
 
+# Create convenience alias target Spix::Spix -> Spix::SpixQtQuick
+if(TARGET Spix::SpixQtQuick AND NOT TARGET Spix::Spix)
+    add_library(Spix::Spix ALIAS Spix::SpixQtQuick)
+endif()
+
 # Let check_required_components handle all validation and error handling
 check_required_components(Spix)
