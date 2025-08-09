@@ -3,7 +3,7 @@ project(SpixStandaloneExample LANGUAGES CXX)
 
 set(SPIX_QT_MAJOR "6" CACHE STRING "Major Qt version to build Spix against")
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../../cmake/modules")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../../../cmake/modules")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
