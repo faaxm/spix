@@ -3,6 +3,7 @@ project(Spix LANGUAGES CXX)
 
 option(SPIX_BUILD_EXAMPLES "Build Spix examples." ON)
 option(SPIX_BUILD_TESTS "Build Spix unit tests." OFF)
+option(SPIX_BUILD_QTQUICK "Build the QtQuick scene library." ON)
 set(SPIX_QT_MAJOR "6" CACHE STRING "Major Qt version to build Spix against")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/modules")
@@ -14,14 +15,16 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 add_subdirectory(libs)
 
-if(SPIX_BUILD_EXAMPLES)
+if(SPIX_BUILD_EXAMPLES AND SPIX_BUILD_QTQUICK)
     add_subdirectory(examples)
 endif()
 
 if(SPIX_BUILD_TESTS)
     enable_testing()
     add_subdirectory(libs/Core/tests)
-    add_subdirectory(libs/Scenes/QtQuick/tests)
+    if(SPIX_BUILD_QTQUICK)
+        add_subdirectory(libs/Scenes/QtQuick/tests)
+    endif()
 endif()
 
 #
