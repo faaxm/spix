@@ -5,7 +5,7 @@ Since this example is a standalone project, it is not built as part of the "Spix
 
 After installing Spix, you can build this example like this:
 ```shell
-cd examples/BasicStandalone
+cd examples/qtquick/BasicStandalone
 mkdir build
 cmake -B build .
 cmake --build build

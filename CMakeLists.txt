@@ -15,7 +15,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 add_subdirectory(libs)
 
-if(SPIX_BUILD_EXAMPLES AND SPIX_BUILD_QTQUICK)
+if(SPIX_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
