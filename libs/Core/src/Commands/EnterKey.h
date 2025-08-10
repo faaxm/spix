@@ -1,0 +1,29 @@
+/***
+ * Copyright (C) Falko Axmann. All rights reserved.
+ * Licensed under the MIT license.
+ * See LICENSE.txt file in the project root for full license information.
+ ****/
+
+#pragma once
+
+#include <Spix/Commands/Command.h>
+#include <Spix/Data/ItemPath.h>
+#include <Spix/Scene/Events.h>
+
+namespace spix {
+namespace cmd {
+
+class EnterKey : public Command {
+public:
+    EnterKey(ItemPath path, int keyCode, KeyModifier mod);
+
+    void execute(CommandEnvironment& env) override;
+
+private:
+    ItemPath m_path;
+    int m_keyCode;
+    KeyModifier m_mod;
+};
+
+} // namespace cmd
+} // namespace spix

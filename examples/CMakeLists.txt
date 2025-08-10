@@ -1,7 +1,5 @@
-add_subdirectory(Basic)
-add_subdirectory(GTest)
-add_subdirectory(GTestMouseClickPosition)
-add_subdirectory(GTestTypeFinder)
-add_subdirectory(ListGridView)
-add_subdirectory(RemoteCtrl)
-add_subdirectory(RepeaterLoader)
+# Examples CMakeLists.txt - Conditional example building based on available components
+
+if(SPIX_BUILD_QTQUICK)
+    add_subdirectory(qtquick)
+endif()

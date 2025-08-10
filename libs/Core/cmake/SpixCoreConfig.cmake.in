@@ -1,0 +1,14 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Threads)
+find_dependency(AnyRPC)
+
+include("${CMAKE_CURRENT_LIST_DIR}/SpixCoreTargets.cmake")
+
+# Create the expected alias target
+if(TARGET Spix::SpixCore AND NOT TARGET Spix::Core)
+    add_library(Spix::Core ALIAS Spix::SpixCore)
+endif()
+
+check_required_components(SpixCore)

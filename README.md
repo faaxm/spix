@@ -36,7 +36,17 @@ s.quit()
 ```
 
 You can also use [PyAutoGUI](https://pyautogui.readthedocs.io) in combination with
-Spix. Have a look at the [example script](examples/RemoteCtrl/script/autogui.py).
+Spix. Have a look at the [example script](examples/qtquick/RemoteCtrl/script/autogui.py).
+
+## Architecture
+
+Spix uses a modular architecture with separate components:
+
+- **Spix::Core** - Qt-independent functionality (RPC server, commands, data structures)
+- **Spix::QtQuick** - Qt/QML scene implementation for UI interaction
+- **Spix::Spix** - Convenience alias to QtQuick for backward compatibility
+
+This design enables Core-only usage in headless environments and future support for other UI frameworks.
 
 ## What are the applications of Spix?
 The main use for Spix is to automatically test the UI of your Qt/QML application
@@ -45,8 +55,8 @@ an easy way to remote control existing Qt/QML applications or to automatically
 generate and update screenshots for your documentation.
 
 # Requirements
-* Qt (both 5 and 6 supported)
-* [AnyRPC](https://github.com/sgieseking/anyrpc)
+* [AnyRPC](https://github.com/sgieseking/anyrpc) (required for all builds)
+* Qt (both 5 and 6 supported, required for QtQuick scene support)
 
 # Current Features
 * Send mouse events (click, move, drag/drop)
@@ -88,7 +98,17 @@ cmake -DSPIX_QT_MAJOR=6 ..
 cmake --build .
 sudo cmake --install .
 ```
-> Change SPIX_QT_MAJOR to 5 to build against Qt5 instead of Qt6.
+
+### Build Options
+* `SPIX_QT_MAJOR`: Qt version to build against (5 or 6, default: 6)
+* `SPIX_BUILD_QTQUICK`: Build QtQuick scene support (default: ON)
+* `SPIX_BUILD_EXAMPLES`: Build example applications (default: ON)
+* `SPIX_BUILD_TESTS`: Build unit tests (default: OFF)
+
+**Core-only build** (no Qt dependencies):
+```sh
+cmake -DSPIX_BUILD_QTQUICK=OFF ..
+```
 
 If you installed the dependencies (like AnyRPC) in a non-standard directory you can point cmake to it by setting `CMAKE_PREFIX_PATH`, so
 instead of `cmake ..` you run:
@@ -102,11 +122,25 @@ If using qmake, add the following to your Qt `.pro` file:
 ```
 QT += quick
 INCLUDEPATH += /usr/local/include
-LIBS += -lSpix -lanyrpc
+LIBS += -lSpixQtQuick -lSpixCore -lanyrpc
 ```
 If using CMake, add the following to your `CMakeLists.txt`:
-```
+
+**For Qt/QML applications** (recommended):
+```cmake
 find_package(Spix REQUIRED)
+target_link_libraries(your_app PRIVATE Spix::QtQuick)
+```
+
+**Alternative component-based usage**:
+```cmake
+# Find specific components
+find_package(Spix COMPONENTS Core QtQuick REQUIRED)
+target_link_libraries(your_app PRIVATE Spix::QtQuick)
+
+# Or for Core-only usage (no Qt dependencies)
+find_package(Spix COMPONENTS Core REQUIRED)
+target_link_libraries(your_app PRIVATE Spix::Core)
 ```
 
 Update your `main(...)` to start the Spix RPC server:
@@ -144,7 +178,7 @@ s.mouseClick("root/Button_2")
 resultText = s.getStringProperty("root/results", "text")
 ```
 
-You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](lib/src/AnyRpcServer.cpp).
+You can also use the XMLRPC client to list the available methods. The complete list of methods are also available in the [source](libs/Core/src/AnyRpcServer.cpp).
 ```python
 print(s.system.listMethods())
 # ['command', 'enterKey', 'existsAndVisible', 'getBoundingBox', 'getErrors', 'getStringProperty', 'inputText', 'invokeMethod', 'mouseBeginDrag', 'mouseClick', 'mouseDropUrls', 'mouseEndDrag', 'quit', 'setStringProperty', 'system.listMethods', 'system.methodHelp', 'takeScreenshot', 'wait']
@@ -268,4 +302,4 @@ device via the network (RPC).
 In this case, Spix is not generating the events itself. Instead, you use a script to query
 Spix for the screen coordinates of qt objects and then generate events on the system level
 through other tools. One option is to use python together with PyAutoGUI for this, as is
-done in the [RemoteCtrl](examples/RemoteCtrl) example.
+done in the [RemoteCtrl](examples/qtquick/RemoteCtrl) example.

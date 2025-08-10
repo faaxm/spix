@@ -1,0 +1,56 @@
+/***
+ * Copyright (C) Falko Axmann. All rights reserved.
+ * Licensed under the MIT license.
+ * See LICENSE.txt file in the project root for full license information.
+ ****/
+
+#pragma once
+
+#include <Spix/spix_core_export.h>
+
+#include <Spix/CommandExecuter/ExecuterState.h>
+#include <Spix/Commands/Command.h>
+
+#include <memory>
+#include <mutex>
+#include <queue>
+#include <thread>
+
+namespace spix {
+
+class Scene;
+
+/**
+ * @brief Handles and processes commands
+ *
+ * The CommandExecuter manages a queue of commands that will
+ * be processed on the main thread.
+ *
+ * Commands can be enqueued from any thread, but all other
+ * methods have to be called from the main thread.
+ */
+class SPIXCORE_EXPORT CommandExecuter {
+public:
+    CommandExecuter();
+
+    ExecuterState& state();
+
+    void enqueueCommand(std::unique_ptr<cmd::Command> command);
+    void processCommands(Scene& scene);
+
+    template <typename CmdType, typename... Args>
+    void enqueueCommand(Args&&... args)
+    {
+        enqueueCommand(std::make_unique<CmdType>(std::forward<Args>(args)...));
+    }
+
+private:
+    std::thread::id m_mainThreadId;
+    std::mutex m_mutex;
+
+    std::queue<std::unique_ptr<cmd::Command>> m_commandQueue;
+
+    ExecuterState m_state;
+};
+
+} // namespace spix

@@ -1,0 +1,51 @@
+#
+# SpixConfig.cmake - Main configuration file for Spix library
+#
+# Supports both traditional usage and modern component-based usage:
+#   find_package(Spix)                         # Finds both Core and QtQuick
+#   find_package(Spix COMPONENTS Core)         # Finds only Core library
+#   find_package(Spix COMPONENTS QtQuick)      # Finds only QtQuick library
+#   find_package(Spix COMPONENTS Core QtQuick) # Explicit both
+#
+
+@PACKAGE_INIT@
+
+# Include guard - return if any component already loaded
+if(TARGET Spix::Core OR TARGET Spix::QtQuick)
+    return()
+endif()
+
+# Default components if none specified
+if(NOT Spix_FIND_COMPONENTS)
+    set(Spix_FIND_COMPONENTS Core QtQuick)
+endif()
+
+# Available components
+set(Spix_KNOWN_COMPONENTS Core QtQuick)
+
+# Validate requested components against known components
+foreach(comp ${Spix_FIND_COMPONENTS})
+    if(NOT comp IN_LIST Spix_KNOWN_COMPONENTS)
+        set(Spix_NOT_FOUND_MESSAGE "Unknown Spix component: ${comp}. Available components: ${Spix_KNOWN_COMPONENTS}")
+        set(Spix_FOUND FALSE)
+        return()
+    endif()
+endforeach()
+
+# Find each requested component using data-driven approach
+foreach(comp ${Spix_FIND_COMPONENTS})
+    set(package_name "Spix${comp}")
+    find_package(${package_name} REQUIRED
+        PATHS "${CMAKE_CURRENT_LIST_DIR}/../../${package_name}/cmake"
+        NO_DEFAULT_PATH
+    )
+    set(Spix_${comp}_FOUND ${${package_name}_FOUND})
+endforeach()
+
+# Create convenience alias target Spix::Spix -> Spix::SpixQtQuick
+if(TARGET Spix::SpixQtQuick AND NOT TARGET Spix::Spix)
+    add_library(Spix::Spix ALIAS Spix::SpixQtQuick)
+endif()
+
+# Let check_required_components handle all validation and error handling
+check_required_components(Spix)

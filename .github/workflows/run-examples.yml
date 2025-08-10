@@ -55,17 +55,17 @@ jobs:
       - name: "Test GTest Examples (Linux)"
         if: ${{ contains(matrix.base.os, 'ubuntu') }}
         run: |
-          build/examples/GTest/SpixGTestExample -platform minimal
-          build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest -platform minimal
+          build/examples/qtquick/GTest/SpixGTestExample -platform minimal
+          build/examples/qtquick/RepeaterLoader/SpixRepeaterLoaderExampleGTest -platform minimal
 
       - name: "Test GTest Examples (win)"
         if: ${{ contains(matrix.base.os, 'windows') }}
         run: |
-          .\build\examples\GTest\${{ matrix.base.build_type }}\SpixGTestExample.exe -platform minimal
-          .\build\examples\RepeaterLoader\${{ matrix.base.build_type }}\SpixRepeaterLoaderExampleGTest.exe -platform minimal
+          .\build\examples\qtquick\GTest\${{ matrix.base.build_type }}\SpixGTestExample.exe -platform minimal
+          .\build\examples\qtquick\RepeaterLoader\${{ matrix.base.build_type }}\SpixRepeaterLoaderExampleGTest.exe -platform minimal
 
       - name: "Test GTest Examples (mac)"
         if: ${{ contains(matrix.base.os, 'mac') }}
         run: |
-          build/examples/GTest/SpixGTestExample
-          build/examples/RepeaterLoader/SpixRepeaterLoaderExampleGTest
+          build/examples/qtquick/GTest/SpixGTestExample
+          build/examples/qtquick/RepeaterLoader/SpixRepeaterLoaderExampleGTest
