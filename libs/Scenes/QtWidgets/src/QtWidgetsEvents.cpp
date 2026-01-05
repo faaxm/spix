@@ -116,12 +116,7 @@ void QtWidgetsEvents::mouseDown(Item* item, Point loc, MouseButton button, KeyMo
     auto qtmod = getQtKeyboardModifiers(mod);
     // Qt6 requires both local and global positions
     QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonPress,
-        widgetLoc,
-        widget->mapToGlobal(widgetLoc),
-        eventCausingButton,
-        activeButtons,
-        qtmod);
+        QEvent::MouseButtonPress, widgetLoc, widget->mapToGlobal(widgetLoc), eventCausingButton, activeButtons, qtmod);
     QApplication::postEvent(widget, event);
 }
 
@@ -138,13 +133,8 @@ void QtWidgetsEvents::mouseUp(Item* item, Point loc, MouseButton button, KeyModi
     m_pressedMouseButtons ^= button;
 
     auto qtmod = getQtKeyboardModifiers(mod);
-    QMouseEvent* event = new QMouseEvent(
-        QEvent::MouseButtonRelease,
-        widgetLoc,
-        widget->mapToGlobal(widgetLoc),
-        eventCausingButton,
-        activeButtons,
-        qtmod);
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonRelease, widgetLoc, widget->mapToGlobal(widgetLoc),
+        eventCausingButton, activeButtons, qtmod);
     QApplication::postEvent(widget, event);
 }
 
@@ -159,24 +149,14 @@ void QtWidgetsEvents::mouseMove(Item* item, Point loc)
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     widgetLoc.rx() -= 1;
-    QMouseEvent* mouseMoveEvent = new QMouseEvent(
-        QEvent::MouseMove,
-        widgetLoc,
-        widget->mapToGlobal(widgetLoc),
-        Qt::MouseButton::NoButton,
-        activeButtons,
-        Qt::NoModifier);
+    QMouseEvent* mouseMoveEvent = new QMouseEvent(QEvent::MouseMove, widgetLoc, widget->mapToGlobal(widgetLoc),
+        Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
     QApplication::postEvent(widget, mouseMoveEvent);
 
     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
     widgetLoc.rx() += 1;
-    mouseMoveEvent = new QMouseEvent(
-        QEvent::MouseMove,
-        widgetLoc,
-        widget->mapToGlobal(widgetLoc),
-        Qt::MouseButton::NoButton,
-        activeButtons,
-        Qt::NoModifier);
+    mouseMoveEvent = new QMouseEvent(QEvent::MouseMove, widgetLoc, widget->mapToGlobal(widgetLoc),
+        Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
     QApplication::postEvent(widget, mouseMoveEvent);
 }
 

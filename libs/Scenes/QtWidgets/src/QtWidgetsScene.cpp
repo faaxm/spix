@@ -11,12 +11,12 @@
 #include <QtWidgetsItemTools.h>
 #include <Spix/Data/ItemPath.h>
 
+#include <QApplication>
 #include <QBuffer>
 #include <QByteArray>
-#include <QApplication>
 #include <QObject>
-#include <QWidget>
 #include <QPixmap>
+#include <QWidget>
 
 namespace spix {
 

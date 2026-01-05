@@ -28,3 +28,4 @@ target_include_directories(SpixQtWidgetsTests
 )
 
 add_test(NAME SpixQtWidgetsTests COMMAND SpixQtWidgetsTests)
+set_tests_properties(SpixQtWidgetsTests PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")

@@ -47,7 +47,8 @@ public:
 
         setCentralWidget(centralWidget);
 
-        connect(m_submitBtn, &QPushButton::clicked, this, [this]() { m_output->setText("Submitted: " + m_input->text()); });
+        connect(
+            m_submitBtn, &QPushButton::clicked, this, [this]() { m_output->setText("Submitted: " + m_input->text()); });
     }
 
 private:
