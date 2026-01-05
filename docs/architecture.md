@@ -21,7 +21,9 @@ graph LR
     *   In the detailed architecture, this corresponds primarily to the `CommandExecuter`, the individual `Command` objects, and the driving logic within `QtQmlBot`.
     *   **Important:** The Core and TestServer components are deliberately designed to be UI framework-agnostic. They should never contain code that depends on a specific UI framework like Qt.
 *   **Scene:** This component acts as the bridge to the underlying UI framework (currently Qt). It provides a standardized interface (`Scene` and `Item` base classes) through which commands dispatched by the Core can interact with the UI - manipulating widgets/items, querying properties, and retrieving information about what is shown on screen.
-    *   The standard implementation uses `QtScene` and `QtItem` for Qt/QML applications.
+    *   Spix provides two Qt scene implementations:
+        *   `QtScene` and `QtItem` for Qt/QML (QtQuick) applications
+        *   `QtWidgetsScene` and `QtWidgetsItem` for traditional QWidget applications (Qt6 only)
     *   Users could potentially adapt Spix to other UI frameworks by providing alternative implementations of the `Scene` and `Item` interfaces without needing to modify the TestServer or Core components.
     *   All UI framework-specific code is isolated within the Scene implementation, ensuring the rest of Spix remains framework-agnostic.
 
@@ -178,10 +180,16 @@ To adapt Spix to support a new UI framework beyond its existing Qt support, one 
    * Map abstract events (like mouseDown) to framework-specific event dispatching
    * Handle any special event routing required by the framework
 
-For example, the Qt implementation of these interfaces includes:
+For example, Spix includes two Qt implementations of these interfaces:
 
-- `QtScene`: Finds QQuickItems by traversing the Qt object hierarchy
+**QtQuick (Qt/QML) Implementation:**
+- `QtScene`: Finds QQuickItems by traversing the Qt object hierarchy via `QGuiApplication::topLevelWindows()`
 - `QtItem`: Wraps QQuickItems and provides access to their properties and methods
 - `QtEvents`: Generates Qt mouse and keyboard events to simulate user interaction
+
+**QtWidgets Implementation (Qt6 only):**
+- `QtWidgetsScene`: Finds QWidgets by traversing the widget hierarchy via `QApplication::topLevelWidgets()`
+- `QtWidgetsItem`: Wraps QWidgets and provides access to their properties and methods
+- `QtWidgetsEvents`: Generates Qt events using `QApplication::postEvent()` with proper child widget targeting via `childAt()`
 
 A key challenge when implementing support for a new framework is handling item lookup and event routing correctly, as different UI frameworks have different object hierarchies, event systems, and property mechanisms.
