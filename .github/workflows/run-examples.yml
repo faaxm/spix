@@ -13,12 +13,12 @@ jobs:
       matrix:
         base: [
           # Qt v5.15.2 (no macOS - Qt 5.15 lacks ARM64 support and macos-13 is deprecated)
-          {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF'},
-          {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF'},
+          {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           # Qt v6.2.3
-          {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF'},
-          {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF'},
+          {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON'},
+          {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON'},
         ]
     steps:
       - name: Check out repository code
@@ -46,7 +46,7 @@ jobs:
       - name: "Configure"
         run: |
           mkdir build
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.base.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=${{ matrix.base.tests }} -DSPIX_BUILD_EXAMPLES=ON ${{ matrix.base.cmake_flags }} -DBUILD_SHARED_LIBS=${{ matrix.base.shared_libs }} -DSPIX_QT_MAJOR=${{ matrix.base.qt_version[0] }} .
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.base.build_type }} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DSPIX_BUILD_TESTS=${{ matrix.base.tests }} -DSPIX_BUILD_EXAMPLES=ON -DSPIX_BUILD_QTWIDGETS=${{ matrix.base.qtwidgets }} ${{ matrix.base.cmake_flags }} -DBUILD_SHARED_LIBS=${{ matrix.base.shared_libs }} -DSPIX_QT_MAJOR=${{ matrix.base.qt_version[0] }} .
 
       - name: "Build"
         run: cmake --build build --config ${{ matrix.base.build_type }}
@@ -68,3 +68,18 @@ jobs:
         run: |
           build/examples/qtquick/GTest/SpixGTestExample
           build/examples/qtquick/RepeaterLoader/SpixRepeaterLoaderExampleGTest
+
+      - name: "Test QtWidgets GTest Example (Linux)"
+        if: ${{ contains(matrix.base.os, 'ubuntu') && matrix.base.qtwidgets == 'ON' }}
+        run: |
+          build/examples/qtwidgets/GTest/SpixQtWidgetsGTestExample -platform minimal
+
+      - name: "Test QtWidgets GTest Example (win)"
+        if: ${{ contains(matrix.base.os, 'windows') && matrix.base.qtwidgets == 'ON' }}
+        run: |
+          .\build\examples\qtwidgets\GTest\${{ matrix.base.build_type }}\SpixQtWidgetsGTestExample.exe -platform minimal
+
+      - name: "Test QtWidgets GTest Example (mac)"
+        if: ${{ contains(matrix.base.os, 'mac') && matrix.base.qtwidgets == 'ON' }}
+        run: |
+          build/examples/qtwidgets/GTest/SpixQtWidgetsGTestExample

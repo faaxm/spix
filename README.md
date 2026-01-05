@@ -44,9 +44,10 @@ Spix uses a modular architecture with separate components:
 
 - **Spix::Core** - Qt-independent functionality (RPC server, commands, data structures)
 - **Spix::QtQuick** - Qt/QML scene implementation for UI interaction
+- **Spix::QtWidgets** - QWidget scene implementation for traditional Qt widget applications (Qt6 only)
 - **Spix::Spix** - Convenience alias to QtQuick for backward compatibility
 
-This design enables Core-only usage in headless environments and future support for other UI frameworks.
+This design enables Core-only usage in headless environments and support for different Qt UI frameworks.
 
 ## What are the applications of Spix?
 The main use for Spix is to automatically test the UI of your Qt/QML application
@@ -102,6 +103,7 @@ sudo cmake --install .
 ### Build Options
 * `SPIX_QT_MAJOR`: Qt version to build against (5 or 6, default: 6)
 * `SPIX_BUILD_QTQUICK`: Build QtQuick scene support (default: ON)
+* `SPIX_BUILD_QTWIDGETS`: Build QtWidgets scene support (default: OFF, Qt6 only)
 * `SPIX_BUILD_EXAMPLES`: Build example applications (default: ON)
 * `SPIX_BUILD_TESTS`: Build unit tests (default: OFF)
 
@@ -130,6 +132,12 @@ If using CMake, add the following to your `CMakeLists.txt`:
 ```cmake
 find_package(Spix REQUIRED)
 target_link_libraries(your_app PRIVATE Spix::QtQuick)
+```
+
+**For QWidget applications** (Qt6 only):
+```cmake
+find_package(SpixQtWidgets REQUIRED)
+target_link_libraries(your_app PRIVATE Spix::QtWidgets)
 ```
 
 **Alternative component-based usage**:

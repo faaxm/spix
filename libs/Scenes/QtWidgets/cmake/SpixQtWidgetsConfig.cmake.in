@@ -1,0 +1,16 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(SpixCore)
+
+set(SPIX_QT_MAJOR "@SPIX_QT_MAJOR@")
+find_dependency(Qt${SPIX_QT_MAJOR} COMPONENTS Core Gui Widgets)
+
+include("${CMAKE_CURRENT_LIST_DIR}/SpixQtWidgetsTargets.cmake")
+
+# Create the expected alias target
+if(TARGET Spix::SpixQtWidgets AND NOT TARGET Spix::QtWidgets)
+    add_library(Spix::QtWidgets ALIAS Spix::SpixQtWidgets)
+endif()
+
+check_required_components(SpixQtWidgets)
