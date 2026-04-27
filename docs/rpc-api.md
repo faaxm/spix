@@ -161,6 +161,49 @@ b64 = s.takeScreenshotAsBase64("mainWindow")
 image_data = base64.b64decode(b64)
 ```
 
+### Introspection
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `dumpTree` | `dumpTree(path) -> string` | Return the item tree under `path` as a compact JSON string |
+
+The JSON tree recursively describes all items. Each node contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | Simplified type name (e.g. `"Rectangle"`) |
+| `objectName` | string | Object name (`objectName` property) |
+| `className` | string | Full C++ class name |
+| `bounds` | object | `x`, `y`, `width`, `height` in screen coordinates (QQuickItem only) |
+| `visible` | bool | Whether the item is visible (QQuickItem only) |
+| `opacity` | number | Opacity 0.0–1.0 (QQuickItem only) |
+| `clip` | bool | Whether clipping is enabled (QQuickItem only) |
+| `enabled` | bool | Whether the item is enabled (QQuickItem only) |
+| `properties` | object | All readable scalar QMetaObject properties as strings |
+| `children` | array | Recursively nested child nodes |
+
+Pass a window-level path (length 1) to dump the entire window content tree, or a deeper path to start from a specific item.
+
+```python
+import json
+
+# Dump the full window tree
+tree = json.loads(s.dumpTree("mainWindow"))
+
+# Dump a subtree
+subtree = json.loads(s.dumpTree("mainWindow/panel"))
+
+# Walk the tree
+def print_tree(node, indent=0):
+    print(" " * indent + node["name"] + " (" + node["type"] + ")")
+    for child in node.get("children", []):
+        print_tree(child, indent + 2)
+
+print_tree(tree)
+```
+
+Returns `"{}"` if the path cannot be resolved.
+
 ### Error Handling
 
 | Method | Signature | Description |

@@ -31,6 +31,9 @@ public:
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
     std::string takeScreenshotAsBase64(const ItemPath& targetItem) override;
 
+    // Introspection
+    std::string dumpTree(const ItemPath& rootPath) override;
+
 private:
     QtEvents m_events;
 };

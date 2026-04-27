@@ -10,6 +10,7 @@ set(CORE_TEST_SOURCES
     CommandExecuter/ExecuterState_test.cpp
     Commands/ClickOnItem_test.cpp
     Commands/DropFromExt_test.cpp
+    Commands/DumpTree_test.cpp
     Commands/GetProperty_test.cpp
     Data/ItemPathComponent_test.cpp
     Data/ItemPath_test.cpp

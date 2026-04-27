@@ -70,6 +70,7 @@ public:
 
     void takeScreenshot(ItemPath targetItem, std::string filePath);
     std::string takeScreenshotAsBase64(ItemPath targetItem);
+    std::string dumpTree(ItemPath rootPath);
     void quit();
 
 protected:

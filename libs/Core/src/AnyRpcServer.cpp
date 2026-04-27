@@ -128,6 +128,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Take a screenshot of the object and send as base64 string | takeScreenshotAsBase64(string pathToTargetedItem)",
         [this](std::string targetItem) { return takeScreenshotAsBase64(std::move(targetItem)); });
 
+    utils::AddFunctionToAnyRpc<std::string(std::string)>(methodManager, "dumpTree",
+        "Return a JSON tree of all items under the given path | dumpTree(string rootPath) : string json_tree",
+        [this](std::string rootPath) { return dumpTree(std::move(rootPath)); });
+
     utils::AddFunctionToAnyRpc<void()>(methodManager, "quit", "Close the app | quit()", [this] { quit(); });
 
     utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command",

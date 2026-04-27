@@ -26,6 +26,10 @@ public:
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
     std::string takeScreenshotAsBase64(const ItemPath& targetItem) override;
+
+    // Introspection
+    std::string dumpTree(const ItemPath& rootPath) override;
+
     // Mock stuff
     void addItemAtPath(MockItem item, const ItemPath& path);
     MockEvents& mockEvents();

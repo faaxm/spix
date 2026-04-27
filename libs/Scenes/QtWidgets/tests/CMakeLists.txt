@@ -8,6 +8,7 @@ set(QTWIDGETS_TEST_SOURCES
     unittests_main.cpp
     QtWidgetsItemTools_test.cpp
     QtWidgetsItem_test.cpp
+    QtWidgetsScene_dumpTree_test.cpp
     QtWidgetsTestUtils.h
 )
 
