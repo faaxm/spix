@@ -13,6 +13,7 @@
 #include <Commands/DragBegin.h>
 #include <Commands/DragEnd.h>
 #include <Commands/DropFromExt.h>
+#include <Commands/DumpTree.h>
 #include <Commands/EnterKey.h>
 #include <Commands/ExistsAndVisible.h>
 #include <Commands/GetBoundingBox.h>
@@ -194,6 +195,16 @@ std::string TestServer::takeScreenshotAsBase64(ItemPath targetItem)
     std::promise<std::string> promise;
     auto result = promise.get_future();
     auto cmd = std::make_unique<cmd::ScreenshotAsBase64>(targetItem, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
+}
+
+std::string TestServer::dumpTree(ItemPath rootPath)
+{
+    std::promise<std::string> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::DumpTree>(rootPath, std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
 
     return result.get();

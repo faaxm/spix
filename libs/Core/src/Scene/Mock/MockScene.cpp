@@ -33,6 +33,11 @@ std::string MockScene::takeScreenshotAsBase64(const ItemPath&)
     return "Base64 String";
 }
 
+std::string MockScene::dumpTree(const ItemPath&)
+{
+    return "{}";
+}
+
 void MockScene::addItemAtPath(MockItem item, const ItemPath& path)
 {
     m_items.emplace(std::make_pair(path.string(), std::move(item)));

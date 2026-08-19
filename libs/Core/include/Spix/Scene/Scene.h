@@ -38,6 +38,9 @@ public:
     // Tasks
     virtual void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) = 0;
     virtual std::string takeScreenshotAsBase64(const ItemPath& targetItem) = 0;
+
+    // Introspection
+    virtual std::string dumpTree(const ItemPath& rootPath) = 0;
 };
 
 } // namespace spix
