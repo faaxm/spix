@@ -36,11 +36,11 @@ void MockEvents::stringInput(Item* item, const std::string& text)
     }
 }
 
-void MockEvents::keyPress(Item* item, int keyCode, KeyModifier mod)
+void MockEvents::keyPress(Item* /*item*/, int /*keyCode*/, KeyModifier /*mod*/)
 {
 }
 
-void MockEvents::keyRelease(Item* item, int keyCode, KeyModifier mod)
+void MockEvents::keyRelease(Item* /*item*/, int /*keyCode*/, KeyModifier /*mod*/)
 {
 }
 

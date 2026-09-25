@@ -36,11 +36,11 @@ std::string MockItem::stringProperty(const std::string& name) const
     return m_stringProperties.at(name);
 }
 
-void MockItem::setStringProperty(const std::string& name, const std::string& value)
+void MockItem::setStringProperty(const std::string& /*name*/, const std::string& /*value*/)
 {
 }
 
-bool MockItem::invokeMethod(const std::string& method, const std::vector<Variant>& args, Variant& ret)
+bool MockItem::invokeMethod(const std::string& /*method*/, const std::vector<Variant>& /*args*/, Variant& ret)
 {
     ret = Variant(nullptr);
     return true;

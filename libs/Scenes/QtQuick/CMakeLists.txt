@@ -47,7 +47,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 #
 # Qt MOC Files
 #
-cmake_language(CALL "qt${SPIX_QT_MAJOR}_wrap_cpp" MOC_FILES "include/Spix/QtQmlBot.h")
+qt_wrap_cpp(SOURCES "include/Spix/QtQmlBot.h")
 
 #
 # Target

@@ -263,9 +263,9 @@ Variant QMLReturnVariantToVariant(const QMLReturnVariant& var)
 
 bool CanConvertArgTypes(const QMetaMethod& metaMethod, const std::vector<QVariant>& varargs)
 {
-    if (metaMethod.parameterCount() != varargs.size())
+    if (metaMethod.parameterCount() != static_cast<int>(varargs.size()))
         return false;
-    for (size_t i = 0; i < metaMethod.parameterCount(); i++) {
+    for (size_t i = 0; i < static_cast<size_t>(metaMethod.parameterCount()); i++) {
         int targetType = metaMethod.parameterType(i);
         if (targetType != QMetaType::Type::QVariant && !varargs[i].canConvert(targetType))
             return false;
@@ -277,7 +277,7 @@ bool GetMethodMetaForArgs(
     const QObject& obj, const std::string& method, const std::vector<QVariant>& varargs, QMetaMethod& ret)
 {
     const QMetaObject* itemMeta = obj.metaObject();
-    for (size_t i = 0; i < itemMeta->methodCount(); i++) {
+    for (size_t i = 0; i < static_cast<size_t>(itemMeta->methodCount()); i++) {
         const QMetaMethod methodMeta = itemMeta->method(i);
         if (methodMeta.name().compare(method.data()) == 0 && CanConvertArgTypes(methodMeta, varargs)) {
             ret = methodMeta;

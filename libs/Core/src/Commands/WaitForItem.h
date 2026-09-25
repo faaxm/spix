@@ -25,8 +25,8 @@ public:
 private:
     bool m_timerInitialized = false;
     std::chrono::steady_clock::time_point m_startTime;
-    std::chrono::milliseconds m_maxWaitTime;
     ItemPath m_path;
+    std::chrono::milliseconds m_maxWaitTime;
     std::promise<bool> m_promise;
     bool m_itemFound = false;
 };

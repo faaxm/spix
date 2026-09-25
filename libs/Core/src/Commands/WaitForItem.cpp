@@ -12,12 +12,12 @@ namespace cmd {
 
 WaitForItem::WaitForItem(ItemPath path, std::chrono::milliseconds maxWaitTime, std::promise<bool> promise)
 : m_path(std::move(path))
-, m_promise(std::move(promise))
 , m_maxWaitTime(std::move(maxWaitTime))
+, m_promise(std::move(promise))
 {
 }
 
-void WaitForItem::execute(CommandEnvironment& env)
+void WaitForItem::execute(CommandEnvironment& /*env*/)
 {
     m_promise.set_value(m_itemFound);
 }
