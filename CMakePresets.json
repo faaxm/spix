@@ -1,9 +1,11 @@
 {
-  "version": 2,
+  "version": 3,
   "configurePresets": [
     {
       "name": "base",
       "generator": "Ninja",
+      "binaryDir": "build-${presetName}",
+      "toolchainFile": "${sourceDir}/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
@@ -12,7 +14,8 @@
     {
       "name": "dev",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "SPIX_BUILD_TESTS": "ON"
       },
       "inherits": [
         "base"
