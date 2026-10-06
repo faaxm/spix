@@ -1,0 +1,9 @@
+{
+    "name": "spix",
+    "version": "0.0.0",
+    "builtin-baseline": "5bc3a07440d08549832055eaddc3979eeeaad51b",
+    "dependencies": [
+        "anyrpc",
+        "gtest"
+    ]
+}
