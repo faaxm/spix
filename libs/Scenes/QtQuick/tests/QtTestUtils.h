@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include <gtest/gtest.h>
 
@@ -38,6 +40,7 @@ protected:
         if (childItem == nullptr || !dynamic_cast<QQuickItem*>(childItem))
             throw std::runtime_error(
                 std::string("Failed to create QML component: ") + component.errorString().toStdString());
+        createdItems.emplace_back(childItem);
         return static_cast<QQuickItem*>(childItem);
     }
 
@@ -65,4 +68,6 @@ protected:
     QCoreApplication app;
     QQmlEngine engine;
     QQmlComponent component;
+    // Declared last so the items are destroyed before the component and engine
+    std::vector<std::unique_ptr<QObject>> createdItems;
 };
