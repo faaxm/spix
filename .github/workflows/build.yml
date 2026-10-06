@@ -35,6 +35,8 @@ jobs:
           # compilers
           {name: 'clang++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=clang++', triplet: 'x64-linux'},
           {name: 'g++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=g++', triplet: 'x64-linux'},
+          # sanitizers
+          {name: 'asan ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DCMAKE_CXX_FLAGS=-DQT_FORCE_ASSERTS -fsanitize=address -fsanitize=undefined -fno-optimize-sibling-calls" "-DCMAKE_SHARED_LINKER_FLAGS=-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer" "-DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"'},
         ]
     steps:
       - name: Check out repository code
