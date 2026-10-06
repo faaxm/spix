@@ -1,0 +1,67 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "vadimcn.vscode-lldb",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "mhutchie.git-graph",
+      "theqtcompany.qt-qml",
+      "ms-vscode.cmake-tools",
+      "KDAB.qttests"
+    ],
+    "unwantedRecommendations": [
+      "ms-azuretools.vscode-docker"
+    ]
+  },
+  "settings": {
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnSave": true,
+    "clangd.arguments": [
+      "-header-insertion=never",
+      "--clang-tidy=false"
+    ],
+    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
+    "cmake.automaticReconfigure": false,
+    "files.insertFinalNewline": true,
+    "cmake.showSystemKits": false,
+    "cmake.enableAutomaticKitScan": false,
+    "cmake.options.statusBarVisibility": "hidden",
+    "cmake.options.advanced": {
+      "configurePreset": {
+        "statusBarVisibility": "visible"
+      },
+      "buildTarget": {
+        "statusBarVisibility": "visible"
+      },
+      "launchTarget": {
+        "statusBarVisibility": "visible",
+        "inheritDefault": "visible"
+      },
+      "debug": {
+        "statusBarVisibility": "hidden"
+      },
+    },
+    "git.blame.ignoreWhitespace": true,
+    "files.associations": {
+      "*.code-workspace.template": "json"
+    }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Current Target (kdap)",
+        "type": "kdap",
+        "request": "launch",
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [],
+        "cwd": "${command:cmake.buildDirectory}",
+        "env": {}
+      }
+    ]
+  }
+}
