@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickWindow>
+#include <QStyleHints>
 
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
@@ -129,6 +130,41 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mo
     QMouseEvent* event
         = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, qtmod);
     QGuiApplication::postEvent(window, event);
+}
+
+bool QtEvents::mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyModifier mod)
+{
+    if (m_pressedMouseButtons != MouseButtons::None)
+        return false;
+
+    QPointF windowLoc;
+    auto window = getWindowAndPositionForItem(item, loc, windowLoc);
+    if (!window)
+        return false;
+
+    const auto eventCausingButton = getQtMouseButtonValue(button);
+    const Qt::MouseButtons pressedButtons = eventCausingButton;
+    // Match native double-click delivery: the released button is no longer held.
+    // Qt Quick also uses this mask to clear pointer grabs after the gesture.
+    const Qt::MouseButtons releasedButtons = Qt::NoButton;
+    const auto qtmod = getQtKeyboardModifiers(mod);
+    // Like QTest's complete gesture helper, separate successive gestures in the
+    // event time domain. TapHandler uses timestamps to distinguish tap sequences.
+    m_lastDoubleClickTimestamp += QGuiApplication::styleHints()->mouseDoubleClickInterval() + 1;
+    auto postMouseEvent = [&](QEvent::Type type, Qt::MouseButtons buttons) {
+        auto event = new QMouseEvent(type, windowLoc, eventCausingButton, buttons, qtmod);
+        event->setTimestamp(++m_lastDoubleClickTimestamp);
+        QGuiApplication::postEvent(window, event);
+    };
+
+    // Queue the complete gesture without pumping events. Its final logical state
+    // is released, so m_pressedMouseButtons remains unchanged.
+    postMouseEvent(QEvent::MouseButtonPress, pressedButtons);
+    postMouseEvent(QEvent::MouseButtonRelease, releasedButtons);
+    postMouseEvent(QEvent::MouseButtonPress, pressedButtons);
+    postMouseEvent(QEvent::MouseButtonDblClick, pressedButtons);
+    postMouseEvent(QEvent::MouseButtonRelease, releasedButtons);
+    return true;
 }
 
 void QtEvents::mouseMove(Item* item, Point loc)

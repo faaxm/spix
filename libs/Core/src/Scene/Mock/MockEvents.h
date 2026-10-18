@@ -19,6 +19,7 @@ class SPIXCORE_EXPORT MockEvents : public Events {
 public:
     void mouseDown(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
     void mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
+    bool mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
     void mouseMove(Item* item, Point loc) override;
     void stringInput(Item* item, const std::string& text) override;
     void keyPress(Item* item, int keyCode, KeyModifier mod) override;
@@ -28,6 +29,7 @@ public:
 
     // Mock stuff
     std::function<void(Item*, Point, bool, bool)> onMouseClickEvent;
+    std::function<bool(Item*, Point, MouseButton, KeyModifier)> onMouseDoubleClickEvent;
     std::function<void(Item*, const std::string&)> onStringInputEvent;
     std::function<void(Item*, Point, PasteboardContent&)> onMouseDropEvent;
 };

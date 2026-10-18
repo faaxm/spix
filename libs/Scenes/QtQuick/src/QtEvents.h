@@ -14,6 +14,7 @@ class QtEvents : public Events {
 public:
     void mouseDown(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
     void mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
+    bool mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyModifier mod) override;
     void mouseMove(Item* item, Point loc) override;
     void stringInput(Item* item, const std::string& text) override;
     void keyPress(Item* item, int keyCode, KeyModifier mod) override;
@@ -24,6 +25,7 @@ public:
 private:
     /// Keep track of which buttons are currently pressed
     MouseButton m_pressedMouseButtons = MouseButtons::None;
+    unsigned long m_lastDoubleClickTimestamp = 0;
 };
 
 } // namespace spix

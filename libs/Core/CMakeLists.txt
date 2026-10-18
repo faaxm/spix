@@ -27,6 +27,8 @@ set(SOURCES
     src/Commands/Command.cpp
     src/Commands/CustomCmd.cpp
     src/Commands/CustomCmd.h
+    src/Commands/DoubleClickOnItem.cpp
+    src/Commands/DoubleClickOnItem.h
     src/Commands/DragBegin.cpp
     src/Commands/DragBegin.h
     src/Commands/DragEnd.cpp
