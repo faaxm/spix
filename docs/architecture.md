@@ -122,6 +122,7 @@ public:
     virtual void keyRelease(Item* item, int keyCode, KeyModifier mod) = 0;
     virtual void extMouseDrop(Item* item, Point loc, PasteboardContent& content) = 0;
     virtual void quit() = 0;
+    virtual bool mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyModifier mod) { return false; }
 };
 ```
 

@@ -158,6 +158,31 @@ TEST(MyTest, ClickButton) {
 
 See [examples/qtquick/GTest](../examples/qtquick/GTest) for a complete example.
 
+### Double-Click Gestures
+
+Spix provides C++ API methods on `TestServer` for double-clicking Qt Quick items:
+
+```cpp
+// Double-click center of item with left button
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"));
+
+// Double-click at specific relative position (e.g. 25% from top-left)
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::Point(0.25, 0.25));
+
+// Double-click with relative position and pixel offset
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::Point(0.25, 0.25), spix::Point(10, 5));
+
+// Double-click with specific mouse button and modifier keys
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::MouseButtons::Left, spix::KeyModifiers::Control);
+```
+
+#### Behavior and Semantics
+
+- **Asynchronous Queueing**: Commands are enqueued to the command executor and dispatched asynchronously on the main Qt event thread.
+- **Complete Native Gesture Sequence**: Delivers the complete native event sequence (`MouseButtonPress` -> `MouseButtonRelease` -> `MouseButtonPress` -> `MouseButtonDblClick` -> `MouseButtonRelease`) without blocking sleeps or pumping the event loop. The released button is not held in the release event button mask (`NoButton`), matching native OS delivery and ensuring pointer grabs are cleared in Qt Quick.
+- **Timestamp Separation**: Successive gestures are monotonically incremented and spaced in the timestamp domain using `styleHints()->mouseDoubleClickInterval() + 1`, ensuring QML `TapHandler` and `MouseArea` correctly recognize repeated double-clicks.
+- **Scope & Backend Support**: Double-click is currently implemented for Qt Quick (`QtEvents`). QtWidgets and RPC interfaces do not currently implement double-click; invoking double-click against unsupported backends reports an error. Existing dynamic library consumers require a binary rebuild against the updated `Events` interface.
+
 ## Examples
 
 The following examples demonstrate QtQuick usage:
