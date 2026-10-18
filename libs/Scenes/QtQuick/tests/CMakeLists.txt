@@ -27,3 +27,13 @@ target_include_directories(SpixQtQuickTests
 )
 
 add_test(NAME SpixQtQuickTests COMMAND SpixQtQuickTests)
+
+# Real input delivery needs a GUI application, separate from the item unit tests.
+add_executable(SpixQtQuickGestureTests QtDoubleClick_test.cpp)
+target_link_libraries(SpixQtQuickGestureTests PRIVATE
+    Spix::QtQuick Qt${SPIX_QT_MAJOR}::Test GTest::gtest)
+target_include_directories(SpixQtQuickGestureTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)
+add_test(NAME SpixQtQuickGestureTests COMMAND SpixQtQuickGestureTests)
+set_tests_properties(SpixQtQuickGestureTests PROPERTIES
+    TIMEOUT 60
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen;QT_QUICK_BACKEND=software;QSG_RHI_BACKEND=software")
