@@ -158,6 +158,45 @@ TEST(MyTest, ClickButton) {
 
 See [examples/qtquick/GTest](../examples/qtquick/GTest) for a complete example.
 
+### Double-Click Gestures
+
+Spix provides C++ API methods on `TestServer` for double-clicking Qt Quick items:
+
+```cpp
+// Double-click center of item with left button
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"));
+
+// Double-click at specific relative position (e.g. 25% from top-left)
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::Point(0.25, 0.25));
+
+// Double-click with relative position and pixel offset
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::Point(0.25, 0.25), spix::Point(10, 5));
+
+// Double-click with specific mouse button and modifier keys
+SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::MouseButtons::Left, spix::KeyModifiers::Control);
+```
+
+The defaults are the item center, left button, and no modifiers. Position overloads
+use proportions of the item's size plus an optional pixel offset. The button
+overload accepts one of `Left`, `Right`, or `Middle`; `Shift`, `Control`, `Alt`, and
+`Meta` modifiers may be combined.
+
+Calls enqueue work for the Qt application thread. Wait for an observable application
+result with a bounded timeout before asserting completion. Missing items, invalid
+button/modifier masks, an already-held mouse button, and unsupported backends report
+executor errors through `getErrors()` without starting a partial double-click.
+
+The gesture is press, release, press, double-click, release. The first release can
+select an item before its double-click handler runs; ordinary click callbacks are
+therefore expected. Events carry the target's window and global coordinates, release
+the button, and separate successive gestures using timestamps without sleeps or
+pumping the event loop in the backend.
+
+This operation supports the C++ API with Qt Quick. Qt Widgets inherits the default
+unsupported backend implementation; RPC double-click methods are not registered.
+Adding the virtual operation to `Events` requires rebuilding binary consumers and
+backends against the updated interface.
+
 ## Examples
 
 The following examples demonstrate QtQuick usage:

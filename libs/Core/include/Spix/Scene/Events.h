@@ -27,6 +27,10 @@ public:
     virtual void keyRelease(Item* item, int keyCode, KeyModifier mod) = 0;
     virtual void extMouseDrop(Item* item, Point loc, PasteboardContent& content) = 0;
     virtual void quit() = 0;
+
+    // Queue a complete double-click gesture. False means no gesture was started.
+    // Existing backends remain usable until they implement this optional operation.
+    virtual bool mouseDoubleClick(Item*, Point, MouseButton, KeyModifier) { return false; }
 };
 
 } // namespace spix

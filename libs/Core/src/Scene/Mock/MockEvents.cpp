@@ -22,6 +22,11 @@ void MockEvents::mouseUp(Item* item, Point loc, MouseButton /*button*/, KeyModif
     }
 }
 
+bool MockEvents::mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyModifier mod)
+{
+    return onMouseDoubleClickEvent ? onMouseDoubleClickEvent(item, loc, button, mod) : true;
+}
+
 void MockEvents::mouseMove(Item* item, Point loc)
 {
     if (onMouseClickEvent) {
