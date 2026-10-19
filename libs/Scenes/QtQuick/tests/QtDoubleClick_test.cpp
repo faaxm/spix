@@ -31,6 +31,7 @@ class Server : public spix::TestServer {
 struct MouseEventRecord {
     QEvent::Type type;
     QPointF position;
+    QPointF globalPosition;
     Qt::MouseButton button;
     Qt::MouseButtons buttons;
     Qt::KeyboardModifiers modifiers;
@@ -47,10 +48,13 @@ public:
             auto* mouse = static_cast<QMouseEvent*>(event);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             auto position = mouse->position();
+            auto globalPosition = mouse->globalPosition();
 #else
             auto position = mouse->localPos();
+            auto globalPosition = mouse->screenPos();
 #endif
-            events.push_back({event->type(), position, mouse->button(), mouse->buttons(), mouse->modifiers()});
+            events.push_back(
+                {event->type(), position, globalPosition, mouse->button(), mouse->buttons(), mouse->modifiers()});
         }
         return false;
     }
@@ -237,6 +241,33 @@ TEST_F(DoubleClickGesture, PositionsReachNestedTransformedTarget)
         EXPECT_NEAR(window->property("lastX").toDouble(), expected[i].x(), 0.01);
         EXPECT_NEAR(window->property("lastY").toDouble(), expected[i].y(), 0.01);
         EXPECT_FALSE(row()->property("pressed").toBool());
+    }
+}
+
+TEST_F(DoubleClickGesture, GlobalPositionTracksWindowAndFractionalItemCoordinates)
+{
+    auto* group = window->findChild<QQuickItem*>("group");
+    group->setRotation(17);
+    group->setScale(1.15);
+    const QPointF localPoint(40.25, 20.5);
+    for (const auto& position : {QPoint(120, 160), QPoint(260, 210)}) {
+        window->setPosition(position);
+        QCoreApplication::processEvents();
+        resetObservations();
+        const auto expectedWindowPosition = row()->mapToScene(localPoint);
+        const auto expectedGlobalPosition = row()->mapToGlobal(localPoint);
+
+        server.mouseDoubleClick(path, {0.0, 0.0}, {localPoint.x(), localPoint.y()});
+        deliver();
+
+        ASSERT_EQ(count("doubles"), 1);
+        ASSERT_EQ(recorder.events.size(), 5u);
+        for (const auto& event : recorder.events) {
+            EXPECT_NEAR(event.position.x(), expectedWindowPosition.x(), 0.01);
+            EXPECT_NEAR(event.position.y(), expectedWindowPosition.y(), 0.01);
+            EXPECT_NEAR(event.globalPosition.x(), expectedGlobalPosition.x(), 0.01);
+            EXPECT_NEAR(event.globalPosition.y(), expectedGlobalPosition.y(), 0.01);
+        }
     }
 }
 

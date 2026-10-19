@@ -142,6 +142,7 @@ bool QtEvents::mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyMo
     if (!window)
         return false;
 
+    const auto globalLoc = QPointF(window->mapToGlobal(QPoint())) + windowLoc;
     const auto eventCausingButton = getQtMouseButtonValue(button);
     const Qt::MouseButtons pressedButtons = eventCausingButton;
     // Match native double-click delivery: the released button is no longer held.
@@ -152,7 +153,7 @@ bool QtEvents::mouseDoubleClick(Item* item, Point loc, MouseButton button, KeyMo
     // event time domain. TapHandler uses timestamps to distinguish tap sequences.
     m_lastDoubleClickTimestamp += QGuiApplication::styleHints()->mouseDoubleClickInterval() + 1;
     auto postMouseEvent = [&](QEvent::Type type, Qt::MouseButtons buttons) {
-        auto event = new QMouseEvent(type, windowLoc, eventCausingButton, buttons, qtmod);
+        auto event = new QMouseEvent(type, windowLoc, globalLoc, eventCausingButton, buttons, qtmod);
         event->setTimestamp(++m_lastDoubleClickTimestamp);
         QGuiApplication::postEvent(window, event);
     };
