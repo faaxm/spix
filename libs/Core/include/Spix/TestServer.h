@@ -52,6 +52,8 @@ public:
     void mouseClick(ItemPath path, Point proportion, Point offset);
     void mouseClick(ItemPath path, MouseButton mouseButton, KeyModifier keyModifier = spix::KeyModifiers::None);
 
+    // Queue a complete gesture; wait for the application's result before asserting it.
+    // Defaults to the item center, left button, and no modifiers. Errors use getErrors().
     void mouseDoubleClick(ItemPath path);
     void mouseDoubleClick(ItemPath path, Point proportion);
     void mouseDoubleClick(ItemPath path, Point proportion, Point offset);

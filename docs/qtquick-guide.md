@@ -176,12 +176,26 @@ SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::Poin
 SpixGTest::srv->mouseDoubleClick(spix::ItemPath("mainWindow/button"), spix::MouseButtons::Left, spix::KeyModifiers::Control);
 ```
 
-#### Behavior and Semantics
+The defaults are the item center, left button, and no modifiers. Position overloads
+use proportions of the item's size plus an optional pixel offset. The button
+overload accepts one of `Left`, `Right`, or `Middle`; `Shift`, `Control`, `Alt`, and
+`Meta` modifiers may be combined.
 
-- **Asynchronous Queueing**: Commands are enqueued to the command executor and dispatched asynchronously on the main Qt event thread.
-- **Complete Native Gesture Sequence**: Delivers the complete native event sequence (`MouseButtonPress` -> `MouseButtonRelease` -> `MouseButtonPress` -> `MouseButtonDblClick` -> `MouseButtonRelease`) without blocking sleeps or pumping the event loop. The released button is not held in the release event button mask (`NoButton`), matching native OS delivery and ensuring pointer grabs are cleared in Qt Quick.
-- **Timestamp Separation**: Successive gestures are monotonically incremented and spaced in the timestamp domain using `styleHints()->mouseDoubleClickInterval() + 1`, ensuring QML `TapHandler` and `MouseArea` correctly recognize repeated double-clicks.
-- **Scope & Backend Support**: Double-click is currently implemented for Qt Quick (`QtEvents`). QtWidgets and RPC interfaces do not currently implement double-click; invoking double-click against unsupported backends reports an error. Existing dynamic library consumers require a binary rebuild against the updated `Events` interface.
+Calls enqueue work for the Qt application thread. Wait for an observable application
+result with a bounded timeout before asserting completion. Missing items, invalid
+button/modifier masks, an already-held mouse button, and unsupported backends report
+executor errors through `getErrors()` without starting a partial double-click.
+
+The gesture is press, release, press, double-click, release. The first release can
+select an item before its double-click handler runs; ordinary click callbacks are
+therefore expected. Events carry the target's window and global coordinates, release
+the button, and separate successive gestures using timestamps without sleeps or
+pumping the event loop in the backend.
+
+This operation supports the C++ API with Qt Quick. Qt Widgets inherits the default
+unsupported backend implementation; RPC double-click methods are not registered.
+Adding the virtual operation to `Events` requires rebuilding binary consumers and
+backends against the updated interface.
 
 ## Examples
 
