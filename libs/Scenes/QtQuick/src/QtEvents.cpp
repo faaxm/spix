@@ -13,6 +13,7 @@
 
 #include <QGuiApplication>
 #include <QObject>
+#include <QPointer>
 #include <QQuickItem>
 #include <QQuickWindow>
 
@@ -114,21 +115,31 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mo
     if (!window)
         return;
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-    // Qt6 expects the mouse to be down during the event
-    Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
-    Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
-    m_pressedMouseButtons ^= button;
-#else
-    // Qt5 expects the mouse to be up during the event
+    // The released button must not be in the active buttons. Qt6 otherwise
+    // marks the event point as Pressed and delivers the release like a press.
     m_pressedMouseButtons ^= button;
     Qt::MouseButton eventCausingButton = getQtMouseButtonValue(button);
     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
-#endif
     auto qtmod = getQtKeyboardModifiers(mod);
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)) && (QT_VERSION < QT_VERSION_CHECK(6, 10, 3))
+    // Before Qt 6.10.3 (QTBUG-121987), a new QMouseEvent modifies the QEventPoint
+    // it shares with the queued press and turns the press into a release.
+    // Create the release only after the press has been delivered.
+    QPointer<QQuickWindow> target(window);
+    QMetaObject::invokeMethod(
+        window,
+        [target, windowLoc, eventCausingButton, activeButtons, qtmod] {
+            if (!target)
+                return;
+            QMouseEvent event(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, qtmod);
+            QGuiApplication::sendEvent(target, &event);
+        },
+        Qt::QueuedConnection);
+#else
     QMouseEvent* event
         = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, qtmod);
     QGuiApplication::postEvent(window, event);
+#endif
 }
 
 void QtEvents::mouseMove(Item* item, Point loc)

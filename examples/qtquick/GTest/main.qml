@@ -4,6 +4,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
 
 Window {
+    id: mainWindow
     objectName: "mainWindow"
     visible: true
     width: 640
@@ -81,5 +82,15 @@ Window {
         objectName: "propItem"
         property var propertyWithTarget: button1
         property var propertyWithParent: button1.parent
+    }
+
+    // A Drawer keeps the window overlay visible, which made clicks fail on Qt 6 (#54).
+    property bool withDrawer: false
+    Loader {
+        active: mainWindow.withDrawer
+        sourceComponent: Drawer {
+            width: 100
+            height: mainWindow.height
+        }
     }
 }
