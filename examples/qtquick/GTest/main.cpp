@@ -79,6 +79,16 @@ TEST(GTestExample, BasicUITest)
     srv->mouseClick(spix::ItemPath("mainWindow/.propertyWithParent/Button_2"));
     srv->wait(std::chrono::milliseconds(500));
 
+    // the same clicks while a Drawer keeps the window overlay visible
+    srv->setStringProperty("mainWindow", "withDrawer", "true");
+    srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_1"));
+    srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"), spix::MouseButtons::Right);
+    srv->wait(std::chrono::milliseconds(500));
+    srv->mouseClick(spix::ItemPath("mainWindow/Button_2"), spix::MouseButtons::Left, spix::KeyModifiers::Shift);
+    srv->wait(std::chrono::milliseconds(500));
+
     srv->wait(std::chrono::milliseconds(500));
 
     auto result = srv->getStringProperty("mainWindow/results", "text");
@@ -95,7 +105,10 @@ Button 2 control clicked
 Button 2 shift control clicked
 Button 1 clicked
 Button 1 clicked
-Button 2 clicked)RSLT";
+Button 2 clicked
+Button 1 clicked
+Button 2 right clicked
+Button 2 shift clicked)RSLT";
 
     EXPECT_EQ(result, expected_result);
 
